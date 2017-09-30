@@ -5,7 +5,7 @@ const config = require('../config');
 
 const utils = require('../utils');
 
-class QQProvider extends Provider {
+class JuheProvider extends Provider {
   constructor() {
     super();
   }
@@ -48,4 +48,4 @@ class QQProvider extends Provider {
   }
 }
 
-module.exports = QQProvider;
+module.exports = JuheProvider;
