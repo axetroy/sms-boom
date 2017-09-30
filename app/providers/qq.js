@@ -22,11 +22,22 @@ class QQProvider extends Provider {
 
     await page.deleteCookie();
 
-    const $phone = await page.$('#phone');
-    const $send = await page.$('#send-sms');
-    await $phone.click();
-    await page.type(phone + '');
-    await $send.click();
+    const [$nickname, $password, $phone, $send] = await Promise.all([
+      page.$('#nickname'),
+      page.$('#password'),
+      page.$('#phone'),
+      page.$('#send-sms')
+    ]);
+
+    await $nickname.click({ button: 'left' });
+    await page.type(`门卫张大爷abc123`, { delay: 100 });
+
+    await $password.click({ button: 'left' });
+    await page.type(`abc123abc123`, { delay: 100 });
+
+    await $phone.click({ button: 'left' });
+    await page.type(phone + '', { delay: 100 });
+    await $send.click({ button: 'left' });
 
     await browser.close();
   }

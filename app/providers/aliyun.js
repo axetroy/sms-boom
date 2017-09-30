@@ -23,6 +23,8 @@ class QQProvider extends Provider {
       timeout: 3000000
     });
 
+    await page.deleteCookie();
+
     const [$nick, $password, $rePassword, $mobile] = await Promise.all([
       page.$('#nick'),
       page.$('#password'),
