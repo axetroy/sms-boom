@@ -1,3 +1,4 @@
+const Tesseract = require('tesseract.js');
 const App = require('./app/app');
 const QQProvider = require('./app/providers/qq');
 const AliyunProvider = require('./app/providers/aliyun');

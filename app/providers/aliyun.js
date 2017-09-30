@@ -17,46 +17,49 @@ class QQProvider extends Provider {
 
     const page = await browser.newPage();
 
-    await utils.sleep(2000);
-
-    await page.press('F12');
-
     await page.goto(URL, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
       timeout: 3000000
     });
 
-    const result = await page.evaluate(async () => {
-      //获取元素的纵坐标
-      function getTop(e) {
-        let offset = e.offsetTop;
-        if (e.offsetParent !== null) offset += getTop(e.offsetParent);
-        return offset;
-      }
-      //获取元素的横坐标
-      function getLeft(e) {
-        let offset = e.offsetLeft;
-        if (e.offsetParent !== null) offset += getLeft(e.offsetParent);
-        return offset;
-      }
+    const [$nick, $password, $rePassword, $mobile] = await Promise.all([
+      page.$('#nick'),
+      page.$('#password'),
+      page.$('#rePassword'),
+      page.$('#mobile')
+    ]);
 
-      const $span = document.querySelector('button');
-      return {
-        x: +getTop($span) + 5,
-        y: +getLeft($span) + 5
-      };
+    await $nick.click();
+    await page.type(`张三abc1154`, { delay: 100 });
+
+    let psw = Math.random() + '';
+    await $password.click();
+    await page.type(psw, { delay: 100 });
+
+    await $rePassword.click();
+    await page.type(psw, { delay: 100 });
+
+    await $mobile.click();
+    await page.type(phone + '', { delay: phone });
+
+    // 按下鼠标，拖动滚动条
+    await page.mouse.move(365, 380);
+    await page.mouse.click(365, 380);
+    await page.mouse.down({
+      button: 'left'
     });
 
-    console.log(result);
+    await page.mouse.move(670, 380, { steps: 1 });
 
-    await page.mouse.move(result.x, result.y, { steps: 20 });
+    await page.mouse.up({ button: 'left' });
+    // 松开鼠标
 
-    // await page.mouse.down();
-    await page.mouse.click();
-    // await page.mouse.move(result.x + 1, result.y);
+    await utils.sleep(1000);
 
-    // await browser.close();
+    await page.mouse.click(438, 433);
+
+    await browser.close();
   }
 }
 

@@ -20,9 +20,11 @@
   "dependencies": {
     "axios": "^0.16.2",
     "baidu-ocr-api": "^2.0.5",
-    "puppeteer": "^0.11.0"
+    "puppeteer": "^0.11.0",
+    "tesseract.js": "^1.0.10"
   },
   "devDependencies": {
+    "@types/puppeteer": "^0.10.1",
     "cross-env": "^5.0.5"
   }
 }
