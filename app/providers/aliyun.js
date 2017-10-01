@@ -52,7 +52,7 @@ class AliYunProvider extends Provider {
       button: 'left'
     });
 
-    await page.mouse.move(670, 380, { steps: 1 });
+    await page.mouse.move(670, 380, { steps: 10 });
 
     await page.mouse.up({ button: 'left' });
     // 松开鼠标
