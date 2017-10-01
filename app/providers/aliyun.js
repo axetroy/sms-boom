@@ -61,6 +61,8 @@ class AliYunProvider extends Provider {
 
     await page.mouse.click(438, 433);
 
+    await utils.sleep(2000);
+
     await browser.close();
   }
 }

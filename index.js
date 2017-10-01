@@ -4,6 +4,7 @@ const AliyunProvider = require('./app/providers/aliyun');
 const TaobaoProvider = require('./app/providers/taobao');
 const JuheProvider = require('./app/providers/juhe');
 const XiangRiKuiProvider = require('./app/providers/xiangrikui');
+const YoukuProvider = require('./app/providers/youku');
 
 new App(13377175342)
   .provider(QQProvider)
@@ -11,4 +12,5 @@ new App(13377175342)
   .provider(TaobaoProvider)
   .provider(JuheProvider)
   .provider(XiangRiKuiProvider)
+  .provider(YoukuProvider)
   .bootstrap();

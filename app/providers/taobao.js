@@ -57,6 +57,8 @@ class TaobaoProvider extends Provider {
 
     await page.mouse.click(500, 380);
 
+    await utils.sleep(2000);
+
     await browser.close();
   }
 }

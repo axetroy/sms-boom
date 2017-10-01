@@ -44,7 +44,9 @@ class JuheProvider extends Provider {
 
     await $sendBtn.click({ button: 'left' });
 
-    // await browser.close();
+    await utils.sleep(2000);
+
+    await browser.close();
   }
 }
 

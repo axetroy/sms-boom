@@ -38,13 +38,6 @@ class XiangRiKuiProvider extends Provider {
     await $mobile.click();
     await page.type(phone + '', { delay: 100 });
 
-    // 按下鼠标，拖动滚动条
-    await page.mouse.move(415, 325, { step: 10 });
-    await $slide.click(415, 325);
-    await page.mouse.down({
-      button: 'left'
-    });
-
     await $submit.click({ button: 'left' });
 
     await utils.sleep(2000);

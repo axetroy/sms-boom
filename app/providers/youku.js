@@ -9,7 +9,7 @@ class QQProvider extends Provider {
     super();
   }
   async resolve(phone) {
-    const URL = `https://ssl.zc.qq.com/v3/index-chs.html`;
+    const URL = `http://www.youku.com/`;
     const browser = await puppeteer.launch({
       headless: config.isProduction
     });
@@ -23,21 +23,34 @@ class QQProvider extends Provider {
 
     await page.deleteCookie();
 
-    const [$nickname, $password, $phone, $send] = await Promise.all([
-      page.$('#nickname'),
-      page.$('#password'),
-      page.$('#phone'),
-      page.$('#send-sms')
+    const $user = await page.$('#qheader_login'); // 点击登陆
+
+    await $user.click({ button: 'left' });
+
+    await utils.sleep(2000);
+
+    const $go2register = await page.$('#YT-registeBtn'); // phone
+
+    await $go2register.click({ button: 'left' });
+
+    await utils.sleep(2000);
+
+    const [$phone, $password, $repassword, $send] = await Promise.all([
+      page.$('#YT-mPassport'), // phone
+      page.$('#YT-mRegPassword'), // password
+      page.$('#YT-mRepeatPwd'), // 确认密码
+      page.$('#YT-mGetMobileCode') // 发送验证码
     ]);
 
-    await $nickname.click({ button: 'left' });
-    await page.type(`门卫张大爷abc123`, { delay: 100 });
+    await $phone.click({ button: 'left' });
+    await page.type(phone + '', { delay: 100 });
 
     await $password.click({ button: 'left' });
     await page.type(`abc123abc123`, { delay: 100 });
 
-    await $phone.click({ button: 'left' });
-    await page.type(phone + '', { delay: 100 });
+    await $repassword.click({ button: 'left' });
+    await page.type(`abc123abc123`, { delay: 100 });
+
     await $send.click({ button: 'left' });
 
     await utils.sleep(2000);
