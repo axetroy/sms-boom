@@ -9,13 +9,10 @@ class AliPayProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `https://memberprod.alipay.com/account/reg/index.htm`;
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
 
-    const page = await browser.newPage();
+    const page = ctx.page;
 
     await page.goto(URL, {
       networkIdleTimeout: 5000,
@@ -43,10 +40,6 @@ class AliPayProvider extends Provider {
     await page.type('123456', { delay: 100 });
 
     await $submit.click();
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

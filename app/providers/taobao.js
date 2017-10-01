@@ -9,14 +9,10 @@ class TaobaoProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `https://reg.taobao.com/member/reg/fill_mobile.htm`;
 
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
-
-    const page = await browser.newPage();
+    const page = ctx.page;
 
     await page.goto(URL, {
       networkIdleTimeout: 5000,
@@ -56,10 +52,6 @@ class TaobaoProvider extends Provider {
     await utils.sleep(1000);
 
     await page.mouse.click(500, 380);
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

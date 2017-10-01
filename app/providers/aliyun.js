@@ -9,13 +9,10 @@ class AliYunProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `https://passport.alibaba.com/member/reg/fast/fast_reg.htm?_regfrom=ALIYUN`;
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
 
-    const page = await browser.newPage();
+    const page = ctx.page;
 
     await page.goto(URL, {
       networkIdleTimeout: 5000,
@@ -52,7 +49,7 @@ class AliYunProvider extends Provider {
       button: 'left'
     });
 
-    await page.mouse.move(670, 380, { steps: 10 });
+    await page.mouse.move(670, 380, { steps: 5 });
 
     await page.mouse.up({ button: 'left' });
     // 松开鼠标
@@ -60,10 +57,6 @@ class AliYunProvider extends Provider {
     await utils.sleep(1000);
 
     await page.mouse.click(438, 433);
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

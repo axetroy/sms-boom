@@ -8,13 +8,11 @@ class QQProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `https://ssl.zc.qq.com/v3/index-chs.html`;
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
 
-    const page = await browser.newPage();
+    const page = ctx.page;
+
     await page.goto(URL, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
@@ -39,10 +37,6 @@ class QQProvider extends Provider {
     await $phone.click({ button: 'left' });
     await page.type(phone + '', { delay: 100 });
     await $send.click({ button: 'left' });
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

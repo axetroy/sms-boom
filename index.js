@@ -15,4 +15,4 @@ new App(13377175342)
   .provider(XiangRiKuiProvider)
   .provider(YoukuProvider)
   .provider(AliPayProvider)
-  .bootstrap();
+  .bootstrap({ autoClose: false });

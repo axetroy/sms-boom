@@ -8,13 +8,11 @@ class QQProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `http://www.youku.com/`;
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
 
-    const page = await browser.newPage();
+    const page = ctx.page;
+
     await page.goto(URL, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
@@ -52,10 +50,6 @@ class QQProvider extends Provider {
     await page.type(`abc123abc123`, { delay: 100 });
 
     await $send.click({ button: 'left' });
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

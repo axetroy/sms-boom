@@ -9,14 +9,10 @@ class XiangRiKuiProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `http://z.xiangrikui.com/zn/phone/submit?rand_key=224594`;
 
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
-
-    const page = await browser.newPage();
+    const page = ctx.page;
 
     await page.goto(URL, {
       networkIdleTimeout: 5000,
@@ -39,10 +35,6 @@ class XiangRiKuiProvider extends Provider {
     await page.type(phone + '', { delay: 100 });
 
     await $submit.click({ button: 'left' });
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 

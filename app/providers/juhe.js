@@ -9,14 +9,10 @@ class JuheProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(phone) {
+  async resolve(ctx, phone) {
     const URL = `https://www.juhe.cn/register`;
 
-    const browser = await puppeteer.launch({
-      headless: config.isProduction
-    });
-
-    const page = await browser.newPage();
+    const page = ctx.page;
 
     await page.goto(URL, {
       networkIdleTimeout: 5000,
@@ -43,10 +39,6 @@ class JuheProvider extends Provider {
     await page.type(phone + '', { delay: 100 });
 
     await $sendBtn.click({ button: 'left' });
-
-    await utils.sleep(2000);
-
-    await browser.close();
   }
 }
 
