@@ -1,8 +1,4 @@
-const puppeteer = require('puppeteer');
 const Provider = require('../provider');
-
-const config = require('../config');
-
 const utils = require('../utils');
 
 class AliYunProvider extends Provider {

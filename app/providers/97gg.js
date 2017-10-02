@@ -1,7 +1,4 @@
 const Provider = require('../provider');
-
-const config = require('../config');
-
 const utils = require('../utils');
 
 class JiuQiGeGeProvider extends Provider {
