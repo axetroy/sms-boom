@@ -8,6 +8,7 @@ const XiangRiKuiProvider = require('./app/providers/xiangrikui');
 const YoukuProvider = require('./app/providers/youku');
 const IQiYiProvider = require('./app/providers/iqiyi');
 const XiaoMiProvider = require('./app/providers/xiaomi');
+const SixYueGameProvider = require('./app/providers/6yuecom');
 
 new App({
   username: 'abc1333llgo',
@@ -25,4 +26,5 @@ new App({
   .provider(AliPayProvider)
   .provider(IQiYiProvider)
   .provider(XiaoMiProvider)
+  .provider(SixYueGameProvider)
   .bootstrap({ autoClose: false });
