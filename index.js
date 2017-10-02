@@ -11,6 +11,7 @@ const XiaoMiProvider = require('./app/providers/xiaomi');
 const SixYueGameProvider = require('./app/providers/6yuecom');
 const GaoDeProvider = require('./app/providers/gaode');
 const JiuQiGeGeProvider = require('./app/providers/97gg');
+const XinNetProvider = require('./app/providers/xinnet');
 
 new App({
   username: 'abc1333llgo',
@@ -31,4 +32,5 @@ new App({
   .provider(SixYueGameProvider)
   .provider(GaoDeProvider)
   .provider(JiuQiGeGeProvider)
+  .provider(XinNetProvider)
   .bootstrap({ autoClose: false });

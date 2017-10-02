@@ -33,8 +33,6 @@ class App {
         await util.sleep(2000);
       }
     }
-
-    await util.sleep(1000 * 5);
   }
   async bootstrap(options = {}) {
     const browser = (this.browser = await puppeteer.launch({
@@ -55,6 +53,7 @@ class App {
     } else {
       while (true) {
         await this.run();
+        await util.sleep(1000 * 60);
       }
     }
 
