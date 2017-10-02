@@ -7,12 +7,14 @@ const JuheProvider = require('./app/providers/juhe');
 const XiangRiKuiProvider = require('./app/providers/xiangrikui');
 const YoukuProvider = require('./app/providers/youku');
 const IQiYiProvider = require('./app/providers/iqiyi');
+const XiaoMiProvider = require('./app/providers/xiaomi');
 
 new App({
   username: 'abc1333llgo',
   name: '张大爷',
   password: 'abc123abc123',
-  phone: '13377175342'
+  phone: '13377175342',
+  once: true
 })
   .provider(QQProvider)
   .provider(AliyunProvider)
@@ -22,4 +24,5 @@ new App({
   .provider(YoukuProvider)
   .provider(AliPayProvider)
   .provider(IQiYiProvider)
+  .provider(XiaoMiProvider)
   .bootstrap({ autoClose: false });
