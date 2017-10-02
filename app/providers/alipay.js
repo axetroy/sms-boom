@@ -9,8 +9,10 @@ class AliPayProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(ctx, phone) {
+  async resolve(ctx) {
     const URL = `https://memberprod.alipay.com/account/reg/index.htm`;
+
+    const options = ctx.options;
 
     const page = ctx.page;
 
@@ -33,7 +35,7 @@ class AliPayProvider extends Provider {
     await utils.sleep(2000);
 
     await $mobile.click();
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     await $codeInput.click();
 

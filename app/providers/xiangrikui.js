@@ -8,13 +8,13 @@ const utils = require('../utils');
 class XiangRiKuiProvider extends Provider {
   constructor() {
     super();
+    this.url = `http://z.xiangrikui.com/zn/phone/submit?rand_key=224594`;
   }
-  async resolve(ctx, phone) {
-    const URL = `http://z.xiangrikui.com/zn/phone/submit?rand_key=224594`;
-
+  async resolve(ctx) {
+    const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(URL, {
+    await page.goto(this.url, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
       timeout: 3000000
@@ -29,10 +29,10 @@ class XiangRiKuiProvider extends Provider {
     ]);
 
     await $name.click({ button: 'left' });
-    await page.type('门卫张大爷', { delay: 100 });
+    await page.type(options.name, { delay: 100 });
 
     await $mobile.click();
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     await $submit.click({ button: 'left' });
   }

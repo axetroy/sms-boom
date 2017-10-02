@@ -8,7 +8,12 @@ const XiangRiKuiProvider = require('./app/providers/xiangrikui');
 const YoukuProvider = require('./app/providers/youku');
 const IQiYiProvider = require('./app/providers/iqiyi');
 
-new App(13377175342)
+new App({
+  username: 'abc1333llgo',
+  name: '张大爷',
+  password: 'abc123abc123',
+  phone: '13377175342'
+})
   .provider(QQProvider)
   .provider(AliyunProvider)
   .provider(TaobaoProvider)

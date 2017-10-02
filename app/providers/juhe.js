@@ -8,13 +8,13 @@ const utils = require('../utils');
 class JuheProvider extends Provider {
   constructor() {
     super();
+    this.url = `https://www.juhe.cn/register`;
   }
-  async resolve(ctx, phone) {
-    const URL = `https://www.juhe.cn/register`;
-
+  async resolve(ctx) {
+    const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(URL, {
+    await page.goto(this.url, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
       timeout: 3000000
@@ -30,13 +30,13 @@ class JuheProvider extends Provider {
     ]);
 
     await $username.click();
-    await page.type('smsboom2017', { delay: 100 });
+    await page.type(options.username, { delay: 100 });
 
     await $password.click();
-    await page.type('123123abcabc', { delay: 100 });
+    await page.type(options.password, { delay: 100 });
 
     await $mobile.click();
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     await $sendBtn.click({ button: 'left' });
   }

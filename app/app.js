@@ -3,8 +3,8 @@ const config = require('./config');
 const util = require('./utils');
 
 class App {
-  constructor(phone) {
-    this.phone = phone;
+  constructor(options = {}) {
+    this.options = options;
     this.providers = [];
   }
   provider(provider) {
@@ -12,23 +12,37 @@ class App {
     return this;
   }
   async bootstrap(options = {}) {
-    const browser = await puppeteer.launch({
+    const browser = (this.browser = await puppeteer.launch({
       headless: config.isProduction
-    });
+    }));
     const page = (this.page = await browser.newPage());
     const providers = this.providers;
+
+    const entities = [];
+
     while (providers.length) {
       const Provider = providers.shift();
-      const p = new Provider();
-      try {
-        await p.resolve(this, this.phone);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        await util.sleep(2000);
-      }
+      entities.push(new Provider());
     }
+
     console.info(`Bootstrap done!`);
+
+    while (true) {
+      for (let i = 0; i < entities.length; i++) {
+        const entity = entities[i];
+
+        try {
+          await entity.resolve(this);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          await util.sleep(2000);
+        }
+      }
+
+      await util.sleep(1000 * 5);
+    }
+
     if (options.autoClose === true) {
       await page.close();
       await browser.close();

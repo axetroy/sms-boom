@@ -10,7 +10,8 @@ class IQiYiProvider extends Provider {
     super();
     this.url = 'http://www.iqiyi.com/iframe/loginreg?is_reg=1&';
   }
-  async resolve(ctx, phone) {
+  async resolve(ctx) {
+    const options = ctx.options;
     const page = ctx.page;
 
     await page.goto(this.url, {
@@ -25,12 +26,12 @@ class IQiYiProvider extends Provider {
 
     if ($mobile) {
       await $mobile.click();
-      await page.type(phone + '', { delay: 100 });
+      await page.type(options.phone, { delay: 100 });
     }
 
-    const $submit = await page.$('a[rseat="prgvpd_regbtn"]');
+    await utils.sleep(2000);
 
-    await $submit.click();
+    await page.click('[rseat="prgd_smsbtn"]', { button: 'left' });
   }
 }
 

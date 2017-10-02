@@ -9,9 +9,9 @@ class AliYunProvider extends Provider {
   constructor() {
     super();
   }
-  async resolve(ctx, phone) {
+  async resolve(ctx) {
     const URL = `https://passport.alibaba.com/member/reg/fast/fast_reg.htm?_regfrom=ALIYUN`;
-
+    const options = ctx.options;
     const page = ctx.page;
 
     await page.goto(URL, {
@@ -30,17 +30,16 @@ class AliYunProvider extends Provider {
     ]);
 
     await $nick.click();
-    await page.type(`张三abc1154`, { delay: 100 });
+    await page.type(options.username, { delay: 100 });
 
-    let psw = Math.random() + '';
     await $password.click();
-    await page.type(psw, { delay: 100 });
+    await page.type(options.password, { delay: 100 });
 
     await $rePassword.click();
-    await page.type(psw, { delay: 100 });
+    await page.type(options.password, { delay: 100 });
 
     await $mobile.click();
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     // 按下鼠标，拖动滚动条
     await page.mouse.move(365, 380);

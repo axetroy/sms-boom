@@ -7,13 +7,13 @@ const utils = require('../utils');
 class QQProvider extends Provider {
   constructor() {
     super();
+    this.url = `http://www.youku.com/`;
   }
-  async resolve(ctx, phone) {
-    const URL = `http://www.youku.com/`;
-
+  async resolve(ctx) {
+    const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(URL, {
+    await page.goto(this.url, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
       timeout: 3000000
@@ -41,13 +41,13 @@ class QQProvider extends Provider {
     ]);
 
     await $phone.click({ button: 'left' });
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     await $password.click({ button: 'left' });
-    await page.type(`abc123abc123`, { delay: 100 });
+    await page.type(options.password, { delay: 100 });
 
     await $repassword.click({ button: 'left' });
-    await page.type(`abc123abc123`, { delay: 100 });
+    await page.type(options.password, { delay: 100 });
 
     await $send.click({ button: 'left' });
   }

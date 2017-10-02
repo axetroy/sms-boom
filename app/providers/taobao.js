@@ -8,13 +8,13 @@ const utils = require('../utils');
 class TaobaoProvider extends Provider {
   constructor() {
     super();
+    this.url = `https://reg.taobao.com/member/reg/fill_mobile.htm`;
   }
-  async resolve(ctx, phone) {
-    const URL = `https://reg.taobao.com/member/reg/fill_mobile.htm`;
-
+  async resolve(ctx) {
+    const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(URL, {
+    await page.goto(this.url, {
       networkIdleTimeout: 5000,
       waitUntil: 'networkidle',
       timeout: 3000000
@@ -31,7 +31,7 @@ class TaobaoProvider extends Provider {
     await $btn.click();
 
     await $mobile.click();
-    await page.type(phone + '', { delay: 100 });
+    await page.type(options.phone, { delay: 100 });
 
     // 按下鼠标，拖动滚动条
     await page.mouse.move(415, 325, { step: 10 });
