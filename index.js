@@ -9,6 +9,7 @@ const YoukuProvider = require('./app/providers/youku');
 const IQiYiProvider = require('./app/providers/iqiyi');
 const XiaoMiProvider = require('./app/providers/xiaomi');
 const SixYueGameProvider = require('./app/providers/6yuecom');
+const GaoDeProvider = require('./app/providers/gaode');
 
 new App({
   username: 'abc1333llgo',
@@ -27,4 +28,5 @@ new App({
   .provider(IQiYiProvider)
   .provider(XiaoMiProvider)
   .provider(SixYueGameProvider)
+  .provider(GaoDeProvider)
   .bootstrap({ autoClose: false });
