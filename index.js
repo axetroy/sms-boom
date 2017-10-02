@@ -10,6 +10,7 @@ const IQiYiProvider = require('./app/providers/iqiyi');
 const XiaoMiProvider = require('./app/providers/xiaomi');
 const SixYueGameProvider = require('./app/providers/6yuecom');
 const GaoDeProvider = require('./app/providers/gaode');
+const JiuQiGeGeProvider = require('./app/providers/97gg');
 
 new App({
   username: 'abc1333llgo',
@@ -18,15 +19,16 @@ new App({
   phone: '13377175342',
   once: true
 })
-  .provider(QQProvider)
-  .provider(AliyunProvider)
-  .provider(TaobaoProvider)
-  .provider(JuheProvider)
-  .provider(XiangRiKuiProvider)
-  .provider(YoukuProvider)
-  .provider(AliPayProvider)
-  .provider(IQiYiProvider)
-  .provider(XiaoMiProvider)
-  .provider(SixYueGameProvider)
-  .provider(GaoDeProvider)
+  // .provider(QQProvider)
+  // .provider(AliyunProvider)
+  // .provider(TaobaoProvider)
+  // .provider(JuheProvider)
+  // .provider(XiangRiKuiProvider)
+  // .provider(YoukuProvider)
+  // .provider(AliPayProvider)
+  // .provider(IQiYiProvider)
+  // .provider(XiaoMiProvider)
+  // .provider(SixYueGameProvider)
+  // .provider(GaoDeProvider)
+  .provider(JiuQiGeGeProvider)
   .bootstrap({ autoClose: false });
