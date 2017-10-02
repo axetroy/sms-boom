@@ -14,14 +14,6 @@ class IQiYiProvider extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(this.url, {
-      networkIdleTimeout: 5000,
-      waitUntil: 'networkidle',
-      timeout: 3000000
-    });
-
-    await page.deleteCookie();
-
     const $mobile = await page.$('input[data-regbox="name"]');
 
     if ($mobile) {

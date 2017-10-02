@@ -8,23 +8,12 @@ const utils = require('../utils');
 class AliPayProvider extends Provider {
   constructor() {
     super();
+    this.url = `https://memberprod.alipay.com/account/reg/index.htm`;
   }
   async resolve(ctx) {
-    const URL = `https://memberprod.alipay.com/account/reg/index.htm`;
-
     const options = ctx.options;
 
     const page = ctx.page;
-
-    await page.goto(URL, {
-      networkIdleTimeout: 5000,
-      waitUntil: 'networkidle',
-      timeout: 3000000
-    });
-
-    await page.deleteCookie();
-
-    await utils.sleep(2000);
 
     const [$mobile, $codeInput, $submit] = await Promise.all([
       page.$('#J-accName'),

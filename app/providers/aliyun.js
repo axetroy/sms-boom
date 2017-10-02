@@ -8,19 +8,11 @@ const utils = require('../utils');
 class AliYunProvider extends Provider {
   constructor() {
     super();
+    this.url = `https://passport.alibaba.com/member/reg/fast/fast_reg.htm?_regfrom=ALIYUN`;
   }
   async resolve(ctx) {
-    const URL = `https://passport.alibaba.com/member/reg/fast/fast_reg.htm?_regfrom=ALIYUN`;
     const options = ctx.options;
     const page = ctx.page;
-
-    await page.goto(URL, {
-      networkIdleTimeout: 5000,
-      waitUntil: 'networkidle',
-      timeout: 3000000
-    });
-
-    await page.deleteCookie();
 
     const [$nick, $password, $rePassword, $mobile] = await Promise.all([
       page.$('#nick'),

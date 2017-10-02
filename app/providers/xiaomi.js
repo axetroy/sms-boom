@@ -15,14 +15,6 @@ class XiaoMiProvider extends Provider {
 
     const page = ctx.page;
 
-    await page.goto(this.url, {
-      networkIdleTimeout: 5000,
-      waitUntil: 'networkidle',
-      timeout: 3000000
-    });
-
-    await page.deleteCookie();
-
     await page.mouse.move(670, 370, { step: 10 });
 
     await page.click('.result-select-regions');

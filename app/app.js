@@ -18,6 +18,14 @@ class App {
       const entity = entities[i];
 
       try {
+        await this.page.goto(entity.url, {
+          networkIdleTimeout: 5000,
+          waitUntil: 'networkidle',
+          timeout: 3000000
+        });
+
+        await this.page.deleteCookie();
+
         await entity.resolve(this);
       } catch (err) {
         console.error(err);

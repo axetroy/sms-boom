@@ -14,14 +14,6 @@ class TaobaoProvider extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    await page.goto(this.url, {
-      networkIdleTimeout: 5000,
-      waitUntil: 'networkidle',
-      timeout: 3000000
-    });
-
-    await page.deleteCookie();
-
     const [$btn, $mobile, $slide] = await Promise.all([
       page.$('#J_AgreementBtn'),
       page.$('#J_Mobile'),
