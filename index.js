@@ -13,6 +13,7 @@ const GaoDeProvider = require('./app/providers/gaode');
 const JiuQiGeGeProvider = require('./app/providers/97gg');
 const XinNetProvider = require('./app/providers/xinnet');
 const CnmoProvider = require('./app/providers/cnmo');
+const SuRong360Provider = require('./app/providers/surong');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -37,4 +38,5 @@ new App({
   .provider(JiuQiGeGeProvider)
   .provider(XinNetProvider)
   .provider(CnmoProvider)
+  .provider(SuRong360Provider)
   .bootstrap({ autoClose: false });
