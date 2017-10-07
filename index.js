@@ -15,6 +15,7 @@ const XinNetProvider = require('./app/providers/xinnet');
 const CnmoProvider = require('./app/providers/cnmo');
 const SuRong360Provider = require('./app/providers/surong');
 const HaiChuFangProvider = require('./app/providers/haichufang');
+const LingYuQiPaiProvider = require('./app/providers/lingyuqipai');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -41,4 +42,5 @@ new App({
   .provider(CnmoProvider)
   .provider(SuRong360Provider)
   .provider(HaiChuFangProvider)
+  .provider(LingYuQiPaiProvider)
   .bootstrap({ autoClose: false });
