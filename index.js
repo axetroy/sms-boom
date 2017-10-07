@@ -12,13 +12,16 @@ const SixYueGameProvider = require('./app/providers/6yuecom');
 const GaoDeProvider = require('./app/providers/gaode');
 const JiuQiGeGeProvider = require('./app/providers/97gg');
 const XinNetProvider = require('./app/providers/xinnet');
+const CnmoProvider = require('./app/providers/cnmo');
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 new App({
-  username: 'abc1333llgo',
+  username: 'abc123mmp',
   name: '张大爷',
-  password: 'abc123abc123',
+  password: 'abc123*abc123',
   phone: '13377175342',
-  once: true
+  once: isProduction === false
 })
   .provider(QQProvider)
   .provider(AliyunProvider)
@@ -33,4 +36,5 @@ new App({
   .provider(GaoDeProvider)
   .provider(JiuQiGeGeProvider)
   .provider(XinNetProvider)
+  .provider(CnmoProvider)
   .bootstrap({ autoClose: false });

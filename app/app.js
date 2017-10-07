@@ -24,6 +24,15 @@ class App {
           timeout: 3000000
         });
 
+        this.page.evaluate(() => {
+          const title = document.title;
+          window.addEventListener('mousemove', e => {
+            const x = e.x;
+            const y = e.y;
+            document.title = `(${x},${y})${title}`;
+          });
+        });
+
         await this.page.deleteCookie();
 
         await entity.resolve(this);
@@ -53,7 +62,7 @@ class App {
     } else {
       while (true) {
         await this.run();
-        await util.sleep(1000 * 60);
+        await util.sleep(1000 * 30);
       }
     }
 
