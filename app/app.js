@@ -62,7 +62,7 @@ class App {
     } else {
       while (true) {
         await this.run();
-        await util.sleep(1000 * 30);
+        await util.sleep(1000 * 10);
       }
     }
 

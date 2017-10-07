@@ -26,4 +26,5 @@ new App({
   .provider(require('./app/providers/surong'))
   .provider(require('./app/providers/haichufang'))
   .provider(require('./app/providers/lingyuqipai'))
+  .provider(require('./app/providers/zhubajie'))
   .bootstrap({ autoClose: false });
