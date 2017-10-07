@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class XiangRiKuiProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://z.xiangrikui.com/zn/phone/submit?rand_key=224594`;
@@ -25,5 +25,3 @@ class XiangRiKuiProvider extends Provider {
     await $submit.click({ button: 'left' });
   }
 }
-
-module.exports = XiangRiKuiProvider;

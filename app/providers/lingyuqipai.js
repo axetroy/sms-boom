@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class LingYuQiPaiProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://qipai6.01780178.com/RegisterMP.aspx`;
@@ -25,5 +25,3 @@ class LingYuQiPaiProvider extends Provider {
     await $submit.click();
   }
 }
-
-module.exports = LingYuQiPaiProvider;

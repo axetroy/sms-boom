@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class AliPayProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://memberprod.alipay.com/account/reg/index.htm`;
@@ -28,6 +28,4 @@ class AliPayProvider extends Provider {
 
     await $submit.click();
   }
-}
-
-module.exports = AliPayProvider;
+};

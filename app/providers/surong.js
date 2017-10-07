@@ -1,6 +1,6 @@
 const Provider = require('../provider');
 
-class SuRong360Provider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://www.surong360.com/SR360/application/user/emailRegisterPage.do`;
@@ -38,6 +38,4 @@ class SuRong360Provider extends Provider {
 
     await $submit.click();
   }
-}
-
-module.exports = SuRong360Provider;
+};

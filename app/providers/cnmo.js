@@ -1,6 +1,6 @@
 const Provider = require('../provider');
 
-class CnmoProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://passport.cnmo.com/register/`;
@@ -38,6 +38,4 @@ class CnmoProvider extends Provider {
 
     await $submit.click();
   }
-}
-
-module.exports = CnmoProvider;
+};

@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class AliYunProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://passport.alibaba.com/member/reg/fast/fast_reg.htm?_regfrom=ALIYUN`;
@@ -45,6 +45,4 @@ class AliYunProvider extends Provider {
 
     await page.mouse.click(438, 433);
   }
-}
-
-module.exports = AliYunProvider;
+};

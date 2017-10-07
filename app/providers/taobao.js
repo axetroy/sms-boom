@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class TaobaoProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://reg.taobao.com/member/reg/fill_mobile.htm`;
@@ -41,6 +41,4 @@ class TaobaoProvider extends Provider {
 
     await page.mouse.click(500, 380);
   }
-}
-
-module.exports = TaobaoProvider;
+};

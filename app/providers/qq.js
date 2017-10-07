@@ -1,7 +1,6 @@
 const Provider = require('../provider');
-const utils = require('../utils');
 
-class QQProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://ssl.zc.qq.com/v3/index-chs.html`;
@@ -27,6 +26,4 @@ class QQProvider extends Provider {
     await page.type(options.phone, { delay: 100 });
     await $send.click({ button: 'left' });
   }
-}
-
-module.exports = QQProvider;
+};

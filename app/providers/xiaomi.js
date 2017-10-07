@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class XiaoMiProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = 'https://account.xiaomi.com/pass/register?_locale=zh_CN';
@@ -36,5 +36,3 @@ class XiaoMiProvider extends Provider {
     await page.click('input[type="submit"]');
   }
 }
-
-module.exports = XiaoMiProvider;

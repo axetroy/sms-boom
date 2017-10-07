@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class GaoDeProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://id.amap.com/register/index`;
@@ -31,6 +31,4 @@ class GaoDeProvider extends Provider {
 
     await page.click('#send_msg');
   }
-}
-
-module.exports = GaoDeProvider;
+};

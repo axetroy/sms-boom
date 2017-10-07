@@ -1,6 +1,6 @@
 const Provider = require('../provider');
 
-class SixYueGameProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://www.6ycom.com/register`;
@@ -20,6 +20,4 @@ class SixYueGameProvider extends Provider {
 
     await $submit.click();
   }
-}
-
-module.exports = SixYueGameProvider;
+};

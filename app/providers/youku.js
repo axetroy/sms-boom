@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class QQProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://account.youku.com/register.htm`;
@@ -29,5 +29,3 @@ class QQProvider extends Provider {
     await $submit.click();
   }
 }
-
-module.exports = QQProvider;

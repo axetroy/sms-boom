@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class JiuQiGeGeProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://97gg.net/Account/Register`;
@@ -35,6 +35,4 @@ class JiuQiGeGeProvider extends Provider {
 
     await $submit.click();
   }
-}
-
-module.exports = JiuQiGeGeProvider;
+};

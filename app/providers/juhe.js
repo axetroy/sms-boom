@@ -1,6 +1,6 @@
 const Provider = require('../provider');
 
-class JuheProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://www.juhe.cn/register`;
@@ -28,5 +28,3 @@ class JuheProvider extends Provider {
     await $sendBtn.click({ button: 'left' });
   }
 }
-
-module.exports = JuheProvider;

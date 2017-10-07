@@ -1,7 +1,7 @@
 const Provider = require('../provider');
 const utils = require('../utils');
 
-class IQiYiProvider extends Provider {
+module.exports = class extends Provider {
   constructor() {
     super();
     this.url = 'http://www.iqiyi.com/iframe/loginreg?is_reg=1&';
@@ -21,6 +21,4 @@ class IQiYiProvider extends Provider {
 
     await page.click('[rseat="prgd_smsbtn"]', { button: 'left' });
   }
-}
-
-module.exports = IQiYiProvider;
+};
