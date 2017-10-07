@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env node index.js"
+    "start": "cross-env NODE_ENV=production node index.js"
   },
   "repository": {
     "type": "git",
