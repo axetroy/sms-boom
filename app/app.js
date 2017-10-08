@@ -35,7 +35,32 @@ class App {
 
         await this.page.deleteCookie();
 
-        await entity.resolve(this);
+        // 如果resolve超过xxx秒，则认为是超时，不会无限等待
+        await new Promise(async (resolve, reject) => {
+          let haveResponse = false;
+          entity
+            .resolve(this)
+            .then(() => {
+              if (haveResponse === false) {
+                haveResponse = true;
+                this.__timer__ && clearTimeout(this.__timer__);
+                resolve();
+              }
+            })
+            .catch(err => {
+              if (haveResponse === false) {
+                haveResponse = true;
+                this.__timer__ && clearTimeout(this.__timer__);
+                reject(err);
+              }
+            });
+          this.__timer__ = setTimeout(() => {
+            if (haveResponse === false) {
+              reject(new Error(`Resolve time out...`));
+            }
+            this.__timer__ && clearTimeout(this.__timer__);
+          }, 1000 * 60);
+        });
       } catch (err) {
         console.error(err);
       } finally {
@@ -48,6 +73,10 @@ class App {
       headless: config.isProduction
     }));
     const page = (this.page = await browser.newPage());
+    await page.setViewport({
+      width: 1366,
+      height: 768
+    });
     const providers = this.providers;
 
     while (providers.length) {

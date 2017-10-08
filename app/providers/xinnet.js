@@ -20,20 +20,18 @@ module.exports = class extends Provider {
     await page.type(options.phone, { delay: 100 });
 
     // 按下鼠标，拖动滚动条
-    await page.mouse.move(460, 470);
+    await page.mouse.move(540, 470);
     await page.mouse.down({
       button: 'left'
     });
 
-    await page.mouse.move(750, 470, { steps: 10 });
-
-    await utils.sleep(1000);
+    await page.mouse.move(850, 470, { steps: 10 });
 
     await page.mouse.up({ button: 'left' });
     // 松开鼠标
 
-    await utils.sleep(1000);
+    await utils.sleep(500);
 
     await $submit.click();
   }
-}
+};

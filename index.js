@@ -27,4 +27,5 @@ new App({
   .provider(require('./app/providers/haichufang'))
   .provider(require('./app/providers/lingyuqipai'))
   .provider(require('./app/providers/zhubajie'))
+  .provider(require('./app/providers/huaban'))
   .bootstrap({ autoClose: false });

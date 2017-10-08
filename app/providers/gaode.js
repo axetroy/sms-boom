@@ -16,13 +16,13 @@ module.exports = class extends Provider {
     await page.type(options.phone, { delay: 100 });
 
     // 按下鼠标，拖动滚动条
-    await page.mouse.move(372, 325, { steps: 10 });
-    await page.mouse.click(372, 325);
+    await page.mouse.move(560, 325, { steps: 10 });
+    await page.mouse.click(560, 325);
     await page.mouse.down({
       button: 'left'
     });
 
-    await page.mouse.move(650, 325, { steps: 10 });
+    await page.mouse.move(840, 325, { steps: 10 });
 
     await page.mouse.up({ button: 'left' });
     // 松开鼠标

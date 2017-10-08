@@ -10,11 +10,18 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$nick, $password, $rePassword, $mobile] = await Promise.all([
+    const [
+      $nick,
+      $password,
+      $rePassword,
+      $mobile,
+      $submit
+    ] = await Promise.all([
       page.$('#nick'),
       page.$('#password'),
       page.$('#rePassword'),
-      page.$('#mobile')
+      page.$('#mobile'),
+      page.$('button.next-btn')
     ]);
 
     await $nick.click();
@@ -30,19 +37,19 @@ module.exports = class extends Provider {
     await page.type(options.phone, { delay: 100 });
 
     // 按下鼠标，拖动滚动条
-    await page.mouse.move(365, 380);
-    await page.mouse.click(365, 380);
+    await page.mouse.move(550, 380);
+    await page.mouse.click(550, 380);
     await page.mouse.down({
       button: 'left'
     });
 
-    await page.mouse.move(670, 380, { steps: 5 });
+    await page.mouse.move(850, 380, { steps: 5 });
 
     await page.mouse.up({ button: 'left' });
     // 松开鼠标
 
     await utils.sleep(1000);
 
-    await page.mouse.click(438, 433);
+    await $submit.click();
   }
 };
