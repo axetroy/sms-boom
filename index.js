@@ -31,4 +31,5 @@ new App({
   .provider(require('./app/providers/guomei'))
   .provider(require('./app/providers/ruanmei'))
   .provider(require('./app/providers/baixing'))
+  .provider(require('./app/providers/liepin'))
   .bootstrap({ autoClose: false });
