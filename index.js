@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 new App({
   username: 'abc123mmp',
   name: '张大爷',
-  password: 'abc123*abc123',
+  password: 'abc123abc123',
   phone: '13377175342',
   once: isProduction === false
 })
@@ -32,4 +32,5 @@ new App({
   .provider(require('./app/providers/ruanmei'))
   .provider(require('./app/providers/baixing'))
   .provider(require('./app/providers/liepin'))
+  .provider(require('./app/providers/fangtianxia'))
   .bootstrap({ autoClose: false });
