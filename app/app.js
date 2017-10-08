@@ -24,7 +24,7 @@ class App {
           timeout: 3000000
         });
 
-        this.page.evaluate(() => {
+        await this.page.evaluate(() => {
           const title = document.title;
           window.addEventListener('mousemove', e => {
             const x = e.x;

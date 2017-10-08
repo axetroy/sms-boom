@@ -28,4 +28,7 @@ new App({
   .provider(require('./app/providers/lingyuqipai'))
   .provider(require('./app/providers/zhubajie'))
   .provider(require('./app/providers/huaban'))
+  .provider(require('./app/providers/guomei'))
+  .provider(require('./app/providers/ruanmei'))
+  .provider(require('./app/providers/baixing'))
   .bootstrap({ autoClose: false });
