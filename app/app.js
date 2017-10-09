@@ -77,6 +77,10 @@ class App {
       width: 1366,
       height: 768
     });
+    page.on('dialog', async dialog => {
+      console.log(dialog.message());
+      await dialog.dismiss();
+    });
     const providers = this.providers;
 
     while (providers.length) {
