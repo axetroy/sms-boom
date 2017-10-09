@@ -26,6 +26,26 @@ class App {
     return this;
   }
   async run() {
+    // open the browser
+    this.browser = await puppeteer.launch({
+      headless: config.isProduction
+    });
+
+    // create a new tab
+    this.page = await this.browser.newPage();
+
+    // set the browser's viewport
+    await this.page.setViewport({
+      width: 1366,
+      height: 768
+    });
+
+    // listen on tab dialog, like alert, confirm
+    this.page.on('dialog', async dialog => {
+      console.log(dialog.message());
+      await dialog.dismiss();
+    });
+
     const entities = this.entities;
     for (let i = 0; i < entities.length; i++) {
       const entity = entities[i];
@@ -80,20 +100,12 @@ class App {
         await util.sleep(2000);
       }
     }
+
+    // close the browser
+    await page.close();
+    await browser.close();
   }
-  async bootstrap(options = {}) {
-    const browser = (this.browser = await puppeteer.launch({
-      headless: config.isProduction
-    }));
-    const page = (this.page = await browser.newPage());
-    await page.setViewport({
-      width: 1366,
-      height: 768
-    });
-    page.on('dialog', async dialog => {
-      console.log(dialog.message());
-      await dialog.dismiss();
-    });
+  async bootstrap() {
     const entities = this.providers
       .map(Provider => new Provider())
       .filter(entity => entity.active === true);
@@ -113,11 +125,6 @@ class App {
         await this.run();
         await util.sleep(1000 * 10);
       }
-    }
-
-    if (options.autoClose === true) {
-      await page.close();
-      await browser.close();
     }
   }
 }

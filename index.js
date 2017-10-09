@@ -11,4 +11,4 @@ new App({
   once: isProduction === false
 })
   .resolveProviders('./app/providers/')
-  .bootstrap({ autoClose: false });
+  .bootstrap();
