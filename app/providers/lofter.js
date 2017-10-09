@@ -17,7 +17,9 @@ module.exports = class extends Provider {
     ]);
 
     await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.type(options.phone, { delay: 300 });
+
+    await utils.sleep(1000);
 
     await $code.click();
     await page.type(options.phone, { delay: 100 });

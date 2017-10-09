@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const puppeteer = require('puppeteer');
 const config = require('./config');
 const util = require('./utils');
@@ -10,6 +12,17 @@ class App {
   }
   provider(provider) {
     this.providers.push(provider);
+    return this;
+  }
+  resolveProviders(dir) {
+    dir = path.join(process.cwd(), dir);
+    const files = fs.readdirSync(dir) || [];
+
+    while (files.length) {
+      const file = files.shift();
+      this.provider(require(path.join(dir, file)));
+    }
+
     return this;
   }
   async run() {
