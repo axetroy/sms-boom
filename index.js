@@ -34,4 +34,5 @@ new App({
   .provider(require('./app/providers/猎聘'))
   .provider(require('./app/providers/房天下'))
   .provider(require('./app/providers/网易云课堂'))
+  .provider(require('./app/providers/segmentfault'))
   .bootstrap({ autoClose: false });
