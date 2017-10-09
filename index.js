@@ -35,4 +35,5 @@ new App({
   .provider(require('./app/providers/房天下'))
   .provider(require('./app/providers/网易云课堂'))
   .provider(require('./app/providers/segmentfault'))
+  .provider(require('./app/providers/lofter'))
   .bootstrap({ autoClose: false });
