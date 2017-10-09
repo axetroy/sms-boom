@@ -94,14 +94,17 @@ class App {
       console.log(dialog.message());
       await dialog.dismiss();
     });
-    const providers = this.providers;
+    const entities = this.providers
+      .map(Provider => new Provider())
+      .filter(entity => entity.active === true);
 
-    while (providers.length) {
-      const Provider = providers.shift();
-      this.entities.push(new Provider());
+    const aloneEntity = entities.find(entity => entity.alone);
+
+    if (aloneEntity && !this.options.isProduction) {
+      this.entities = [aloneEntity];
+    } else {
+      this.entities = entities;
     }
-
-    console.info(`Bootstrap done!`);
 
     if (this.options.once === true) {
       await this.run();
