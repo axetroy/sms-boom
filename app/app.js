@@ -60,9 +60,7 @@ class App {
         await this.page.evaluate(() => {
           const title = document.title;
           window.addEventListener('mousemove', e => {
-            const x = e.x;
-            const y = e.y;
-            document.title = `(${x},${y})${title}`;
+            document.title = `(${e.x},${e.y})${title}`;
           });
         });
 
