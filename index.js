@@ -36,4 +36,5 @@ new App({
   .provider(require('./app/providers/网易云课堂'))
   .provider(require('./app/providers/segmentfault'))
   .provider(require('./app/providers/lofter'))
+  .provider(require('./app/providers/优视'))
   .bootstrap({ autoClose: false });
