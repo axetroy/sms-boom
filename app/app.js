@@ -102,8 +102,8 @@ class App {
     }
 
     // close the browser
-    await page.close();
-    await browser.close();
+    await this.page.close();
+    await this.browser.close();
   }
   async bootstrap() {
     const entities = this.providers
