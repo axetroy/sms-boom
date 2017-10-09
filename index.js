@@ -38,4 +38,5 @@ new App({
   .provider(require('./app/providers/lofter'))
   .provider(require('./app/providers/优视'))
   .provider(require('./app/providers/日报网'))
+  .provider(require('./app/providers/大智慧'))
   .bootstrap({ autoClose: false });
