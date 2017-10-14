@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://authgtj.alipay.com/login/index.htm`;
-    this.alone = true;
     this.times = 0;
   }
   async resolve(ctx) {
