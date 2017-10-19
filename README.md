@@ -21,8 +21,20 @@
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
-export PHONE=your_phone_number
+```
+
+1. Run once
+
+```bash
+export PHONE=your_phone_number    ## set env.NUMBER
 node index.js
+````
+
+2. Run forever
+
+```bash
+vim pm2.json    ## change the env.NUMBER to phone number
+pm2 start pm2.json
 ````
 
 ## Contributing
