@@ -9,9 +9,9 @@
 <!-- [![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom) -->
 
 <figure>
-    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg" width="360" height="640">
-    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg" width="360" height="640">
-    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg" width="360" height="640">
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg" width="240" height="427">
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg" width="240" height="427">
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg" width="240" height="427">
 </figure>
 
 ## How it work...
