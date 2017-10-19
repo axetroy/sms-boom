@@ -8,7 +8,9 @@
 ![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
 [![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom)
 
-![sceenshot](https://github.com/axetroy/sms-boom/raw/master/screenshot.jpg)
+![sceenshot1](https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg)
+![sceenshot2](https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg)
+![sceenshot3](https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg)
 
 ## How it work...
 
