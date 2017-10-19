@@ -47,4 +47,6 @@ You can flow [Contribute Guide](https://github.com/axetroy/sms-boom/blob/master/
 
 ## License
 
+**本项目仅用于技术研究，由于使用该项目产生的任何纠纷，由使用者承担**
+
 The [Apache License](https://github.com/axetroy/sms-boom/blob/master/LICENSE)
