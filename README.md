@@ -1,16 +1,18 @@
 ## Phone Message boomer
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/axetroy/sms-boom.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/axetroy/sms-boom.svg?branch=master)](https://travis-ci.org/axetroy/sms-boom)
+<!-- [![Build Status](https://travis-ci.org/axetroy/sms-boom.svg?branch=master)](https://travis-ci.org/axetroy/sms-boom) -->
 [![Dependency](https://david-dm.org/axetroy/sms-boom.svg)](https://david-dm.org/axetroy/sms-boom)
 ![License](https://img.shields.io/badge/license-Apache-green.svg)
 [![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-green.svg)](https://github.com/prettier/prettier)
 ![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
-[![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom)
+<!-- [![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom) -->
 
-![sceenshot1](https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg)
-![sceenshot2](https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg)
-![sceenshot3](https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg)
+<figure>
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg" width="360" height="640">
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg" width="360" height="640">
+    <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg" width="360" height="640">
+</figure>
 
 ## How it work...
 
