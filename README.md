@@ -8,7 +8,7 @@
 ![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
 <!-- [![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom) -->
 
-<figure>
+<figure class="third">
     <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg" width="240" height="427">
     <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot2.jpg" width="240" height="427">
     <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg" width="240" height="427">
@@ -27,17 +27,17 @@ git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
 ```
 
-1. Run once
+1. 单次配置运行(Run once)
 
 ```bash
-export PHONE=your_phone_number    ## set env.NUMBER
+export PHONE=phone_number  ## 设置env.NUMBER为目标手机号
 node index.js
 ````
 
-2. Run forever
+2. 持久配置运行(Run forever)
 
 ```bash
-vim pm2.json    ## change the env.NUMBER to phone number
+vim pm2.json  ## 修改env.NUMBER为目标手机号
 pm2 start pm2.json
 ````
 

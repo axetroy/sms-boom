@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "@types/puppeteer": "^0.12.0",
-    "cross-env": "^5.0.5"
+    "cross-env": "^5.1.0"
   }
 }
