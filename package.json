@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production node index.js"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "generate": "all-contributors generate"
   },
   "repository": {
     "type": "git",
@@ -18,13 +19,11 @@
   },
   "homepage": "https://github.com/axetroy/sms-boom#readme",
   "dependencies": {
-    "axios": "^0.16.2",
-    "baidu-ocr-api": "^2.0.5",
-    "puppeteer": "^0.12.0",
-    "tesseract.js": "^1.0.10"
+    "puppeteer": "^0.12.0"
   },
   "devDependencies": {
     "@types/puppeteer": "^0.12.0",
+    "all-contributors-cli": "^4.5.1",
     "cross-env": "^5.1.0"
   }
 }
