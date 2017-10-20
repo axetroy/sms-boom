@@ -1,12 +1,10 @@
 ## Phone Message boomer
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/axetroy/sms-boom.svg)](https://greenkeeper.io/)
-<!-- [![Build Status](https://travis-ci.org/axetroy/sms-boom.svg?branch=master)](https://travis-ci.org/axetroy/sms-boom) -->
 [![Dependency](https://david-dm.org/axetroy/sms-boom.svg)](https://david-dm.org/axetroy/sms-boom)
 ![License](https://img.shields.io/badge/license-Apache-green.svg)
 [![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-green.svg)](https://github.com/prettier/prettier)
 ![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
-<!-- [![npm version](https://badge.fury.io/js/sms-boom.svg)](https://badge.fury.io/js/sms-boom) -->
 
 <figure class="third">
     <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot1.jpg" width="240" height="427">
@@ -14,7 +12,7 @@
     <img src="https://github.com/axetroy/sms-boom/raw/master/screenshot3.jpg" width="240" height="427">
 </figure>
 
-## How it work...
+## How it works...
 
 开启chrome的headless模式，仿真模拟用户去注册...
 
@@ -30,14 +28,14 @@ cd ./sms-boom
 1. 单次配置运行(Run once)
 
 ```bash
-export PHONE=phone_number  ## 设置env.NUMBER为目标手机号
+export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
 node index.js
 ````
 
 2. 持久配置运行(Run forever)
 
 ```bash
-vim pm2.json  ## 修改env.NUMBER为目标手机号
+vim pm2.json  ## 修改process.env.PHONE为目标手机号
 pm2 start pm2.json
 ````
 
@@ -61,8 +59,10 @@ You can flow [Contribute Guide](https://github.com/axetroy/sms-boom/blob/master/
 | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## License
+## Disclaimer
 
 **本项目仅用于技术研究，由于使用该项目产生的任何纠纷，由使用者承担**
+
+## License
 
 The [Apache License](https://github.com/axetroy/sms-boom/blob/master/LICENSE)
