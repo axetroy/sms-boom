@@ -10,25 +10,20 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$mobile] = await Promise.all([page.$('#phone')]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.type('#phone', options.phone, { delay: 50 });
 
     // 按下鼠标，拖动滚动条
     await page.mouse.move(560, 325, { steps: 10 });
     await page.mouse.click(560, 325);
-    await page.mouse.down({
-      button: 'left'
-    });
-
+    await page.mouse.down();
     await page.mouse.move(840, 325, { steps: 10 });
-
-    await page.mouse.up({ button: 'left' });
+    await page.mouse.up();
     // 松开鼠标
 
     await utils.sleep(1000);
 
     await page.click('#send_msg');
+
+    await utils.sleep(1000 * 999999999);
   }
 };

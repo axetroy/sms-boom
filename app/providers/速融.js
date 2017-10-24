@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -7,35 +8,14 @@ module.exports = class extends Provider {
   }
   async resolve(ctx) {
     const options = ctx.options;
-
     const page = ctx.page;
 
-    const [
-      $mobile,
-      $password,
-      $repassword,
-      $username,
-      $submit
-    ] = await Promise.all([
-      page.$('#sms'),
-      page.$('#passWord'),
-      page.$('#passWordAgain'),
-      page.$('#userName'),
-      page.$('#verificationCodeSpanId')
-    ]);
+    await page.type('#sms', options.phone, { delay: 100 });
+    await page.type('#passWord', options.password, { delay: 100 });
+    await page.type('#passWordAgain', options.password, { delay: 100 });
+    await page.type('#userName', options.username, { delay: 100 });
+    await page.click('#verificationCodeSpanId');
 
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $repassword.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $username.click();
-    await page.type(options.username, { delay: 100 });
-
-    await $submit.click();
+    await utils.sleep(1000 * 6000000);
   }
 };

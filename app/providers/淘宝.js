@@ -10,33 +10,21 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$agreeBtn, $mobile, $submit] = await Promise.all([
-      page.$('#J_AgreementBtn'),
-      page.$('#J_Mobile'),
-      page.$('#J_BtnMobileForm')
-    ]);
+    try {
+      // 点击同意协议按钮
+      await page.click('#J_AgreementBtn');
+    } catch (err) {}
 
-    // 点击同意协议按钮
-    if ($agreeBtn) {
-      await $agreeBtn.click();
-    }
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.type('#J_Mobile', options.phone, { delay: 50 });
 
     // 按下鼠标，拖动滚动条
     await page.mouse.move(600, 325, { step: 10 });
-    await page.mouse.down({
-      button: 'left'
-    });
-
+    await page.mouse.down();
     await page.mouse.move(880, 325, { steps: 10 });
-
-    await page.mouse.up({ button: 'left' });
+    await page.mouse.up();
     // 松开鼠标
 
     await utils.sleep(500);
-
-    await $submit.click(500, 380);
+    await page.click('#J_BtnMobileForm');
   }
 };

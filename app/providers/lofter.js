@@ -10,22 +10,19 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$mobile, $code, $submit] = await Promise.all([
-      page.$('#phone-num'),
-      page.$('#auth-code'),
-      page.$('#btn-auth')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 300 });
+    await page.type('#phone-num', options.phone, { delay: 100 });
 
     await utils.sleep(1000);
 
-    await $code.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.type('#auth-code', options.phone, { delay: 50 });
 
     await utils.sleep(1000);
 
-    await $submit.click();
+    throw new Error(`Ivano`);
+
+    await page.click('#btn-auth');
+
+    // 检验是否发送成功
+    await page.waitForSelector('#btn-auth.btn-disabled', { timeout: 1000 * 3 });
   }
 };

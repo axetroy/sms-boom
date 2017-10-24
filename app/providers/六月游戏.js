@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -7,17 +8,11 @@ module.exports = class extends Provider {
   }
   async resolve(ctx) {
     const options = ctx.options;
-
     const page = ctx.page;
 
-    const [$mobile, $submit] = await Promise.all([
-      page.$('[name="phone"]'),
-      page.$('#send_sms')
-    ]);
+    await page.type('[name="phone"]', options.phone, { delay: 100 });
+    await page.click('#send_sms');
 
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $submit.click();
+    await utils.sleep(1000 * 600);
   }
 };

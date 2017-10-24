@@ -11,37 +11,21 @@ module.exports = class extends Provider {
 
     const page = ctx.page;
 
-    await page.reload();
-
-    await page.evaluate(() => {
-      const title = document.title;
-      window.addEventListener('mousemove', e => {
-        const x = e.x;
-        const y = e.y;
-        document.title = `(${x},${y})${title}`;
-      });
-    });
+    await page.reload(); // 页面需要重新加载，否则无法刷新出微信二维码
 
     await utils.sleep(2000);
 
-    const [$firstTab, $mobile, $submit] = await Promise.all([
-      page.$('.tab-title-item'),
-      page.$('[name="mobile"]'),
-      page.$('button[type="submit"]')
-    ]);
-
-    if ($firstTab) {
+    try {
       await page.mouse.move(546, 264, { steps: 10 });
-      await $firstTab.click();
-    }
+      await page.click('.tab-title-item');
+    } catch (err) {}
 
     await page.mouse.move(600, 420, { steps: 10 });
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
+    await page.type('[name="mobile"]', options.phone, { delay: 100 });
     await page.mouse.move(670, 500, { steps: 10 });
 
-    await $submit.click();
+    await page.click('button[type="submit"]');
+
+    await page.waitForSelector('.code-tip', { timeout: 1000 * 3 });
   }
 };

@@ -8,30 +8,27 @@ module.exports = class extends Provider {
   }
   async resolve(ctx) {
     const options = ctx.options;
-
     const page = ctx.page;
 
-    const [$mobile, $submit] = await Promise.all([
-      page.$('#userMobiNumber'),
-      page.$('#verifyCode_href')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
+    await page.type('#userMobiNumber', options.phone, { delay: 50 });
     // 按下鼠标，拖动滚动条
     await page.mouse.move(540, 470);
-    await page.mouse.down({
-      button: 'left'
-    });
-
+    await page.mouse.down();
     await page.mouse.move(850, 470, { steps: 10 });
-
-    await page.mouse.up({ button: 'left' });
+    await page.mouse.up();
     // 松开鼠标
+    await utils.sleep(500);
+    await page.click('#verifyCode_href');
 
     await utils.sleep(500);
 
-    await $submit.click();
+    const isSuccess = await page.evaluate(() => {
+      const sendMsgBtn = document.querySelector('#verifyCode_href');
+      return sendMsgBtn.innerText.trim().indexOf('获取验证码') < 0;
+    });
+
+    if (!isSuccess) {
+      throw null;
+    }
   }
 };

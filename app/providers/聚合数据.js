@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -9,22 +10,12 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$username, $password, $mobile, $sendBtn] = await Promise.all([
-      page.$('#username'),
-      page.$('#password'),
-      page.$('#mobilephone'),
-      page.$('#reg_smsbtn')
-    ]);
+    await page.type('#username', options.username, { delay: 50 });
+    await page.type('#password', options.password, { delay: 50 });
+    await page.type('#mobilephone', options.phone, { delay: 50 });
+    await page.click('#reg_smsbtn');
 
-    await $username.click();
-    await page.type(options.username, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $sendBtn.click({ button: 'left' });
+    // await utils.sleep(1000 * 60000);
+    // TODO: 验证是否发送成功...
   }
-}
+};

@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -9,18 +10,9 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$mobile, $code, $submit] = await Promise.all([
-      page.$('input[name="phone"]'),
-      page.$('input.phoneVerify'),
-      page.$('.phoneVerifyBtn')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $code.click();
-    await page.type('1234', { delay: 100 });
-
-    await $submit.click();
+    await page.type('input[name="phone"]', options.phone, { delay: 50 });
+    await page.type('input.phoneVerify', '1234', { delay: 50 });
+    await page.click('.phoneVerifyBtn');
+    await page.waitForSelector('.phoneVerifyBtn.disabled', { timeout: 1000 * 3 });
   }
 };

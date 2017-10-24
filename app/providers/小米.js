@@ -8,9 +8,9 @@ module.exports = class extends Provider {
   }
   async resolve(ctx) {
     const options = ctx.options;
-
     const page = ctx.page;
 
+    // 随便模拟一段用户操作
     await page.mouse.move(670, 370, { step: 10 });
 
     await page.click('.result-select-regions');
@@ -23,16 +23,15 @@ module.exports = class extends Provider {
     await page.mouse.move(500, 600, { step: 10 });
     await page.mouse.move(670, 670, { step: 10 });
 
-    const $mobile = await page.$('input[name="phone"]');
-
-    await $mobile.click({ button: 'left' });
-
-    await page.type(options.phone, { delay: 100 });
+    // 开始输入电话号码
+    await page.type('input[name="phone"]', options.phone, { delay: 50 });
 
     await page.mouse.move(670, 560, { step: 10 });
 
     await utils.sleep(1000);
 
     await page.click('input[type="submit"]');
+
+    await page.waitForSelector('.send-status.disabled');
   }
-}
+};

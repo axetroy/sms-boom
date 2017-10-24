@@ -10,14 +10,7 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$mobile, $submit] = await Promise.all([
-      page.$('input[name="phone"]'),
-      page.$('.login-reg-code')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $submit.click();
+    await page.type('input[name="phone"]', options.phone, { delay: 50 });
+    await page.click('.login-reg-code');
   }
 };

@@ -10,18 +10,8 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$name, $mobile, $submit] = await Promise.all([
-      page.$('#mobilebox_name'),
-      page.$('#mobilebox_phone'),
-      page.$('.contact-submit')
-    ]);
-
-    await $name.click({ button: 'left' });
-    await page.type(options.name, { delay: 100 });
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $submit.click({ button: 'left' });
+    await page.type('#mobilebox_name', options.name, { delay: 30 });
+    await page.type('#mobilebox_phone', options.phone, { delay: 30 });
+    await page.click('.contact-submit');
   }
-}
+};

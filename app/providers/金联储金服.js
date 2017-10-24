@@ -10,24 +10,11 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$mobile, $password, $code, $submit] = await Promise.all([
-      page.$('#loginMobile'),
-      page.$('#password'),
-      page.$('#code'),
-      page.$('#btn')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 300 });
-
-    await $code.click();
-    await page.type(options.phone, { delay: 100 });
-
+    await page.type('#loginMobile', options.phone, { delay: 50 });
+    await page.type('#password', options.password, { delay: 100 });
+    await page.type('#code', options.phone, { delay: 50 });
     await utils.sleep(1000);
-
-    await $submit.click();
+    await page.click('#btn');
+    await page.waitForSelector('#btn[disabled]', { timeout: 1000 * 3 });
   }
 };

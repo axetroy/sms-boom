@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -10,11 +11,11 @@ module.exports = class extends Provider {
 
     const page = ctx.page;
 
-    const [$mobile, $submit] = await Promise.all([page.$('[name="phone"]'), page.$('.getCode')]);
+    await page.type('[name="phone"]', options.phone, { delay: 100 });
 
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.click('.getCode');
 
-    await $submit.click();
+    // 检验是否发送成功
+    await page.waitForSelector('.getCode[disabled]', { timeout: 1000 * 3 });
   }
 };

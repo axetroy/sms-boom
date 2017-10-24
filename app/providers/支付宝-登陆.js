@@ -5,6 +5,7 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://authgtj.alipay.com/login/index.htm`;
+    this.active = false; // 暂不启用
     this.times = 0;
   }
   async resolve(ctx) {
@@ -19,21 +20,9 @@ module.exports = class extends Provider {
     });
 
     await utils.sleep(1000);
-
-    const [$mobile, $password, $login] = await Promise.all([
-      page.$('#J-input-user'),
-      page.$('#password_rsainput'),
-      page.$('#J-login-btn')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $login.click();
-
+    await page.type('#J-input-user', options.phone, { delay: 100 });
+    await page.type('#password_rsainput', options.password, { delay: 100 });
+    await page.click('#J-login-btn');
     await utils.sleep(3000);
 
     // 重试5次

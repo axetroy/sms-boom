@@ -10,46 +10,21 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [
-      $nick,
-      $password,
-      $rePassword,
-      $mobile,
-      $submit
-    ] = await Promise.all([
-      page.$('#nick'),
-      page.$('#password'),
-      page.$('#rePassword'),
-      page.$('#mobile'),
-      page.$('button.next-btn')
-    ]);
-
-    await $nick.click();
-    await page.type(options.username, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $rePassword.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
+    await page.type('#nick', options.username, { delay: 50 });
+    await page.type('#password', options.password, { delay: 50 });
+    await page.type('#rePassword', options.password, { delay: 50 });
+    await page.type('#mobile', options.phone, { delay: 50 });
 
     // 按下鼠标，拖动滚动条
     await page.mouse.move(550, 380);
-    await page.mouse.click(550, 380);
-    await page.mouse.down({
-      button: 'left'
-    });
-
+    await page.mouse.down();
     await page.mouse.move(850, 380, { steps: 5 });
-
-    await page.mouse.up({ button: 'left' });
+    await page.mouse.up();
     // 松开鼠标
 
     await utils.sleep(1000);
+    await page.click('button.next-btn');
 
-    await $submit.click();
+    await page.waitForSelector('button.next-btn[disabled]', { timeout: 1000 * 3 });
   }
 };

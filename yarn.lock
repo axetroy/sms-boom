@@ -2,9 +2,17 @@
 # yarn lockfile v1
 
 
+"@types/chalk@^0.4.31":
+  version "0.4.31"
+  resolved "https://registry.npmjs.org/@types/chalk/-/chalk-0.4.31.tgz#a31d74241a6b1edbb973cf36d97a2896834a51f9"
+
 "@types/node@*":
   version "8.0.31"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
+
+"@types/p-timeout@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@types/p-timeout/-/p-timeout-1.2.0.tgz#436378f0cf59286587d701237ac79b284b4cb298"
 
 "@types/puppeteer@^0.12.0":
   version "0.12.0"
@@ -130,6 +138,14 @@ caseless@~0.12.0:
 chalk@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/chalk/-/chalk-2.2.0.tgz#477b3bf2f9b8fd5ca9e429747e37f724ee7af240"
+  dependencies:
+    ansi-styles "^3.1.0"
+    escape-string-regexp "^1.0.5"
+    supports-color "^4.0.0"
+
+chalk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
@@ -642,6 +658,16 @@ os-locale@^1.4.0:
 os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
+
+p-finally@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/p-finally/-/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"
+
+p-timeout@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/p-timeout/-/p-timeout-1.2.0.tgz#9820f99434c5817868b4f34809ee5291660d5b6c"
+  dependencies:
+    p-finally "^1.0.0"
 
 parse-json@^2.2.0:
   version "2.2.0"

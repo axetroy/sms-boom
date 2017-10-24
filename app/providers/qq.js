@@ -1,4 +1,5 @@
 const Provider = require('../provider');
+const utils = require('../utils');
 
 module.exports = class extends Provider {
   constructor() {
@@ -9,21 +10,12 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [$nickname, $password, $phone, $send] = await Promise.all([
-      page.$('#nickname'),
-      page.$('#password'),
-      page.$('#phone'),
-      page.$('#send-sms')
-    ]);
+    await page.type('#nickname', options.username, { delay: 100 });
+    await page.type('#password', options.password, { delay: 100 });
+    await page.type('#phone', options.phone, { delay: 100 });
+    await page.click('#send-sms', { button: 'left' });
 
-    await $nickname.click({ button: 'left' });
-    await page.type(options.username, { delay: 100 });
-
-    await $password.click({ button: 'left' });
-    await page.type(options.password, { delay: 100 });
-
-    await $phone.click({ button: 'left' });
-    await page.type(options.phone, { delay: 100 });
-    await $send.click({ button: 'left' });
+    // 检验是否发送成功
+    await page.waitForSelector('.send-sms.disabled', { timeout: 1000 * 3 });
   }
 };

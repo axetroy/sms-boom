@@ -10,15 +10,9 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const $mobile = await page.$('input[data-regbox="name"]');
-
-    if ($mobile) {
-      await $mobile.click();
-      await page.type(options.phone, { delay: 100 });
-    }
-
-    await utils.sleep(2000);
-
-    await page.click('[rseat="prgd_smsbtn"]', { button: 'left' });
+    await page.waitForSelector('input[data-regbox="name"]');
+    await page.type('input[data-regbox="name"]', options.phone, { delay: 50 });
+    await utils.sleep(1000 * 2);
+    await page.click('[rseat="prgd_smsbtn"]');
   }
 };

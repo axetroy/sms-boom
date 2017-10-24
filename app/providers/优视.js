@@ -10,41 +10,24 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    const [
-      $mobile,
-      $password,
-      $rePassword,
-      $submit
-    ] = await Promise.all([
-      page.$('#registerName'),
-      page.$('#password'),
-      page.$('#confirmPassword'),
-      page.$('#getCodeBtn')
-    ]);
-
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $rePassword.click();
-    await page.type(options.password, { delay: 100 });
+    await page.type('#registerName', options.phone, { delay: 50 });
+    await page.type('#password', options.password, { delay: 50 });
+    await page.type('#confirmPassword', options.password, { delay: 50 });
 
     // 按下鼠标，拖动滚动条
-    await page.mouse.move(515, 400);
-    await page.mouse.click(515, 400);
-    await page.mouse.down({
-      button: 'left'
-    });
-
-    await page.mouse.move(800, 400, { steps: 50 });
-
-    await page.mouse.up({ button: 'left' });
+    await page.mouse.move(515, 400, { steps: 10 });
+    await page.mouse.down();
+    await page.mouse.move(546, 410, { steps: 20 });
+    await page.mouse.move(648, 408, { steps: 30 });
+    await page.mouse.move(768, 406, { steps: 40 });
+    await page.mouse.move(800, 406, { steps: 50 });
+    await page.mouse.up();
     // 松开鼠标
 
     await utils.sleep(1000);
 
-    await $submit.click();
+    await page.click('#getCodeBtn');
+
+    await page.waitForSelector('#getCodeBtn.btn_code');
   }
 };

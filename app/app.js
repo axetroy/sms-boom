@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
+const pTimeout = require('p-timeout');
+const chalk = require('chalk');
 const config = require('./config');
 const util = require('./utils');
 
@@ -20,7 +22,10 @@ class App {
 
     while (files.length) {
       const file = files.shift();
-      this.provider(require(path.join(dir, file)));
+      const absFilePath = path.join(dir, file);
+      const Provider = require(absFilePath);
+      Provider.file = absFilePath;
+      this.provider(Provider);
     }
 
     return this;
@@ -29,6 +34,7 @@ class App {
     // open the browser
     this.browser = await puppeteer.launch({
       headless: config.isProduction
+      // devtools: true
     });
 
     // create a new tab
@@ -59,39 +65,20 @@ class App {
 
         await this.page.evaluate(() => {
           const title = document.title;
-          window.addEventListener('mousemove', e => {
-            document.title = `(${e.x},${e.y})${title}`;
-          });
+          window.addEventListener('mousemove', e => (document.title = `(${e.x},${e.y})${title}`));
         });
 
         await this.page.deleteCookie();
 
-        // 如果resolve超过xxx秒，则认为是超时，不会无限等待
-        await new Promise(async (resolve, reject) => {
-          let haveResponse = false;
-          entity
-            .resolve(this)
-            .then(() => {
-              if (haveResponse === false) {
-                haveResponse = true;
-                this.__timer__ && clearTimeout(this.__timer__);
-                resolve();
-              }
-            })
-            .catch(err => {
-              if (haveResponse === false) {
-                haveResponse = true;
-                this.__timer__ && clearTimeout(this.__timer__);
-                reject(err);
-              }
-            });
-          this.__timer__ = setTimeout(() => {
-            if (haveResponse === false) {
-              reject(new Error(`Resolve time out...`));
-            }
-            this.__timer__ && clearTimeout(this.__timer__);
-          }, 1000 * 60);
-        });
+        // 60s超时用于处理发送短信，不会导致无线等待的情况...
+        await pTimeout(entity.resolve(this), 1000 * 60)
+          .then(() => {
+            util.log(chalk.green('[Success]:'), entity.name);
+          })
+          .catch(err => {
+            util.log(chalk.red('[Fail]:'), entity.name);
+            if (err) console.error(err);
+          });
       } catch (err) {
         console.error(err);
       } finally {
@@ -105,24 +92,35 @@ class App {
   }
   async bootstrap() {
     const entities = this.providers
-      .map(Provider => new Provider())
+      .map(Provider => {
+        // 实例化服务提供者
+        const entity = new Provider(this);
+        const fileInfo = path.parse(Provider.file);
+        // 设置每个服务提供者的文件和名字
+        entity.name = fileInfo.name;
+        entity.file = Provider.file;
+        return entity;
+      })
       .filter(entity => entity.active === true);
 
     const aloneEntity = entities.find(entity => entity.alone);
 
+    // 如果找到设置alone属性的provider，则单独运行，方便调试
     if (aloneEntity && !this.options.isProduction) {
       this.entities = [aloneEntity];
     } else {
       this.entities = entities;
     }
 
-    if (this.options.once === true) {
+    if (this.options.once) {
+      return await this.run();
+    }
+
+    // run forever
+    while (process) {
       await this.run();
-    } else {
-      while (true) {
-        await this.run();
-        await util.sleep(1000 * 10);
-      }
+      // take a rest then let's go...
+      await util.sleep(1000 * 10);
     }
   }
 }

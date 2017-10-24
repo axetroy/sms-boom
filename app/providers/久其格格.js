@@ -11,28 +11,17 @@ module.exports = class extends Provider {
 
     const page = ctx.page;
 
-    const $phoneRegister = await page.$('#phoneRegistTab');
+    await page.click('#phoneRegistTab');
 
-    await $phoneRegister.click();
+    await page.waitForSelector('#chkCodeSendBtn');
 
-    await utils.sleep(1000);
+    await page.type('#UserName', options.phone, { delay: 100 });
+    await page.type('#Password', options.password, { delay: 100 });
+    await page.type('#ConfirmPassword', options.password, { delay: 100 });
 
-    const [$mobile, $password, $repassword, $submit] = await Promise.all([
-      page.$('#UserName'),
-      page.$('#Password'),
-      page.$('#ConfirmPassword'),
-      page.$('#chkCodeSendBtn')
-    ]);
+    await page.click('#chkCodeSendBtn');
 
-    await $mobile.click();
-    await page.type(options.phone, { delay: 100 });
-
-    await $password.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $repassword.click();
-    await page.type(options.password, { delay: 100 });
-
-    await $submit.click();
+    // 检验是否发送成功
+    await page.waitForSelector('#chkCodeSendBtn[disabled]', { timeout: 1000 * 3 });
   }
 };
