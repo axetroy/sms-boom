@@ -20,6 +20,26 @@
 
 ## Usage
 
+###  从NPM安装运行
+
+```bash
+npm install smsboomer -g
+smsboomer 138xxxxxxxx
+# run for help information
+# smsboomer -h
+```
+
+### 自行引入包
+
+```javascript
+const smsboomer = require('smsboomer')
+
+const app = smsboomer('138xxxxxxxx',{})
+```
+
+
+### 从源码运行
+
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
