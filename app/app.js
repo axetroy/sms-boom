@@ -1,16 +1,32 @@
+const { EventEmitter } = require('events');
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const pTimeout = require('p-timeout');
 const chalk = require('chalk');
+const { shuffle } = require('lodash');
 const config = require('./config');
-const util = require('./utils');
+const utils = require('./utils');
 
-class App {
+const EVENT_ON_LAUNCH = 'launch'; // symbol('when App launch');
+const EVENT_ON_OPEN = 'open'; // symbol('when browser open');
+const EVENT_ON_CLOSED = 'closed'; // symbol('when browser closed');
+const EVENT_ON_NEXT = 'next'; // symbol('when turn to next target');
+const EVENT_ON_ERROR = 'error'; //symbol('when the page resolve error');
+
+class App extends EventEmitter {
   constructor(options = {}) {
+    super();
     this.options = options;
     this.providers = [];
     this.entities = [];
+    this.active = false;
+
+    this.on('end', async () => {
+      // close the browser
+      this.page && (await this.page.close());
+      this.browser && (await this.browser.close());
+    });
   }
   provider(provider) {
     this.providers.push(provider);
@@ -30,8 +46,15 @@ class App {
 
     return this;
   }
+
+  /**
+   * 运行一个周期
+   * @returns {Promise.<void>}
+   */
   async run() {
     // open the browser
+    if (!this.active) return;
+    this.emit(EVENT_ON_OPEN, this);
     this.browser = await puppeteer.launch({
       headless: config.isProduction
       // devtools: true
@@ -54,6 +77,7 @@ class App {
 
     const entities = this.entities;
     for (let i = 0; i < entities.length; i++) {
+      if (!this.active) return;
       const entity = entities[i];
 
       try {
@@ -70,38 +94,53 @@ class App {
 
         await this.page.deleteCookie();
 
+        this.emit(EVENT_ON_NEXT, this);
+
         // 60s超时用于处理发送短信，不会导致无线等待的情况...
         await pTimeout(entity.resolve(this), 1000 * 60)
           .then(() => {
-            util.log(chalk.green('[Success]:'), entity.name);
+            utils.log(chalk.green('[Success]:'), entity.name);
           })
           .catch(err => {
-            util.log(chalk.red('[Fail]:'), entity.name);
+            this.emit(EVENT_ON_ERROR, err);
+            utils.log(chalk.red('[Fail]:'), entity.name);
             if (err) console.error(err);
           });
       } catch (err) {
         console.error(err);
       } finally {
-        await util.sleep(2000);
+        await utils.sleep(2000);
       }
     }
 
     // close the browser
     await this.page.close();
     await this.browser.close();
+    this.emit(EVENT_ON_CLOSED, this);
   }
-  async bootstrap() {
-    const entities = this.providers
-      .map(Provider => {
-        // 实例化服务提供者
-        const entity = new Provider(this);
-        const fileInfo = path.parse(Provider.file);
-        // 设置每个服务提供者的文件和名字
-        entity.name = fileInfo.name;
-        entity.file = Provider.file;
-        return entity;
-      })
-      .filter(entity => entity.active === true);
+  async __task() {
+    // run forever
+    while (process) {
+      await this.run();
+      // take a rest then let's go...
+      await utils.sleep(1000 * 10);
+    }
+  }
+  bootstrap() {
+    // 随机序列
+    const entities = shuffle(
+      this.providers
+        .map(Provider => {
+          // 实例化服务提供者
+          const entity = new Provider(this);
+          const fileInfo = path.parse(Provider.file);
+          // 设置每个服务提供者的文件和名字
+          entity.name = fileInfo.name;
+          entity.file = Provider.file;
+          return entity;
+        })
+        .filter(entity => entity.active === true)
+    );
 
     const aloneEntity = entities.find(entity => entity.alone);
 
@@ -112,16 +151,16 @@ class App {
       this.entities = entities;
     }
 
-    if (this.options.once) {
-      return await this.run();
-    }
+    this.emit(EVENT_ON_LAUNCH, this);
 
-    // run forever
-    while (process) {
-      await this.run();
-      // take a rest then let's go...
-      await util.sleep(1000 * 10);
+    this.active = true;
+
+    if (this.options.once) {
+      this.run();
+    } else {
+      this.__task();
     }
+    return this;
   }
 }
 

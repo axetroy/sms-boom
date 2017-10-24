@@ -18,8 +18,6 @@ module.exports = class extends Provider {
 
     await utils.sleep(1000);
 
-    throw new Error(`Ivano`);
-
     await page.click('#btn-auth');
 
     // 检验是否发送成功

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "sms-boom": "./bin/boomer"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node index.js",
@@ -19,7 +22,9 @@
   },
   "homepage": "https://github.com/axetroy/sms-boom#readme",
   "dependencies": {
+    "caporal": "^0.8.0",
     "chalk": "^2.3.0",
+    "lodash": "^4.17.4",
     "p-timeout": "^1.2.0",
     "puppeteer": "^0.12.0"
   },

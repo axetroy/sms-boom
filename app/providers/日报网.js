@@ -16,7 +16,5 @@ module.exports = class extends Provider {
     await page.type('#repass', options.password, { delay: 50 });
     await utils.sleep(500);
     await page.click('a.send');
-
-    await utils.sleep(1000 * 60000);
   }
 };
