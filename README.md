@@ -52,7 +52,7 @@ Welcome PR...
 
 You can flow [Contribute Guide](https://github.com/axetroy/sms-boom/blob/master/contributing.md)
 
-** 如果这能帮助到你, 不妨点个 :star2:，非常感谢**
+**如果这能帮助到你, 不妨点个 :star2:，非常感谢**
 
 ## Contributors
 
