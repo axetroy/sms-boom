@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+const program = require('caporal');
+const boomer = require('../index');
+
+const pkg = require('../package.json');
+program.version(pkg.version).description(pkg.description);
+
+program
+  .argument('<phone>', '手机号码')
+  .option('-f, --forever', '是否持久运行，默认只运行一个周期', program.BOOLEAN, false)
+  .action((argv, opts) => {
+    const app = boomer(argv.phone || process.env.PHONE || '13800000000', { once: !opts.forever });
+
+    process.on('SIGINT', () => {
+      app.emit('end');
+      process.exit(1);
+    });
+
+    app
+      .on('open', () => {
+        console.info(`broswer launch`);
+      })
+      .on('next', () => {
+        console.info(`turn to next page...`);
+      })
+      .on('error', err => {
+        console.error(`error`);
+      });
+  });
+
+program.parse(process.argv);
