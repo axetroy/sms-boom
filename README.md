@@ -26,7 +26,32 @@
 npm install smsboomer -g
 smsboomer 138xxxxxxxx
 # run for help information
-# smsboomer -h
+
+smsboomer -h
+
+  boomer 0.0.1
+   
+  USAGE
+  
+   boomer <phone>
+  
+  ARGUMENTS
+  
+   <phone>      手机号码      required
+  
+  OPTIONS
+  
+   -f, --forever      是否持久运行，默认只运行一个周期                    optional      default: false
+   --dev              是否是开发模式，如果true，则显示浏览器运行过程        optional      default: false
+  
+  GLOBAL OPTIONS
+  
+   -h, --help         Display help
+   -V, --version      Display version
+   --no-color         Disable colors
+   --quiet            Quiet mode - only displays warn and error messages
+   -v, --verbose      Verbose mode - will also output debug messages
+
 ```
 
 ### 自行引入包
