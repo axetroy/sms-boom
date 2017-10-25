@@ -32,7 +32,7 @@ smsboomer 138xxxxxxxx
 ### 自行引入包
 
 ```javascript
-const boomer = require('../index');
+const boomer = require('smsboomer');
 
 const app = boomer("138xxxxxxxx", { once: true });
 
