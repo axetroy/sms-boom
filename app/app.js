@@ -53,75 +53,81 @@ class App extends EventEmitter {
    * @returns {Promise.<void>}
    */
   async run() {
-    // open the browser
-    if (!this.active) return;
-    this.emit(EVENT_ON_OPEN, this);
-    this.browser = await puppeteer.launch({
-      headless: this.options.isProduction
-      // devtools: true
-    });
-
-    // create a new tab
-    this.page = await this.browser.newPage();
-
-    // set the browser's viewport
-    await this.page.setViewport({
-      width: 1366,
-      height: 768
-    });
-
-    // listen on tab dialog, like alert, confirm
-    this.page.on('dialog', async dialog => {
-      console.log(dialog.message());
-      await dialog.dismiss();
-    });
-
-    const entities = this.entities;
-    for (let i = 0; i < entities.length; i++) {
+    try{
+      // open the browser
       if (!this.active) return;
-      const entity = entities[i];
 
-      try {
-        await this.page.goto(entity.url, {
-          networkIdleTimeout: 5000,
-          waitUntil: 'networkidle',
-          timeout: 3000000
-        });
+      this.emit(EVENT_ON_OPEN, this);
 
-        await this.page.evaluate(() => {
-          const title = document.title;
-          window.addEventListener('mousemove', e => (document.title = `(${e.x},${e.y})${title}`));
-        });
+      this.browser = await puppeteer.launch({
+        headless: this.options.isProduction
+        // devtools: true
+      });
 
-        await this.page.deleteCookie();
+      // create a new tab
+      this.page = await this.browser.newPage();
 
-        this.emit(EVENT_ON_NEXT, this);
+      // set the browser's viewport
+      await this.page.setViewport({
+        width: 1366,
+        height: 768
+      });
 
-        // 60s超时用于处理发送短信，不会导致无线等待的情况...
-        await pTimeout(entity.resolve(this), 1000 * 60)
-          .then(() => {
-            utils.log(chalk.green('[Success]:'), entity.name);
-          })
-          .catch(err => {
-            // 等待超时，忽略掉
-            this.emit(EVENT_ON_ERROR, err);
-            utils.log(chalk.red('[Fail]:'), entity.name);
-            if (err instanceof Error && err.message.indexOf('waiting failed')) {
-            } else if (err) {
-              console.error(err);
-            }
+      // listen on tab dialog, like alert, confirm
+      this.page.on('dialog', async dialog => {
+        console.log(dialog.message());
+        await dialog.dismiss();
+      });
+
+      const entities = this.entities;
+      for (let i = 0; i < entities.length; i++) {
+        if (!this.active) return;
+        const entity = entities[i];
+
+        try {
+          await this.page.goto(entity.url, {
+            networkIdleTimeout: 5000,
+            waitUntil: 'networkidle',
+            timeout: 3000000
           });
-      } catch (err) {
-        console.error(err);
-      } finally {
-        await utils.sleep(2000);
-      }
-    }
 
-    // close the browser
-    await this.page.close();
-    await this.browser.close();
-    this.emit(EVENT_ON_CLOSED, this);
+          await this.page.evaluate(() => {
+            const title = document.title;
+            window.addEventListener('mousemove', e => (document.title = `(${e.x},${e.y})${title}`));
+          });
+
+          await this.page.deleteCookie();
+
+          this.emit(EVENT_ON_NEXT, this);
+
+          // 60s超时用于处理发送短信，不会导致无线等待的情况...
+          await pTimeout(entity.resolve(this), 1000 * 60)
+            .then(() => {
+              utils.log(chalk.green('[Success]:'), entity.name);
+            })
+            .catch(err => {
+              // 等待超时，忽略掉
+              this.emit(EVENT_ON_ERROR, err);
+              utils.log(chalk.red('[Fail]:'), entity.name);
+              if (err instanceof Error && err.message.indexOf('waiting failed')) {
+              } else if (err) {
+                console.error(err);
+              }
+            });
+        } catch (err) {
+          console.error(err);
+        } finally {
+          await utils.sleep(2000);
+        }
+      }
+
+      // close the browser
+      await this.page.close();
+      await this.browser.close();
+      this.emit(EVENT_ON_CLOSED, this);
+    }catch (err){
+      console.error(err);
+    }
   }
   async bootstrap() {
     // 随机序列
