@@ -32,9 +32,27 @@ smsboomer 138xxxxxxxx
 ### 自行引入包
 
 ```javascript
-const smsboomer = require('smsboomer')
+const boomer = require('../index');
 
-const app = smsboomer('138xxxxxxxx',{})
+const app = boomer("138xxxxxxxx", { once: true });
+
+process.on('SIGINT', () => {
+  app.emit('end');
+  process.exit(1);
+});
+
+app
+  .on('open', () => {
+    console.info(`打开浏览器...`);
+  })
+  .on('next', () => {
+    console.info(`进入到发送验证码页面...`);
+  })
+  .on('error', err => {
+    console.error(`发送错误了 ${err}`);
+  })
+  // bootstrap
+  .emit('bootstrap');
 ```
 
 ### 从源码运行
