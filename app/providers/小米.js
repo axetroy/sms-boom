@@ -32,6 +32,6 @@ module.exports = class extends Provider {
 
     await page.click('input[type="submit"]');
 
-    await page.waitForSelector('.send-status.disabled');
+    await page.waitForSelector('.send-status.disabled', { timeout: 1000 * 3 });
   }
 };
