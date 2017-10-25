@@ -18,11 +18,7 @@ const defaultOptions = {
 
 module.exports = function(phoneNumber, options) {
   const app = new App({ ...defaultOptions, ...options, ...{ phone: phoneNumber } });
-
+  // load provider
   app.resolveProviders('./app/providers');
-
-  // it will never resolve
-  app.bootstrap();
-
   return app;
 };

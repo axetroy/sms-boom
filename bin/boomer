@@ -18,14 +18,16 @@ program
 
     app
       .on('open', () => {
-        console.info(`broswer launch`);
+        console.info(`打开浏览器...`);
       })
       .on('next', () => {
-        console.info(`turn to next page...`);
+        console.info(`进入到发送验证码页面...`);
       })
       .on('error', err => {
-        console.error(`error`);
-      });
+        console.error(`发送错误了 ${err}`);
+      })
+      // bootstrap
+      .emit('bootstrap');
   });
 
 program.parse(process.argv);

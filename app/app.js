@@ -27,6 +27,7 @@ class App extends EventEmitter {
       this.page && (await this.page.close());
       this.browser && (await this.browser.close());
     });
+    this.on('bootstrap', this.bootstrap.bind(this));
   }
   provider(provider) {
     this.providers.push(provider);
@@ -102,9 +103,13 @@ class App extends EventEmitter {
             utils.log(chalk.green('[Success]:'), entity.name);
           })
           .catch(err => {
+            // 等待超时，忽略掉
             this.emit(EVENT_ON_ERROR, err);
             utils.log(chalk.red('[Fail]:'), entity.name);
-            if (err) console.error(err);
+            if (err instanceof Error && err.message.indexOf('waiting failed')) {
+            } else if (err) {
+              console.error(err);
+            }
           });
       } catch (err) {
         console.error(err);
@@ -118,15 +123,7 @@ class App extends EventEmitter {
     await this.browser.close();
     this.emit(EVENT_ON_CLOSED, this);
   }
-  async __task() {
-    // run forever
-    while (process) {
-      await this.run();
-      // take a rest then let's go...
-      await utils.sleep(1000 * 10);
-    }
-  }
-  bootstrap() {
+  async bootstrap() {
     // 随机序列
     const entities = shuffle(
       this.providers
@@ -158,7 +155,12 @@ class App extends EventEmitter {
     if (this.options.once) {
       this.run();
     } else {
-      this.__task();
+      // run forever
+      while (process) {
+        await this.run();
+        // take a rest then let's go...
+        await utils.sleep(1000 * 10);
+      }
     }
     return this;
   }
