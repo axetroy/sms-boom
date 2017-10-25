@@ -69,7 +69,7 @@ node ./example/forever.js # 无线循环运行
 
 ## Contributing
 
-[贡献指南](https://github.com/axetroy/sms-boom/blob/master/contributing.md)
+[贡献指南](https://github.com/axetroy/sms-boom/blob/master/CONTRIBUTING.md)
 
 **如果这能帮助到你, 不妨点个 :star2:，非常感谢**
 
