@@ -98,7 +98,7 @@ export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
 
 node ./example/once.js  # 运行一个周期
 # 或者
-node ./example/forever.js # 无线循环运行
+node ./example/forever.js # 无限循环运行
 ```
 
 ## Contributing
