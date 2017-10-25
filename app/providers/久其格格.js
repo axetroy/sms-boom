@@ -13,7 +13,7 @@ module.exports = class extends Provider {
 
     await page.click('#phoneRegistTab');
 
-    await page.waitForSelector('#chkCodeSendBtn');
+    await page.waitForSelector('#chkCodeSendBtn', { timeout: 1000 * 5 });
 
     await page.type('#UserName', options.phone, { delay: 100 });
     await page.type('#Password', options.password, { delay: 100 });

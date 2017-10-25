@@ -10,7 +10,7 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    await page.waitForSelector('input[data-regbox="name"]');
+    await page.waitForSelector('input[data-regbox="name"]', { timeout: 1000 * 5 });
     await page.type('input[data-regbox="name"]', options.phone, { delay: 50 });
     await utils.sleep(1000 * 2);
     await page.click('[rseat="prgd_smsbtn"]');
