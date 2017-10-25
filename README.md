@@ -1,7 +1,7 @@
 ## Phone Message boomer
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/axetroy/sms-boom.svg)](https://greenkeeper.io/)
-[![Dependency](https://david-dm.org/axetroy/sms-boom.svg)](https://david-dm.org/axetroy/sms-boom)
+[![Dependency](https://david-dm.org/axetroy/smsboomer.svg)](https://david-dm.org/axetroy/smsboomer)
 ![License](https://img.shields.io/badge/license-Apache-green.svg)
 [![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-green.svg)](https://github.com/prettier/prettier)
 ![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
