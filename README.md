@@ -20,6 +20,15 @@
 
 ## Usage
 
+### 避免重复下载**chromium**
+
+如果你的系统没有安装**chromium**, 请忽略这一条
+
+```bash
+# 在终端运行
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+```
+
 ###  从NPM安装运行
 
 ```bash
