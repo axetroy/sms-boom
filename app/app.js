@@ -57,7 +57,7 @@ class App extends EventEmitter {
     if (!this.active) return;
     this.emit(EVENT_ON_OPEN, this);
     this.browser = await puppeteer.launch({
-      headless: config.isProduction
+      headless: this.options.isProduction
       // devtools: true
     });
 
