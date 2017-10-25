@@ -8,9 +8,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production node index.js",
     "generate": "all-contributors generate"
   },
+  "keywords": [
+    "sms",
+    "boom",
+    "chrome",
+    "puppeteer"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/axetroy/sms-boom.git"
