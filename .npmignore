@@ -377,6 +377,7 @@ jspm_packages/
 .env
 
 example
+.github
 .all-contributorsrc
 .editorconfig
 .gitattributes
