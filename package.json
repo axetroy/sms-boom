@@ -1,7 +1,7 @@
 {
   "name": "smsboomer",
   "version": "0.0.1",
-  "description": "",
+  "description": "利用chrome的headless模式，模拟用户注册进行短信轰炸机",
   "main": "index.js",
   "bin": {
     "smsboomer": "./bin/boomer"
@@ -14,6 +14,7 @@
     "sms",
     "boom",
     "chrome",
+    "headless",
     "puppeteer"
   ],
   "repository": {
