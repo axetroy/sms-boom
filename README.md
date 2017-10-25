@@ -37,40 +37,21 @@ const smsboomer = require('smsboomer')
 const app = smsboomer('138xxxxxxxx',{})
 ```
 
-
 ### 从源码运行
 
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
-```
-
-1. 单次配置运行(Run once)
-
-```bash
 export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
-node index.js
-````
 
-2. 持久配置运行(Run forever)
-
-```bash
-vim pm2.json  ## 修改process.env.PHONE为目标手机号
-pm2 start pm2.json
-````
+node ./example/once.js  # 运行一个周期
+# 或者
+node ./example/forever.js # 无线循环运行
+```
 
 ## Contributing
 
-```bash
-git clone https://github.com/axetroy/sms-boom.git
-cd ./sms-boom
-yarn
-yarn run start
-```
-
-Welcome PR...
-
-You can flow [Contribute Guide](https://github.com/axetroy/sms-boom/blob/master/contributing.md)
+[贡献指南](https://github.com/axetroy/sms-boom/blob/master/contributing.md)
 
 **如果这能帮助到你, 不妨点个 :star2:，非常感谢**
 

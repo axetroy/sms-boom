@@ -1,57 +1,12 @@
-# Contributing to axetroy
+### 如何给本项目贡献代码
 
-First and foremost, thank you! We appreciate that you want to contribute to axetroy, your time is valuable, and your contributions mean a lot to us.
+1. 克隆本项目
+2. 在``app/providers``目录下创建js文件，格式雷同其他文件
 
-**What does "contributing" mean?**
+- ``this.url``: 代表浏览器要打开的页面
+- ``async resolve``: 代表要进行的操作, 返回Promise，如果resolve则表示发送成功，reject表示发送失败。
 
-Creating an issue is the simplest form of contributing to a project. But there are many ways to contribute, including the following:
+3. 给这个Provider添加``this.alone = true``属性，调试专用，表示仅运行这个Provider，在commit之前，记得移除这个属性。
 
-- Updating or correcting documentation
-- Feature requests
-- Bug reports
-
-If you'd like to learn more about contributing in general, the [Guide to Idiomatic Contributing](https://github.com/jonschlinkert/idiomatic-contributing) has a lot of useful information.
-
-**Showing support for axetroy**
-
-Please keep in mind that open source software is built by people like you, who spend their free time creating things the rest the community can use.
-
-Don't have time to contribute? No worries, here are some other ways to show your support for axetroy:
-
-- star the [project](https://git.yichui.net/axetroy/sms-boom#readme)
-- tweet your support for axetroy
-
-## Issues
-
-### Before creating an issue
-
-Please try to determine if the issue is caused by an underlying library, and if so, create the issue there. Sometimes this is difficult to know. We only ask that you attempt to give a reasonable attempt to find out. Oftentimes the readme will have advice about where to go to create issues.
-
-Try to follow these guidelines
-
-- **Investigate the issue**:
-- **Check the readme** - oftentimes you will find notes about creating issues, and where to go depending on the type of issue.
-- Create the issue in the appropriate repository.
-
-### Creating an issue
-
-Please be as descriptive as possible when creating an issue. Give us the information we need to successfully answer your question or address your issue by answering the following in your issue:
-
-- **version**: please note the version of axetroy are you using
-- **extensions, plugins, helpers, etc** (if applicable): please list any extensions you're using
-- **error messages**: please paste any error messages into the issue, or a [gist](https://gist.github.com/)
-
-## Above and beyond
-
-Here are some tips for creating idiomatic issues. Taking just a little bit extra time will make your issue easier to read, easier to resolve, more likely to be found by others who have the same or similar issue in the future.
-
-- read the [Guide to Idiomatic Contributing](https://github.com/jonschlinkert/idiomatic-contributing)
-- take some time to learn basic markdown. This [markdown cheatsheet](https://gist.github.com/jonschlinkert/5854601) is super helpful, as is the GitHub guide to [basic markdown](https://help.github.com/articles/markdown-basics/).
-- Learn about [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/). And if you want to really go above and beyond, read [mastering markdown](https://guides.github.com/features/mastering-markdown/).
-- use backticks to wrap code. This ensures that code will retain its format, making it much more readable to others
-- use syntax highlighting by adding the correct language name after the first "code fence"
-
-
-[node-glob]: https://github.com/isaacs/node-glob
-[micromatch]: https://github.com/jonschlinkert/micromatch
-[so]: http://stackoverflow.com/questions/tagged/axetroy
+4. Commit代码
+5. 发起PR
