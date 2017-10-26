@@ -154,6 +154,20 @@ ERROR: Failed to download Chromium r508693! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOA
 
 解决: 重新安装npm依赖，或者运行``npm rebuild``
 
+### 手动安装 ``npm install puppeteer``
+
+```bash
+axetroy@axetroy-H81M-DS2:~/gpm/github.com/axetroy/sms-boom$ npm install puppeteer
+
+> puppeteer@0.12.0 install /home/axetroy/gpm/github.com/axetroy/sms-boom/node_modules/puppeteer
+> node install.js
+
+Downloading Chromium r508693 - 96.2 Mb [====================] 100% 0.0s 
+Chromium downloaded to /home/axetroy/gpm/github.com/axetroy/sms-boom/node_modules/puppeteer/.local-chromium/linux-508693
++ puppeteer@0.12.0
+added 1 package in 14.979s
+```
+
 ## Contributing
 
 [贡献指南](https://github.com/axetroy/sms-boom/blob/master/CONTRIBUTING.md)
