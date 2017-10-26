@@ -133,7 +133,7 @@ ERROR: Failed to download Chromium r508693! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOA
 
 原因: 网络问题，无法下载chromium
 
-解决: 设置环境变量``PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true``, 然后重新安装依赖
+解决: 设置环境变量``PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true``, 然后重新安装依赖， 或者运行``npm rebuild``
 
 ### Chromium revision is not downloaded. Run "npm install"
 
@@ -152,7 +152,7 @@ ERROR: Failed to download Chromium r508693! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOA
 
 原因: 依赖没有被正确安装
 
-解决: 重新安装npm依赖
+解决: 重新安装npm依赖，或者运行``npm rebuild``
 
 ## Contributing
 
