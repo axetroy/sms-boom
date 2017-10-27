@@ -1,6 +1,6 @@
 {
   "name": "smsboomer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "利用chrome的headless模式，模拟用户注册进行短信轰炸机",
   "main": "index.js",
   "bin": {
