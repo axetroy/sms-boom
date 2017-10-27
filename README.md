@@ -20,47 +20,11 @@
 
 ## Usage
 
-### 避免重复下载**chromium**
-
-如果你的系统没有安装**chromium**, 请忽略这一条
-
-```bash
-# 在终端运行
-export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-```
-
 ###  从NPM安装运行
 
 ```bash
 npm install smsboomer -g
 smsboomer 138xxxxxxxx
-# run for help information
-
-smsboomer -h
-
-  boomer 0.0.1
-   
-  USAGE
-  
-   boomer <phone>
-  
-  ARGUMENTS
-  
-   <phone>      手机号码      required
-  
-  OPTIONS
-  
-   -f, --forever      是否持久运行，默认只运行一个周期                    optional      default: false
-   --dev              是否是开发模式，如果true，则显示浏览器运行过程        optional      default: false
-  
-  GLOBAL OPTIONS
-  
-   -h, --help         Display help
-   -V, --version      Display version
-   --no-color         Disable colors
-   --quiet            Quiet mode - only displays warn and error messages
-   -v, --verbose      Verbose mode - will also output debug messages
-
 ```
 
 ### 自行引入包
@@ -68,22 +32,17 @@ smsboomer -h
 ```javascript
 const boomer = require('smsboomer');
 
-const app = boomer("138xxxxxxxx", { once: true });
-
-process.on('SIGINT', () => {
-  app.emit('end');
-  process.exit(1);
-});
+const app = boomer(process.env.PHONE, { once: true });
 
 app
-  .on('open', () => {
+  .on('open', (ctx) => {
     console.info(`打开浏览器...`);
   })
-  .on('next', () => {
-    console.info(`进入到发送验证码页面...`);
+  .on('next', (ctx) => {
+    console.info(`进入到 ${ctx.currentPage}`);
   })
   .on('error', err => {
-    console.error(`发送错误了 ${err}`);
+    console.error(err);
   })
   // bootstrap
   .emit('bootstrap');
@@ -183,7 +142,7 @@ added 1 package in 14.979s
 
 ## Disclaimer
 
-**本项目仅用于技术研究，由于使用该项目产生的任何纠纷，由使用者承担**
+**本项目仅用于技术研究，由于使用该项目产生的任何纠纷，由使用者承担，如有不当之处，请联系本人 troy450409405@gmail.com**
 
 ## License
 

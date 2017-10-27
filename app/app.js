@@ -5,7 +5,6 @@ const puppeteer = require('puppeteer');
 const pTimeout = require('p-timeout');
 const chalk = require('chalk');
 const { shuffle } = require('lodash');
-const config = require('./config');
 const utils = require('./utils');
 
 const EVENT_ON_LAUNCH = 'launch'; // symbol('when App launch');
@@ -21,6 +20,7 @@ class App extends EventEmitter {
     this.providers = [];
     this.entities = [];
     this.active = false;
+    this.currentPage = null; // 当前正在打开的页面
 
     this.on('end', async () => {
       // close the browser
@@ -53,16 +53,13 @@ class App extends EventEmitter {
    * @returns {Promise.<void>}
    */
   async run() {
-    try{
+    try {
       // open the browser
       if (!this.active) return;
 
       this.emit(EVENT_ON_OPEN, this);
 
-      this.browser = await puppeteer.launch({
-        headless: this.options.isProduction
-        // devtools: true
-      });
+      this.browser = await puppeteer.launch({ headless: this.options.isProduction });
 
       // create a new tab
       this.page = await this.browser.newPage();
@@ -75,7 +72,6 @@ class App extends EventEmitter {
 
       // listen on tab dialog, like alert, confirm
       this.page.on('dialog', async dialog => {
-        console.log(dialog.message());
         await dialog.dismiss();
       });
 
@@ -85,20 +81,27 @@ class App extends EventEmitter {
         const entity = entities[i];
 
         try {
+          this.currentPage = entity.url;
+          this.emit(EVENT_ON_NEXT, this);
+          // 跳转页面
           await this.page.goto(entity.url, {
             networkIdleTimeout: 5000,
             waitUntil: 'networkidle',
             timeout: 3000000
           });
 
-          await this.page.evaluate(() => {
-            const title = document.title;
-            window.addEventListener('mousemove', e => (document.title = `(${e.x},${e.y})${title}`));
-          });
+          // debug 模式下，才显示坐标
+          if (!this.options.isProduction) {
+            await this.page.evaluate(() => {
+              const title = document.title;
+              window.addEventListener(
+                'mousemove',
+                e => (document.title = `(${e.x},${e.y})${title}`)
+              );
+            });
+          }
 
           await this.page.deleteCookie();
-
-          this.emit(EVENT_ON_NEXT, this);
 
           // 60s超时用于处理发送短信，不会导致无线等待的情况...
           await pTimeout(entity.resolve(this), 1000 * 60)
@@ -107,15 +110,16 @@ class App extends EventEmitter {
             })
             .catch(err => {
               // 等待超时，忽略掉
-              this.emit(EVENT_ON_ERROR, err);
               utils.log(chalk.red('[Fail]:'), entity.name);
+              // 如果是等待超时
+              // 则很有可能是验证是否发送成功
               if (err instanceof Error && err.message.indexOf('waiting failed')) {
               } else if (err) {
-                console.error(err);
+                this.emit(EVENT_ON_ERROR, err);
               }
             });
         } catch (err) {
-          console.error(err);
+          this.emit(EVENT_ON_ERROR, err);
         } finally {
           await utils.sleep(2000);
         }
@@ -125,8 +129,8 @@ class App extends EventEmitter {
       await this.page.close();
       await this.browser.close();
       this.emit(EVENT_ON_CLOSED, this);
-    }catch (err){
-      console.error(err);
+    } catch (err) {
+      this.emit(EVENT_ON_ERROR, err);
     }
   }
   async bootstrap() {
