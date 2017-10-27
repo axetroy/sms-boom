@@ -1,7 +1,8 @@
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
 
-console.info(`process ${process.pid} start.`);
+console.info(`process ${chalk.blue(process.pid)} ${chalk.green('start')}.`);
 
 process.on('SIGINT', () => {
   console.info(`SIGINT received`);
@@ -9,7 +10,7 @@ process.on('SIGINT', () => {
 });
 
 process.on('exit', () => {
-  console.info(`process ${process.pid} exit.`);
+  console.info(`process ${chalk.blue(process.pid)} ${chalk.red('exit')}.`);
 });
 
 process.on('uncaughtException', err => {
@@ -20,7 +21,8 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-const localChromiumPath = path.join(process.cwd(), 'node_modules', 'puppeteer', '.local-chromium');
+const puppeteerModulePath = path.join(process.cwd(), 'node_modules', 'puppeteer');
+const localChromiumPath = path.join(puppeteerModulePath, '.local-chromium');
 
 try {
   const stat = fs.statSync(localChromiumPath);
@@ -36,10 +38,15 @@ try {
     throw null;
   }
 } catch (err) {
-  throw new Error(`chromium 没有被正确安装，请重新安装，运行 'npm install'`);
+  if (err) {
+    console.error(err);
+  }
+  console.error(
+    `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(localChromiumPath)}`
+  );
+  console.error(`Try to reinstall: ${chalk.green('node ' + puppeteerModulePath + '/install.js')}`);
+  process.exit(1);
 }
-
-console.log(localChromiumPath);
 
 const App = require('./app/app');
 
