@@ -107,6 +107,7 @@ class App extends EventEmitter {
           await pTimeout(entity.resolve(this), 1000 * 60)
             .then(() => {
               utils.log(chalk.green('[Success]:'), entity.name);
+              return Promise.resolve();
             })
             .catch(err => {
               // 等待超时，忽略掉
@@ -114,8 +115,9 @@ class App extends EventEmitter {
               // 如果是等待超时
               // 则很有可能是验证是否发送成功
               if (err instanceof Error && err.message.indexOf('waiting failed')) {
+                return Promise.resolve();
               } else if (err) {
-                this.emit(EVENT_ON_ERROR, err);
+                return Promise.reject(err);
               }
             });
         } catch (err) {

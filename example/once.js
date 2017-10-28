@@ -10,6 +10,7 @@ app
     console.info(`进入到 ${ctx.currentPage}`);
   })
   .on('error', err => {
+    console.error(`something go wrong`);
     console.error(err);
   })
   // bootstrap

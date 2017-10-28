@@ -14,7 +14,8 @@ process.on('exit', () => {
 });
 
 process.on('uncaughtException', err => {
-  console.error('Error caught in uncaughtException event:', err);
+  console.error('Error caught in uncaughtException event:');
+  console.error(err);
 });
 
 process.on('unhandledRejection', (reason, p) => {
