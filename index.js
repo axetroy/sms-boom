@@ -38,6 +38,15 @@ try {
   if (files.length <= 0) {
     throw null;
   }
+
+  const firstFile = files[0];
+
+  const firstFileStat = fs.statSync(path.join(localChromiumPath, firstFile));
+
+  // 不是目录
+  if (!firstFileStat.isDirectory()) {
+    throw null;
+  }
 } catch (err) {
   if (err) {
     console.error(err);
