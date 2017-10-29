@@ -68,7 +68,6 @@ node ./example/forever.js # 无限循环运行
 ## Contributing
 
 > 每一个人都可以是贡献者。
-
 > 如果你发现有的网站，可以作为短信提供者，请在issue中提出，或PR.
 
 [贡献指南](https://github.com/axetroy/sms-boom/blob/master/CONTRIBUTING.md)
