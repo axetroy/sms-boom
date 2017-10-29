@@ -22,7 +22,7 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-const puppeteerModulePath = path.join(process.cwd(), 'node_modules', 'puppeteer');
+const puppeteerModulePath = path.join(__dirname, 'node_modules', 'puppeteer');
 const localChromiumPath = path.join(puppeteerModulePath, '.local-chromium');
 
 try {
