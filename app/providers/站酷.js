@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://passport.zcool.com.cn/regPhone.do?appId=1006`;
-    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
