@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://passport.vip.com/register`;
-    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
