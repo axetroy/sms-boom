@@ -20,19 +20,23 @@
 
 ## Usage
 
-###  从NPM安装运行
+###  以CLI命令运行
 
 ```bash
 npm install smsboomer -g
 smsboomer 138xxxxxxxx
 ```
 
-### 自行引入包
+### 自行引入NPM包
+
+```bash
+npm install smsboomer --dev
+```
 
 ```javascript
 const boomer = require('smsboomer');
 
-const app = boomer(process.env.PHONE, { once: true });
+const app = boomer("13800000000", { once: true });
 
 app
   .on('open', (ctx) => {
