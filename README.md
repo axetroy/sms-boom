@@ -30,7 +30,7 @@ smsboomer 138xxxxxxxx
 ### 自行引入NPM包
 
 ```bash
-npm install smsboomer --dev
+npm install smsboomer --save
 ```
 
 ```javascript
