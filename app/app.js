@@ -114,7 +114,7 @@ class App extends EventEmitter {
               utils.log(chalk.red('[Fail]:'), entity.name);
               // 如果是等待超时
               // 则很有可能是验证是否发送成功
-              if (err instanceof Error && err.message.indexOf('waiting failed')) {
+              if (err instanceof Error && err.message.indexOf('waiting failed') >= 0) {
                 return Promise.resolve();
               } else if (err) {
                 return Promise.reject(err);

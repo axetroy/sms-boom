@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://service.zol.com.cn/user/siteLogin.php`;
-    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
