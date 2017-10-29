@@ -57,6 +57,7 @@ app
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
+yarn
 export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
 
 node ./example/once.js  # 运行一个周期
