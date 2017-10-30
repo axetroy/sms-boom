@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+/*
+* 检查chromium是否正确下载
+* 如果已下载，则跳过
+* 如果未下载，则执行下载脚本
+* */
+
+const chalk = require('chalk');
+
+console.info(`${chalk.blue('Checking Chromium')}...`);
+
+const path = require('path');
+const config = require('../config');
+const isChromiumExist = require('../isChromiumExist');
+const puppeteerModulePath = path.join(config.paths.root, 'node_modules', 'puppeteer');
+
+const existed = isChromiumExist();
+
+if (existed) {
+  console.info(`${chalk.green('Chromium exist...')}`);
+} else {
+  console.info(`${chalk.red('Chromium not exist...')}`);
+  console.info(`${chalk.blue('Chromium installing...')}`);
+  // run install script
+  require(path.join(puppeteerModulePath, 'install.js'));
+}

@@ -1,6 +1,7 @@
 const path = require('path');
-const fs = require('fs');
 const chalk = require('chalk');
+const checkIsChromiumExist = require('./isChromiumExist');
+const config = require('./config');
 
 console.info(`process ${chalk.blue(process.pid)} ${chalk.green('start')}.`);
 
@@ -22,35 +23,12 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-const puppeteerModulePath = path.join(__dirname, 'node_modules', 'puppeteer');
+const puppeteerModulePath = path.join(config.paths.root, 'node_modules', 'puppeteer');
 const localChromiumPath = path.join(puppeteerModulePath, '.local-chromium');
 
-try {
-  const stat = fs.statSync(localChromiumPath);
+const isChromiumExist = checkIsChromiumExist();
 
-  // 不是目录
-  if (!stat.isDirectory()) {
-    throw null;
-  }
-
-  const files = fs.readdirSync(localChromiumPath);
-
-  if (files.length <= 0) {
-    throw null;
-  }
-
-  const firstFile = files[0];
-
-  const firstFileStat = fs.statSync(path.join(localChromiumPath, firstFile));
-
-  // 不是目录
-  if (!firstFileStat.isDirectory()) {
-    throw null;
-  }
-} catch (err) {
-  if (err) {
-    console.error(err);
-  }
+if (isChromiumExist === false) {
   console.error(
     `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(localChromiumPath)}`
   );
