@@ -6,7 +6,7 @@ const pTimeout = require('p-timeout');
 const chalk = require('chalk');
 const { shuffle } = require('lodash');
 const utils = require('./utils');
-const config = require('./config');
+const config = require('../config');
 
 const EVENT_ON_LAUNCH = 'launch'; // symbol('when App launch');
 const EVENT_ON_OPEN = 'open'; // symbol('when browser open');
