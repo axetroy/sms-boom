@@ -13,7 +13,6 @@ console.info(`${chalk.blue('Checking Chromium')}...`);
 const path = require('path');
 const config = require('../config');
 const isChromiumExist = require('../isChromiumExist');
-const puppeteerModulePath = path.join(config.paths.root, 'node_modules', 'puppeteer');
 
 const existed = isChromiumExist();
 
@@ -23,5 +22,5 @@ if (existed) {
   console.info(`${chalk.red('Chromium not exist...')}`);
   console.info(`${chalk.blue('Chromium installing...')}`);
   // run install script
-  require(path.join(puppeteerModulePath, 'install.js'));
+  require(path.join(config.paths.puppeteer, 'install.js'));
 }

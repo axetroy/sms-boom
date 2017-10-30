@@ -23,16 +23,16 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-const puppeteerModulePath = path.join(config.paths.root, 'node_modules', 'puppeteer');
-const localChromiumPath = path.join(puppeteerModulePath, '.local-chromium');
-
+// 运行时检查是已运行
 const isChromiumExist = checkIsChromiumExist();
 
 if (isChromiumExist === false) {
   console.error(
-    `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(localChromiumPath)}`
+    `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(path.join(config.paths.puppeteer, '.local-chromium'))}`
   );
-  console.error(`Try to reinstall: ${chalk.green('node ' + puppeteerModulePath + '/install.js')}`);
+  console.error(
+    `Try to reinstall: ${chalk.green('node ' + config.paths.puppeteer + '/install.js')}`
+  );
   process.exit(1);
 }
 

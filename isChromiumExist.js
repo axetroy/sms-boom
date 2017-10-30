@@ -7,8 +7,7 @@ const config = require('./config');
  * @returns {boolean}
  */
 module.exports = function() {
-  const puppeteerModulePath = path.join(config.paths.root, 'node_modules', 'puppeteer');
-  const localChromiumPath = path.join(puppeteerModulePath, '.local-chromium');
+  const localChromiumPath = path.join(config.paths.puppeteer, '.local-chromium');
 
   let isExisted = false;
 

@@ -5,6 +5,7 @@ module.exports = {
   paths: {
     root: __dirname,
     app: path.join(__dirname, 'app'),
-    bin: path.join(__dirname, 'bin')
+    bin: path.join(__dirname, 'bin'),
+    puppeteer: path.dirname(require.resolve('puppeteer'))
   }
 };
