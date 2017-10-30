@@ -88,4 +88,4 @@ node ./example/forever.js # 无限循环运行
 
 ## License
 
-The [Apache License](https://github.com/axetroy/sms-boom/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Faxetroy%2Fsms-boom.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Faxetroy%2Fsms-boom?ref=badge_large)
