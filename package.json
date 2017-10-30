@@ -23,7 +23,7 @@
     "url": "git+https://github.com/axetroy/sms-boom.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "Apache",
   "bugs": {
     "url": "https://github.com/axetroy/sms-boom/issues"
   },
