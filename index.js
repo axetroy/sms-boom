@@ -23,10 +23,8 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-// 运行时检查是已运行
-const isChromiumExist = checkIsChromiumExist();
-
-if (isChromiumExist === false) {
+// 运行时检查是已安装Chromium
+if (checkIsChromiumExist() === false) {
   console.error(
     `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(path.join(config.paths.puppeteer, '.local-chromium'))}`
   );
