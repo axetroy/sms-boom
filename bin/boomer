@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const program = require('caporal');
+const chalk = require('chalk');
 const boomer = require('../index');
+const utils = require('../app/utils');
 
 const pkg = require('../package.json');
 program.version(pkg.version).description(pkg.description);
@@ -17,13 +19,15 @@ program
 
     app
       .on('open', () => {
-        console.info(`打开浏览器...`);
+        utils.info(`打开浏览器...`);
       })
-      .on('next', (ctx) => {
-        console.info(`进入到 ${ctx.currentPage}`);
+      .on('next', currentTarget => {
+        utils.info(
+          `进入到 ${chalk.green(currentTarget.name)} ${chalk.green.underline(currentTarget.url)}`
+        );
       })
       .on('error', err => {
-        console.error(err);
+        utils.error(err);
       })
       // bootstrap
       .emit('bootstrap');

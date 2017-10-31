@@ -21,7 +21,7 @@ class App extends EventEmitter {
     this.providers = [];
     this.entities = [];
     this.active = false;
-    this.currentPage = null; // 当前正在打开的页面
+    this.currentTarget = null; // 当前页面的provider实例
     this.on('bootstrap', this.bootstrap.bind(this));
   }
 
@@ -64,9 +64,9 @@ class App extends EventEmitter {
       // open the browser
       if (!this.active) return;
 
-      this.emit(EVENT_ON_OPEN, this);
-
       this.browser = await puppeteer.launch({ headless: this.options.isProduction });
+
+      this.emit(EVENT_ON_OPEN, this);
 
       // create a new tab
       this.page = await this.browser.newPage();
@@ -87,9 +87,10 @@ class App extends EventEmitter {
         if (!this.active) return;
         const entity = entities[i];
 
+        this.currentTarget = entity;
+
         try {
-          this.currentPage = entity.url;
-          this.emit(EVENT_ON_NEXT, this);
+          this.emit(EVENT_ON_NEXT, entity);
           // 跳转页面
           await this.page.goto(entity.url, {
             networkIdleTimeout: 5000,
