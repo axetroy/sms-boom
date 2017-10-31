@@ -31,7 +31,7 @@ if (checkIsChromiumExist() === false) {
     )}`
   );
   console.error(
-    `Try to reinstall: ${chalk.green('node ' + config.paths.puppeteer + '/install.js')}`
+    `Try to reinstall: ${chalk.green('node ' + path.join(config.paths.puppeteer, 'install.js'))}`
   );
   process.exit(1);
 }
