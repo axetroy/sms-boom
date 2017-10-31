@@ -54,6 +54,9 @@ module.exports = function(phoneNumber, options) {
     throw new Error(`Invalid phone number ${phoneNumber}`);
   }
   const app = new App(Object.assign({}, defaultOptions, options, { phone: phoneNumber }));
+  process.on('exit', () => {
+    app.close();
+  });
   // load provider
   app.resolveProviders('./app/providers');
   return app;

@@ -22,18 +22,24 @@ class App extends EventEmitter {
     this.entities = [];
     this.active = false;
     this.currentPage = null; // 当前正在打开的页面
-
-    this.on('end', async () => {
-      // close the browser
-      this.page && (await this.page.close());
-      this.browser && (await this.browser.close());
-    });
     this.on('bootstrap', this.bootstrap.bind(this));
   }
+
+  /**
+   * resolve a provider with Provider Constructor
+   * @param provider
+   * @returns {App}
+   */
   provider(provider) {
     this.providers.push(provider);
     return this;
   }
+
+  /**
+   * resolve the providers with a dir
+   * @param dir
+   * @returns {App}
+   */
   resolveProviders(dir) {
     dir = path.join(config.paths.root, dir);
     const files = fs.readdirSync(dir) || [];
@@ -50,7 +56,7 @@ class App extends EventEmitter {
   }
 
   /**
-   * 运行一个周期
+   * run a circle
    * @returns {Promise.<void>}
    */
   async run() {
@@ -127,15 +133,26 @@ class App extends EventEmitter {
           await utils.sleep(2000);
         }
       }
-
-      // close the browser
-      await this.page.close();
-      await this.browser.close();
-      this.emit(EVENT_ON_CLOSED, this);
+      await this.close();
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);
     }
   }
+
+  /**
+   * close browser
+   * @returns {Promise.<void>}
+   */
+  async close() {
+    const browser = this.browser;
+    browser && (await browser.close());
+    this.emit(EVENT_ON_CLOSED, this);
+  }
+
+  /**
+   * bootstrap the app
+   * @returns {Promise.<App>}
+   */
   async bootstrap() {
     // 随机序列
     const entities = shuffle(
