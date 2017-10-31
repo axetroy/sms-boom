@@ -26,7 +26,9 @@ process.on('unhandledRejection', (reason, p) => {
 // 运行时检查是已安装Chromium
 if (checkIsChromiumExist() === false) {
   console.error(
-    `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(path.join(config.paths.puppeteer, '.local-chromium'))}`
+    `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(
+      path.join(config.paths.puppeteer, '.local-chromium')
+    )}`
   );
   console.error(
     `Try to reinstall: ${chalk.green('node ' + config.paths.puppeteer + '/install.js')}`
@@ -51,7 +53,7 @@ module.exports = function(phoneNumber, options) {
   if (typeof phoneNumber !== 'string' && !isNaN(+phoneNumber)) {
     throw new Error(`Invalid phone number ${phoneNumber}`);
   }
-  const app = new App({ ...defaultOptions, ...options, ...{ phone: phoneNumber } });
+  const app = new App(Object.assign({}, defaultOptions, options, { phone: phoneNumber }));
   // load provider
   app.resolveProviders('./app/providers');
   return app;

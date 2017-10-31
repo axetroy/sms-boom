@@ -6,8 +6,8 @@ async function sleep(ms) {
   });
 }
 
-function log(...argv) {
-  console.log.call(console, ...argv);
+function log() {
+  console.log.apply(console, arguments);
 }
 
 exports.sleep = sleep;
