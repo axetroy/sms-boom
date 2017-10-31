@@ -4,7 +4,7 @@
 [![Dependency](https://david-dm.org/axetroy/smsboomer.svg)](https://david-dm.org/axetroy/smsboomer)
 ![License](https://img.shields.io/badge/license-Apache-green.svg)
 [![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-green.svg)](https://github.com/prettier/prettier)
-![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
+![Node](https://img.shields.io/badge/node-%3E=7.6-blue.svg?style=flat-square)
 [![npm version](https://badge.fury.io/js/smsboomer.svg)](https://badge.fury.io/js/smsboomer)
 
 <figure class="third">
