@@ -43,8 +43,8 @@ app
   .on('open', (ctx) => {
     console.info(`打开浏览器...`);
   })
-  .on('next', (ctx) => {
-    console.info(`进入到 ${ctx.currentPage}`);
+  .on('next', (currentTarget) => {
+    console.info(`进入到 ${currentTarget.name} ${currentTarget.url}`);
   })
   .on('error', err => {
     console.error(err);
