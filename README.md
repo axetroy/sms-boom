@@ -19,6 +19,10 @@
 
 暂不支持图片验证码识别
 
+## Requirement
+
+Node.js 8.3.0+
+
 ## Usage
 
 ###  以CLI命令运行
