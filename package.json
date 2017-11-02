@@ -36,10 +36,8 @@
     "puppeteer": "^0.12.0"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/p-timeout": "^1.2.0",
     "@types/puppeteer": "^0.12.0",
-    "all-contributors-cli": "^4.5.1",
-    "cross-env": "^5.1.0"
+    "all-contributors-cli": "^4.5.1"
   }
 }
