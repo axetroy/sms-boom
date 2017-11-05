@@ -170,13 +170,26 @@ class App extends EventEmitter {
         .filter(entity => entity.active === true)
     );
 
-    const aloneEntity = entities.find(entity => entity.alone);
+    this.entities = entities;
 
-    // 如果找到设置alone属性的provider，则单独运行，方便调试
-    if (aloneEntity && !this.options.isProduction) {
-      this.entities = [aloneEntity];
-    } else {
-      this.entities = entities;
+    if (!this.options.isProduction) {
+      let aloneEntity;
+
+      // 如果找到指定的provider，则单独运行
+      if (this.options.launchProvider) {
+        aloneEntity = entities.find(
+          entity => entity.name === this.options.launchProvider
+        );
+      }
+
+      // 如果找到设置alone属性的provider，则单独运行，方便调试
+      if (!aloneEntity) {
+        aloneEntity = entities.find(entity => entity.alone);
+      }
+
+      if (aloneEntity) {
+        this.entities = [aloneEntity];
+      }
     }
 
     this.emit(EVENT_ON_LAUNCH, this);

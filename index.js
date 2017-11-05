@@ -45,7 +45,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const defaultOptions = {
   isProduction,
   username: 'abc123mmp',
-  name: '张大爷',
+  name: '隔壁老王1024',
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
   once: isProduction === false,

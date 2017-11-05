@@ -11,10 +11,12 @@ program
   .argument('<phone>', '手机号码')
   .option('-f, --forever', '是否持久运行，默认只运行一个周期', program.BOOLEAN, false)
   .option('--dev', '是否是开发模式，如果true，则显示浏览器运行过程', program.BOOLEAN, false)
+  .option('--launch <provider>', '如果是开发模式，则指定站点名称<provider>', program.STRING, "")
   .action((argv, opts) => {
     const app = boomer(argv.phone || process.env.PHONE || '13800000000', {
       once: !opts.forever,
       isProduction: !opts.dev,
+      launchProvider: opts.launch,
     });
 
     app
