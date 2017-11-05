@@ -31,7 +31,9 @@ if (checkIsChromiumExist() === false) {
     )}`
   );
   console.error(
-    `Try to reinstall: ${chalk.green('node ' + path.join(config.paths.puppeteer, 'install.js'))}`
+    `Try to reinstall: ${chalk.green(
+      'node ' + path.join(config.paths.puppeteer, 'install.js')
+    )}`
   );
   process.exit(1);
 }
@@ -46,14 +48,16 @@ const defaultOptions = {
   name: '张大爷',
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
-  once: isProduction === false
+  once: isProduction === false,
 };
 
 module.exports = function(phoneNumber, options) {
   if (typeof phoneNumber !== 'string' && !isNaN(+phoneNumber)) {
     throw new Error(`Invalid phone number ${phoneNumber}`);
   }
-  const app = new App(Object.assign({}, defaultOptions, options, { phone: phoneNumber }));
+  const app = new App(
+    Object.assign({}, defaultOptions, options, { phone: phoneNumber })
+  );
   process.on('exit', () => {
     app.close();
   });

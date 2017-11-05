@@ -14,7 +14,7 @@ program
   .action((argv, opts) => {
     const app = boomer(argv.phone || process.env.PHONE || '13800000000', {
       once: !opts.forever,
-      isProduction: !opts.dev
+      isProduction: !opts.dev,
     });
 
     app
@@ -23,7 +23,9 @@ program
       })
       .on('next', currentTarget => {
         utils.info(
-          `进入到 ${chalk.green(currentTarget.name)} ${chalk.green.underline(currentTarget.url)}`
+          `进入到 ${chalk.green(currentTarget.name)} ${chalk.green.underline(
+            currentTarget.url
+          )}`
         );
       })
       .on('error', err => {
