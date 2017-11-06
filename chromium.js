@@ -2,6 +2,7 @@ const util = require('util');
 const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
+const Context = require('@axetroy/context');
 const config = require('./config');
 
 const LOCAL_CHROMIUM = '.local-chromium';
@@ -15,26 +16,18 @@ const installScript =
   }) +
   `
   // expose the module to outside
-  __ChromiumDownloader.downloadURLs = downloadURLs;
-  Object.assign(__ChromiumDownloader,module.exports);
+  module.exports.downloadURLs = downloadURLs;
   `;
 
-const ChromiumDownloader = {};
-
-const context = {
-  require,
-  console,
-  __dirname: path.dirname(downLoaderPath),
-  __filename: downLoaderPath,
-  module,
-  exports,
-  global,
-  __ChromiumDownloader: ChromiumDownloader
-};
+const context = new Context(downLoaderPath, {
+  global: {}
+});
 
 const script = new vm.Script(`${installScript}`);
 
 script.runInNewContext(context);
+
+const ChromiumDownloader = context.module.exports;
 
 const Chromium = {
   /**
