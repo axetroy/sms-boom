@@ -17,10 +17,10 @@ const isChromiumExist = require('../isChromiumExist');
 const existed = isChromiumExist();
 
 if (existed) {
-  console.info(`${chalk.green('Chromium exist...')}`);
+  console.info(`${chalk.green('Chromium exist.')}`);
 } else {
-  console.info(`${chalk.red('Chromium not exist...')}`);
-  console.info(`${chalk.blue('Chromium installing...')}`);
+  console.info(`${chalk.red('Chromium not exist.')}`);
+  console.info(`${chalk.blue('installing Chromium...')}`);
   // run install script
   require(path.join(config.paths.puppeteer, 'install.js'));
 }
