@@ -1,0 +1,95 @@
+const util = require('util');
+const vm = require('vm');
+const fs = require('fs');
+const path = require('path');
+const config = require('./config');
+
+const LOCAL_CHROMIUM = '.local-chromium';
+
+const puppeteerPkg = require(path.join(config.paths.puppeteer, 'package.json'));
+const downLoaderPath = path.join(config.paths.puppeteer, 'utils', 'ChromiumDownloader.js');
+
+const installScript =
+  fs.readFileSync(downLoaderPath, {
+    encoding: 'utf8'
+  }) +
+  `
+  // expose the module to outside
+  __ChromiumDownloader.downloadURLs = downloadURLs;
+  Object.assign(__ChromiumDownloader,module.exports);
+  `;
+
+const ChromiumDownloader = {};
+
+const context = {
+  require,
+  console,
+  __dirname: path.dirname(downLoaderPath),
+  __filename: downLoaderPath,
+  module,
+  exports,
+  global,
+  __ChromiumDownloader: ChromiumDownloader
+};
+
+const script = new vm.Script(`${installScript}`);
+
+script.runInNewContext(context);
+
+const Chromium = {
+  get revision() {
+    return puppeteerPkg.puppeteer.chromium_revision;
+  },
+  get platform() {
+    return ChromiumDownloader.currentPlatform();
+  },
+  get downloadUrl() {
+    const url = ChromiumDownloader.downloadURLs[this.platform];
+    return util.format(url, this.revision);
+  },
+  /**
+   *
+   * @returns {string}
+   */
+  get path() {
+    return path.join(config.paths.puppeteer, LOCAL_CHROMIUM, this.platform + '-' + this.revision);
+  },
+  get isExist() {
+    const localChromiumPath = path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
+
+    let isExisted = false;
+
+    try {
+      const stat = fs.statSync(localChromiumPath);
+
+      // 不是目录
+      if (!stat.isDirectory()) {
+        throw null;
+      }
+
+      const files = fs.readdirSync(localChromiumPath);
+
+      if (files.length <= 0) {
+        throw null;
+      }
+
+      const firstFile = files[0];
+
+      const firstFileStat = fs.statSync(path.join(localChromiumPath, firstFile));
+
+      // 不是目录
+      if (!firstFileStat.isDirectory()) {
+        throw null;
+      }
+
+      isExisted = true;
+    } catch (err) {}
+
+    return isExisted;
+  },
+  Downloader: ChromiumDownloader
+};
+
+console.log(Chromium.downloadUrl);
+
+module.exports = Chromium;
