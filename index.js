@@ -35,7 +35,7 @@ if (Chromium.isExist === false) {
   );
 
   console.info(
-    `If you got network trouble, You can install ${chalk.green(
+    `If you got network trouble, You can download ${chalk.green(
       Chromium.downloadUrl
     )} by your self and extract to ${chalk.yellow(Chromium.path)}`
   );
