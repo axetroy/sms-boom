@@ -37,23 +37,39 @@ const script = new vm.Script(`${installScript}`);
 script.runInNewContext(context);
 
 const Chromium = {
+  /**
+   * get chromium version should download
+   * @returns {*}
+   */
   get revision() {
     return puppeteerPkg.puppeteer.chromium_revision;
   },
+  /**
+   * get current platform
+   * @returns {*|string}
+   */
   get platform() {
     return ChromiumDownloader.currentPlatform();
   },
+  /**
+   * chromium download url
+   * @returns {string}
+   */
   get downloadUrl() {
     const url = ChromiumDownloader.downloadURLs[this.platform];
     return util.format(url, this.revision);
   },
   /**
-   *
+   * get local chromium path
    * @returns {string}
    */
   get path() {
     return path.join(config.paths.puppeteer, LOCAL_CHROMIUM, this.platform + '-' + this.revision);
   },
+  /**
+   * check the local chromium is exist or not
+   * @returns {boolean}
+   */
   get isExist() {
     const localChromiumPath = path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
 
@@ -89,7 +105,5 @@ const Chromium = {
   },
   Downloader: ChromiumDownloader
 };
-
-console.log(Chromium.downloadUrl);
 
 module.exports = Chromium;
