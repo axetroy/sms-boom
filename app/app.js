@@ -32,8 +32,9 @@ class App extends EventEmitter {
           await initFunc();
         }
       } catch (err) {
+        console.error(err);
         console.error(`Boomer init fail...`);
-        throw err;
+        process.exit(1);
       }
       this.bootstrap();
     });

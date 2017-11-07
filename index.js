@@ -50,25 +50,36 @@ module.exports = function(phoneNumber, options) {
       if ((await Chromium.isExistLocalCache) === true) {
         await fs.copy(Chromium.cacheChromiumPath, Chromium.localChromiumPath);
       } else {
-        // 如果没有缓存，则直接退出
-        console.error(
-          `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(
-            path.join(config.paths.puppeteer, '.local-chromium')
-          )}`
-        );
-        console.error(
-          `Try to reinstall: ${chalk.green(
-            'node ' + path.join(config.paths.puppeteer, 'install.js')
-          )}\n`
-        );
+        // 如果没有缓存，则进行下载
+        console.info(`Can not found the Chromium!`);
+        console.info(`Downloading Chromium...`);
+        try {
+          await Chromium.Downloader.downloadRevision(
+            Chromium.platform,
+            Chromium.revision,
+            (total, delta) => {
+              console.info(`Total ${total}, current received ${delta}`);
+            }
+          );
+        } catch (err) {
+          console.error(
+            `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(
+              path.join(config.paths.puppeteer, '.local-chromium')
+            )}`
+          );
+          console.error(
+            `Try to reinstall: ${chalk.green(
+              'node ' + path.join(config.paths.puppeteer, 'install.js')
+            )}\n`
+          );
 
-        console.info(
-          `If you got network trouble, You can download ${chalk.green(
-            Chromium.downloadUrl
-          )} by your self and extract to ${chalk.yellow(Chromium.path)}`
-        );
-
-        process.exit(1);
+          console.info(
+            `If you got network trouble, You can download ${chalk.green(
+              Chromium.downloadUrl
+            )} by your self and extract to ${chalk.yellow(Chromium.path)}`
+          );
+          throw err;
+        }
       }
     } else {
       // 缓存Chromium，防止重复下载
