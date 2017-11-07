@@ -14,11 +14,15 @@ const path = require('path');
 const config = require('../config');
 const Chromium = require('../chromium');
 
-if (Chromium.isExist || Chromium.isExistLocalCache) {
-  console.info(`${chalk.green('Chromium exist.')}`);
-} else {
-  console.info(`${chalk.red('Chromium not exist.')}`);
-  console.info(`${chalk.blue('installing Chromium...')}`);
-  // run install script
-  require(path.join(config.paths.puppeteer, 'install.js'));
-}
+(async () => {
+  if ((await Chromium.isExist) || (await Chromium.isExistLocalCache)) {
+    console.info(`${chalk.green('Chromium exist.')}`);
+  } else {
+    console.info(`${chalk.red('Chromium not exist.')}`);
+    console.info(`${chalk.blue('installing Chromium...')}`);
+    // run install script
+    require(path.join(config.paths.puppeteer, 'install.js'));
+  }
+})().catch(err => {
+  console.error(err);
+});

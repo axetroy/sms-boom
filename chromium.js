@@ -48,21 +48,24 @@ const Chromium = {
    * @returns {boolean}
    */
   get isExistLocalCache() {
-    const localCachePath = this.cacheChromiumPath;
-    const exist = fs.pathExistsSync(localCachePath);
+    return (async () => {
+      const localCachePath = this.cacheChromiumPath;
+      const exist = await fs.pathExists(localCachePath);
 
-    if (exist === true) {
-      const files = fs.readdirSync(localCachePath);
-      if (files.length < 1) return false;
+      if (exist === true) {
+        const files = await fs.readdir(localCachePath);
+        if (files.length < 1) return false;
 
-      // 查找到对应的版本
-      const existWithPlatformAndVersion = fs.pathExistsSync(
-        localCachePath,
-        this.platform + '-' + this.revision
-      );
-      if (existWithPlatformAndVersion) return true;
-    }
-    return false;
+        // 查找到对应的版本
+        const existWithPlatformAndVersion = fs.pathExistsSync(
+          localCachePath,
+          this.platform + '-' + this.revision
+        );
+        if (existWithPlatformAndVersion) return true;
+      }
+    })()
+      .then(result => Promise.resolve(result))
+      .catch(() => Promise.reject(false));
   },
   /**
    * Get chromium version should download
@@ -98,19 +101,16 @@ const Chromium = {
    * @returns {boolean}
    */
   get isExist() {
-    const localChromiumPath = path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
+    return (async () => {
+      const localChromiumPath = path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
 
-    let isExisted = false;
-
-    try {
-      const stat = fs.statSync(localChromiumPath);
-
+      const stat = await fs.stat(localChromiumPath);
       // 不是目录
       if (!stat.isDirectory()) {
         throw null;
       }
 
-      const files = fs.readdirSync(localChromiumPath);
+      const files = await fs.readdir(localChromiumPath);
 
       if (files.length <= 0) {
         throw null;
@@ -118,17 +118,15 @@ const Chromium = {
 
       const firstFile = files[0];
 
-      const firstFileStat = fs.statSync(path.join(localChromiumPath, firstFile));
+      const firstFileStat = await fs.stat(path.join(localChromiumPath, firstFile));
 
       // 不是目录
       if (!firstFileStat.isDirectory()) {
         throw null;
       }
-
-      isExisted = true;
-    } catch (err) {}
-
-    return isExisted;
+    })()
+      .then(() => Promise.resolve(true))
+      .catch(() => Promise.reject(false));
   },
   Downloader: ChromiumDownloader
 };

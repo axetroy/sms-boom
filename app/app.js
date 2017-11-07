@@ -22,7 +22,26 @@ class App extends EventEmitter {
     this.entities = [];
     this.active = false;
     this.currentTarget = null; // 当前页面的provider实例
-    this.on('bootstrap', this.bootstrap.bind(this));
+    this.initer = []; // 初始化的函数
+    this.on('bootstrap', async () => {
+      try {
+        const initer = this.initer;
+        // init before bootstrap all
+        while (initer.length) {
+          const initFunc = initer.shift();
+          await initFunc();
+        }
+      } catch (err) {
+        console.error(`Boomer init fail...`);
+        throw err;
+      }
+      this.bootstrap();
+    });
+  }
+
+  init(func) {
+    this.initer.push(func);
+    return this;
   }
 
   /**
@@ -177,9 +196,7 @@ class App extends EventEmitter {
 
       // 如果找到指定的provider，则单独运行
       if (this.options.launchProvider) {
-        aloneEntity = entities.find(
-          entity => entity.name === this.options.launchProvider
-        );
+        aloneEntity = entities.find(entity => entity.name === this.options.launchProvider);
       }
 
       // 如果找到设置alone属性的provider，则单独运行，方便调试

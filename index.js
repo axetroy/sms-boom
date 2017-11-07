@@ -25,47 +25,6 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
 });
 
-// 运行时检查是已安装Chromium
-if (Chromium.isExist === false) {
-  // 查看本地是否有缓存
-  if (Chromium.isExistLocalCache === true) {
-    fs.copySync(Chromium.cacheChromiumPath, Chromium.localChromiumPath);
-  } else {
-    // 如果没有缓存，则直接退出
-    console.error(
-      `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(
-        path.join(config.paths.puppeteer, '.local-chromium')
-      )}`
-    );
-    console.error(
-      `Try to reinstall: ${chalk.green(
-        'node ' + path.join(config.paths.puppeteer, 'install.js')
-      )}\n`
-    );
-
-    console.info(
-      `If you got network trouble, You can download ${chalk.green(
-        Chromium.downloadUrl
-      )} by your self and extract to ${chalk.yellow(Chromium.path)}`
-    );
-
-    process.exit(1);
-  }
-} else {
-  // 缓存Chromium，防止重复下载
-  fs.ensureDirSync(Chromium.cacheChromiumPath);
-
-  // 子目录
-  const subPath = Chromium.platform + '-' + Chromium.revision;
-  // 最后缓存的目标路径
-  const targetPath = path.join(Chromium.cacheChromiumPath, subPath);
-
-  // 如果不存在，则缓存起来
-  if (fs.pathExistsSync(targetPath) === false) {
-    fs.copySync(path.join(Chromium.localChromiumPath, subPath), targetPath);
-  }
-}
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 const defaultOptions = {
@@ -82,10 +41,56 @@ module.exports = function(phoneNumber, options) {
     throw new Error(`Invalid phone number ${phoneNumber}`);
   }
   const app = new App(Object.assign({}, defaultOptions, options, { phone: phoneNumber }));
+
+  // init before bootstrap
+  app.init(async () => {
+    // 运行时检查是已安装Chromium
+    if ((await Chromium.isExist) === false) {
+      // 查看本地是否有缓存
+      if ((await Chromium.isExistLocalCache) === true) {
+        await fs.copy(Chromium.cacheChromiumPath, Chromium.localChromiumPath);
+      } else {
+        // 如果没有缓存，则直接退出
+        console.error(
+          `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(
+            path.join(config.paths.puppeteer, '.local-chromium')
+          )}`
+        );
+        console.error(
+          `Try to reinstall: ${chalk.green(
+            'node ' + path.join(config.paths.puppeteer, 'install.js')
+          )}\n`
+        );
+
+        console.info(
+          `If you got network trouble, You can download ${chalk.green(
+            Chromium.downloadUrl
+          )} by your self and extract to ${chalk.yellow(Chromium.path)}`
+        );
+
+        process.exit(1);
+      }
+    } else {
+      // 缓存Chromium，防止重复下载
+      await fs.ensureDir(Chromium.cacheChromiumPath);
+
+      // 子目录
+      const subPath = Chromium.platform + '-' + Chromium.revision;
+      // 最后缓存的目标路径
+      const targetPath = path.join(Chromium.cacheChromiumPath, subPath);
+
+      // 如果不存在，则缓存起来
+      if ((await fs.pathExists(targetPath)) === false) {
+        await fs.copy(path.join(Chromium.localChromiumPath, subPath), targetPath);
+      }
+    }
+  });
+
   process.on('exit', () => {
     app.close();
   });
   // load provider
   app.resolveProviders('./app/providers');
+
   return app;
 };
