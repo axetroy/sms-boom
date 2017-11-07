@@ -66,6 +66,18 @@ node ./example/once.js  # 运行一个周期
 node ./example/forever.js # 无限循环运行
 ```
 
+### 如何更新
+
+由于Chromium下载困难的原因，从1.x版本开始，可以从Github同步Provider，而不用从新安装新版本
+
+这样做的目的是，Github上，添加/修改了Provider，使用者不用从新安装新版本，也能够使用。
+
+运行命令
+
+```bash
+smsboomer update
+```
+
 ## Contributing
 
 > 每一个人都可以是贡献者。
