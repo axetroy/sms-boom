@@ -12,11 +12,9 @@ console.info(`${chalk.blue('Checking Chromium')}...`);
 
 const path = require('path');
 const config = require('../config');
-const isChromiumExist = require('../isChromiumExist');
+const Chromium = require('../chromium');
 
-const existed = isChromiumExist();
-
-if (existed) {
+if (Chromium.isExist) {
   console.info(`${chalk.green('Chromium exist.')}`);
 } else {
   console.info(`${chalk.red('Chromium not exist.')}`);
