@@ -382,3 +382,4 @@ typings/
 .env
 
 package-lock.json
+.local-chromium
