@@ -1,6 +1,6 @@
 const util = require('util');
 const vm = require('vm');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const Context = require('@axetroy/context');
 const config = require('./config');
@@ -28,22 +28,58 @@ script.runInNewContext(context);
 const ChromiumDownloader = context.module.exports;
 
 const Chromium = {
+  local: LOCAL_CHROMIUM,
   /**
-   * get chromium version should download
+   * Get the path which is Chromium download path
+   * @returns {string}
+   */
+  get localChromiumPath() {
+    return path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
+  },
+  /**
+   * Get the file path which cache local Chromium
+   * @returns {string}
+   */
+  get cacheChromiumPath() {
+    return path.join(config.paths.root, LOCAL_CHROMIUM);
+  },
+  /**
+   * Check the is Chromium have been cache in local project
+   * @returns {boolean}
+   */
+  get isExistLocalCache() {
+    const localCachePath = this.cacheChromiumPath;
+    const exist = fs.pathExistsSync(localCachePath);
+
+    if (exist === true) {
+      const files = fs.readdirSync(localCachePath);
+      if (files.length < 1) return false;
+
+      // 查找到对应的版本
+      const existWithPlatformAndVersion = fs.pathExistsSync(
+        localCachePath,
+        this.platform + '-' + this.revision
+      );
+      if (existWithPlatformAndVersion) return true;
+    }
+    return false;
+  },
+  /**
+   * Get chromium version should download
    * @returns {*}
    */
   get revision() {
     return puppeteerPkg.puppeteer.chromium_revision;
   },
   /**
-   * get current platform
+   * Get current platform
    * @returns {*|string}
    */
   get platform() {
     return ChromiumDownloader.currentPlatform();
   },
   /**
-   * chromium download url
+   * Chromium download url
    * @returns {string}
    */
   get downloadUrl() {
@@ -51,14 +87,14 @@ const Chromium = {
     return util.format(url, this.revision);
   },
   /**
-   * get local chromium path
+   * Get local chromium path
    * @returns {string}
    */
   get path() {
-    return path.join(config.paths.puppeteer, LOCAL_CHROMIUM, this.platform + '-' + this.revision);
+    return path.join(this.localChromiumPath, this.platform + '-' + this.revision);
   },
   /**
-   * check the local chromium is exist or not
+   * Check the Chromium have been download in Puppeteer module
    * @returns {boolean}
    */
   get isExist() {

@@ -14,7 +14,7 @@ const path = require('path');
 const config = require('../config');
 const Chromium = require('../chromium');
 
-if (Chromium.isExist) {
+if (Chromium.isExist || Chromium.isExistLocalCache) {
   console.info(`${chalk.green('Chromium exist.')}`);
 } else {
   console.info(`${chalk.red('Chromium not exist.')}`);
