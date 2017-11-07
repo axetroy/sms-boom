@@ -126,7 +126,7 @@ const Chromium = {
       }
     })()
       .then(() => Promise.resolve(true))
-      .catch(() => Promise.reject(false));
+      .catch(() => Promise.resolve(false));
   },
   Downloader: ChromiumDownloader
 };
