@@ -30,10 +30,12 @@
   "homepage": "https://github.com/axetroy/sms-boom#readme",
   "dependencies": {
     "@axetroy/context": "^0.1.0",
+    "axios": "^0.17.0",
     "caporal": "^0.8.0",
     "chalk": "^2.3.0",
     "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
+    "p-retry": "^1.0.0",
     "p-timeout": "^1.2.0",
     "puppeteer": "^0.12.0"
   },

@@ -3,6 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const Chromium = require('./chromium');
 const config = require('./config');
+const App = require('./app/app');
 
 console.info(`process ${chalk.blue(process.pid)} ${chalk.green('start')}.`);
 
@@ -64,8 +65,6 @@ if (Chromium.isExist === false) {
     fs.copySync(path.join(Chromium.localChromiumPath, subPath), targetPath);
   }
 }
-
-const App = require('./app/app');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
