@@ -19,9 +19,7 @@ const installScript =
   module.exports.downloadURLs = downloadURLs;
   `;
 
-const context = new Context(downLoaderPath, {
-  global: {}
-});
+const context = new Context(downLoaderPath);
 
 const script = new vm.Script(`${installScript}`);
 
