@@ -54,13 +54,7 @@ module.exports = function(phoneNumber, options) {
         console.info(`Can not found the Chromium!`);
         console.info(`Downloading Chromium...`);
         try {
-          await Chromium.Downloader.downloadRevision(
-            Chromium.platform,
-            Chromium.revision,
-            (total, delta) => {
-              console.info(`Total ${total}, current received ${delta}`);
-            }
-          );
+          await Chromium.download();
         } catch (err) {
           console.error(
             `Please make sure ${chalk.green('chromium')} have install at ${chalk.yellow(

@@ -3,6 +3,7 @@ const vm = require('vm');
 const fs = require('fs-extra');
 const path = require('path');
 const Context = require('@axetroy/context');
+const ProgressBar = require('progress');
 const config = require('./config');
 
 const LOCAL_CHROMIUM = '.local-chromium';
@@ -18,12 +19,30 @@ const installScript =
   // expose the module to outside
   module.exports.downloadURLs = downloadURLs;
   `;
-
 const context = new Context(downLoaderPath);
-
 const script = new vm.Script(`${installScript}`);
-
 script.runInNewContext(context);
+
+function toMegabytes(bytes) {
+  const mb = bytes / 1024 / 1024;
+  return `${Math.round(mb * 10) / 10} Mb`;
+}
+
+let progressBar = null;
+function onProgress(bytesTotal, delta) {
+  if (!progressBar) {
+    progressBar = new ProgressBar(
+      `Downloading Chromium r${revision} - ${toMegabytes(bytesTotal)} [:bar] :percent :etas `,
+      {
+        complete: '=',
+        incomplete: ' ',
+        width: 20,
+        total: bytesTotal
+      }
+    );
+  }
+  progressBar.tick(delta);
+}
 
 const ChromiumDownloader = context.module.exports;
 
@@ -88,6 +107,14 @@ const Chromium = {
   get downloadUrl() {
     const url = ChromiumDownloader.downloadURLs[this.platform];
     return util.format(url, this.revision);
+  },
+  /**
+   * download Chromium
+   * @returns {Promise.<void>}
+   */
+  async download() {
+    progressBar = null;
+    await this.Downloader.downloadRevision(this.platform, this.revision, onProgress);
   },
   /**
    * Get local chromium path
