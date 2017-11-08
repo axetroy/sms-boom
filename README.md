@@ -24,6 +24,7 @@
 ###  以CLI命令运行
 
 ```bash
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 npm install smsboomer -g
 smsboomer 138xxxxxxxx
 ```
@@ -31,6 +32,7 @@ smsboomer 138xxxxxxxx
 ### 自行引入NPM包
 
 ```bash
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 npm install smsboomer --save
 ```
 
