@@ -60,6 +60,7 @@ app
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 yarn
 export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
 
