@@ -30,7 +30,7 @@ program
         );
       })
       .on('error', err => {
-        utils.error(err);
+        console.error(err);
       })
       // bootstrap
       .emit('bootstrap');
