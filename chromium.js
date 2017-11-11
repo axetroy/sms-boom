@@ -18,6 +18,7 @@ const installScript =
   `
   // expose the module to outside
   module.exports.downloadURLs = downloadURLs;
+  module.exports.DEFAULT_DOWNLOAD_HOST = DEFAULT_DOWNLOAD_HOST;
   `;
 const context = new Context(downLoaderPath);
 const script = new vm.Script(`${installScript}`);
@@ -106,7 +107,7 @@ const Chromium = {
    */
   get downloadUrl() {
     const url = ChromiumDownloader.downloadURLs[this.platform];
-    return util.format(url, this.revision);
+    return util.format(url, ChromiumDownloader.DEFAULT_DOWNLOAD_HOST, this.revision);
   },
   /**
    * download Chromium
@@ -114,7 +115,7 @@ const Chromium = {
    */
   async download() {
     progressBar = null;
-    await this.Downloader.downloadRevision(this.platform, this.revision, onProgress);
+    await this.Downloader.downloadRevision(this.platform, this.revision, void 0, onProgress);
   },
   /**
    * Get local chromium path
