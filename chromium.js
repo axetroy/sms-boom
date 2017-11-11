@@ -29,22 +29,6 @@ function toMegabytes(bytes) {
   return `${Math.round(mb * 10) / 10} Mb`;
 }
 
-let progressBar = null;
-function onProgress(bytesTotal, delta) {
-  if (!progressBar) {
-    progressBar = new ProgressBar(
-      `Downloading Chromium r${Chromium.revision} - ${toMegabytes(bytesTotal)} [:bar] :percent :etas `,
-      {
-        complete: '=',
-        incomplete: ' ',
-        width: 20,
-        total: bytesTotal
-      }
-    );
-  }
-  progressBar.tick(delta);
-}
-
 const ChromiumDownloader = context.module.exports;
 
 const Chromium = {
@@ -114,8 +98,28 @@ const Chromium = {
    * @returns {Promise.<void>}
    */
   async download() {
-    progressBar = null;
-    await this.Downloader.downloadRevision(this.platform, this.revision, void 0, onProgress);
+    let progressBar = null;
+    await this.Downloader.downloadRevision(
+      this.platform,
+      this.revision,
+      ChromiumDownloader.DEFAULT_DOWNLOAD_HOST,
+      () => {
+        if (!progressBar) {
+          progressBar = new ProgressBar(
+            `Downloading Chromium r${this.revision} - ${toMegabytes(
+              bytesTotal
+            )} [:bar] :percent :etas `,
+            {
+              complete: '=',
+              incomplete: ' ',
+              width: 20,
+              total: bytesTotal
+            }
+          );
+        }
+        progressBar.tick(delta);
+      }
+    );
   },
   /**
    * Get local chromium path
