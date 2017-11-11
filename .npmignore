@@ -388,3 +388,4 @@ example
 CONTRIBUTING.md
 screenshot*.jpg
 .local-chromium
+.git
