@@ -33,7 +33,7 @@ let progressBar = null;
 function onProgress(bytesTotal, delta) {
   if (!progressBar) {
     progressBar = new ProgressBar(
-      `Downloading Chromium r${revision} - ${toMegabytes(bytesTotal)} [:bar] :percent :etas `,
+      `Downloading Chromium r${Chromium.revision} - ${toMegabytes(bytesTotal)} [:bar] :percent :etas `,
       {
         complete: '=',
         incomplete: ' ',
