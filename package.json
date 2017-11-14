@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@types/p-timeout": "^1.2.0",
-    "@types/puppeteer": "^0.12.2",
+    "@types/puppeteer": "^0.13.0",
     "all-contributors-cli": "^4.5.3"
   }
 }
