@@ -113,8 +113,7 @@ class App extends EventEmitter {
           this.emit(EVENT_ON_NEXT, entity);
           // 跳转页面
           await this.page.goto(entity.url, {
-            networkIdleTimeout: 5000,
-            waitUntil: 'networkidle',
+            waitUntil: 'load',
             timeout: 3000000
           });
 
