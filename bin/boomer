@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 const program = require('caporal');
+const chalk = require('chalk');
 const boomer = require('../index');
+const utils = require('../app/utils');
+const updateProviders = require('../scripts/update-provider');
 
 const pkg = require('../package.json');
 program.version(pkg.version).description(pkg.description);
@@ -9,18 +12,22 @@ program
   .argument('<phone>', '手机号码')
   .option('-f, --forever', '是否持久运行，默认只运行一个周期', program.BOOLEAN, false)
   .option('--dev', '是否是开发模式，如果true，则显示浏览器运行过程', program.BOOLEAN, false)
+  .option('--launch <provider>', '如果是开发模式，则指定站点名称<provider>', program.STRING, '')
   .action((argv, opts) => {
     const app = boomer(argv.phone || process.env.PHONE || '13800000000', {
       once: !opts.forever,
-      isProduction: !opts.dev
+      isProduction: !opts.dev,
+      launchProvider: opts.launch
     });
 
     app
       .on('open', () => {
-        console.info(`打开浏览器...`);
+        utils.info(`打开浏览器...`);
       })
-      .on('next', (ctx) => {
-        console.info(`进入到 ${ctx.currentPage}`);
+      .on('next', currentTarget => {
+        utils.info(
+          `进入到 ${chalk.green(currentTarget.name)} ${chalk.green.underline(currentTarget.url)}`
+        );
       })
       .on('error', err => {
         console.error(err);
@@ -28,5 +35,17 @@ program
       // bootstrap
       .emit('bootstrap');
   });
+
+program.command('update').action((argv, opts) => {
+  console.info(`Update Providers...`);
+  updateProviders()
+    .catch(err => {
+      console.error(err);
+      return Promise.resolve();
+    })
+    .then(() => {
+      console.info(`Get Remote Providers done!`);
+    });
+});
 
 program.parse(process.argv);

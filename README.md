@@ -4,7 +4,7 @@
 [![Dependency](https://david-dm.org/axetroy/smsboomer.svg)](https://david-dm.org/axetroy/smsboomer)
 ![License](https://img.shields.io/badge/license-Apache-green.svg)
 [![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-green.svg)](https://github.com/prettier/prettier)
-![Node](https://img.shields.io/badge/node-%3E=6.7-blue.svg?style=flat-square)
+![Node](https://img.shields.io/badge/node-%3E=7.6-blue.svg?style=flat-square)
 [![npm version](https://badge.fury.io/js/smsboomer.svg)](https://badge.fury.io/js/smsboomer)
 
 <figure class="third">
@@ -28,6 +28,7 @@ Node.js 8.3.0+
 ###  以CLI命令运行
 
 ```bash
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 npm install smsboomer -g
 smsboomer 138xxxxxxxx
 ```
@@ -35,6 +36,7 @@ smsboomer 138xxxxxxxx
 ### 自行引入NPM包
 
 ```bash
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 npm install smsboomer --save
 ```
 
@@ -47,8 +49,8 @@ app
   .on('open', (ctx) => {
     console.info(`打开浏览器...`);
   })
-  .on('next', (ctx) => {
-    console.info(`进入到 ${ctx.currentPage}`);
+  .on('next', (currentTarget) => {
+    console.info(`进入到 ${currentTarget.name} ${currentTarget.url}`);
   })
   .on('error', err => {
     console.error(err);
@@ -62,12 +64,25 @@ app
 ```bash
 git clone https://github.com/axetroy/sms-boom.git
 cd ./sms-boom
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1   # 跳过安装Chromium, 运行smsbooer时安装
 yarn
 export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
 
 node ./example/once.js  # 运行一个周期
 # 或者
 node ./example/forever.js # 无限循环运行
+```
+
+### 如何更新
+
+由于Chromium下载困难的原因，从1.x版本开始，可以从Github同步Provider，而不用从新安装新版本
+
+这样做的目的是，Github上，添加/修改了Provider，使用者不用从新安装新版本，也能够使用。
+
+运行命令
+
+```bash
+smsboomer update
 ```
 
 ## Contributing

@@ -21,19 +21,45 @@ class App extends EventEmitter {
     this.providers = [];
     this.entities = [];
     this.active = false;
-    this.currentPage = null; // 当前正在打开的页面
-
-    this.on('end', async () => {
-      // close the browser
-      this.page && (await this.page.close());
-      this.browser && (await this.browser.close());
+    this.currentTarget = null; // 当前页面的provider实例
+    this.initer = []; // 初始化的函数
+    this.on('bootstrap', async () => {
+      try {
+        const initer = this.initer;
+        // init before bootstrap all
+        while (initer.length) {
+          const initFunc = initer.shift();
+          await initFunc();
+        }
+      } catch (err) {
+        console.error(`Boomer init fail...`);
+        this.emit(EVENT_ON_ERROR, err);
+        process.exit(1);
+      }
+      this.bootstrap();
     });
-    this.on('bootstrap', this.bootstrap.bind(this));
   }
+
+  init(func) {
+    this.initer.push(func);
+    return this;
+  }
+
+  /**
+   * resolve a provider with Provider Constructor
+   * @param provider
+   * @returns {App}
+   */
   provider(provider) {
     this.providers.push(provider);
     return this;
   }
+
+  /**
+   * resolve the providers with a dir
+   * @param dir
+   * @returns {App}
+   */
   resolveProviders(dir) {
     dir = path.join(config.paths.root, dir);
     const files = fs.readdirSync(dir) || [];
@@ -50,7 +76,7 @@ class App extends EventEmitter {
   }
 
   /**
-   * 运行一个周期
+   * run a circle
    * @returns {Promise.<void>}
    */
   async run() {
@@ -58,9 +84,9 @@ class App extends EventEmitter {
       // open the browser
       if (!this.active) return;
 
-      this.emit(EVENT_ON_OPEN, this);
-
       this.browser = await puppeteer.launch({ headless: this.options.isProduction });
+
+      this.emit(EVENT_ON_OPEN, this);
 
       // create a new tab
       this.page = await this.browser.newPage();
@@ -81,9 +107,10 @@ class App extends EventEmitter {
         if (!this.active) return;
         const entity = entities[i];
 
+        this.currentTarget = entity;
+
         try {
-          this.currentPage = entity.url;
-          this.emit(EVENT_ON_NEXT, this);
+          this.emit(EVENT_ON_NEXT, entity);
           // 跳转页面
           await this.page.goto(entity.url, {
             networkIdleTimeout: 5000,
@@ -127,15 +154,26 @@ class App extends EventEmitter {
           await utils.sleep(2000);
         }
       }
-
-      // close the browser
-      await this.page.close();
-      await this.browser.close();
-      this.emit(EVENT_ON_CLOSED, this);
+      await this.close();
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);
     }
   }
+
+  /**
+   * close browser
+   * @returns {Promise.<void>}
+   */
+  async close() {
+    const browser = this.browser;
+    browser && (await browser.close());
+    this.emit(EVENT_ON_CLOSED, this);
+  }
+
+  /**
+   * bootstrap the app
+   * @returns {Promise.<App>}
+   */
   async bootstrap() {
     // 随机序列
     const entities = shuffle(
@@ -152,13 +190,24 @@ class App extends EventEmitter {
         .filter(entity => entity.active === true)
     );
 
-    const aloneEntity = entities.find(entity => entity.alone);
+    this.entities = entities;
 
-    // 如果找到设置alone属性的provider，则单独运行，方便调试
-    if (aloneEntity && !this.options.isProduction) {
-      this.entities = [aloneEntity];
-    } else {
-      this.entities = entities;
+    if (!this.options.isProduction) {
+      let aloneEntity;
+
+      // 如果找到指定的provider，则单独运行
+      if (this.options.launchProvider) {
+        aloneEntity = entities.find(entity => entity.name === this.options.launchProvider);
+      }
+
+      // 如果找到设置alone属性的provider，则单独运行，方便调试
+      if (!aloneEntity) {
+        aloneEntity = entities.find(entity => entity.alone);
+      }
+
+      if (aloneEntity) {
+        this.entities = [aloneEntity];
+      }
     }
 
     this.emit(EVENT_ON_LAUNCH, this);

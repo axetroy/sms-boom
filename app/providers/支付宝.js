@@ -10,21 +10,17 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    await utils.sleep(1000 * 2);
-
     await page.type('#J-accName', options.phone, { delay: 50 });
+    await page.type('#J-mobCode', '123456', { delay: 50 });
 
-    await utils.sleep(200);
+    // 这里不知道发什么颠
+    // 选择符选择不到这个元素
+    // 只能执行js脚本
+    await page.evaluate(() => {
+      const btn = document.querySelector('#J-resend-mobile');
+      btn.click();
+    });
 
-    try {
-      const subPages = await page.frames();
-      while (subPages.length) {
-        const subPage = subPages.shift();
-        // 点击统一隐私条款
-        await subPage.click('[seed="content-JAgreeButton"]');
-      }
-    } catch (err) {}
-
-    await page.click('#J-resend-mobile');
+    await page.waitForSelector('#J-resend-mobile button[disabled]', { timeout: 1000 * 3 });
   }
 };

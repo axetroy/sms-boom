@@ -1,6 +1,6 @@
 {
   "name": "smsboomer",
-  "version": "0.2.4",
+  "version": "1.2.4",
   "description": "利用chrome的headless模式，模拟用户注册进行短信轰炸机",
   "main": "index.js",
   "bin": {
@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "all-contributors generate",
-    "postinstall": "./scripts/chromium-checker"
+    "generate": "all-contributors generate"
   },
   "keywords": [
     "sms",
@@ -29,17 +28,20 @@
   },
   "homepage": "https://github.com/axetroy/sms-boom#readme",
   "dependencies": {
+    "@axetroy/context": "^0.1.0",
+    "axios": "^0.17.0",
     "caporal": "^0.8.0",
     "chalk": "^2.3.0",
+    "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
+    "p-retry": "^1.0.0",
     "p-timeout": "^1.2.0",
-    "puppeteer": "^0.12.0"
+    "progress": "^2.0.0",
+    "puppeteer": "^0.13.0"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/p-timeout": "^1.2.0",
-    "@types/puppeteer": "^0.12.0",
-    "all-contributors-cli": "^4.5.1",
-    "cross-env": "^5.1.0"
+    "@types/puppeteer": "^0.13.0",
+    "all-contributors-cli": "^4.5.3"
   }
 }

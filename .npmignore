@@ -387,3 +387,5 @@ example
 .yarnclean
 CONTRIBUTING.md
 screenshot*.jpg
+.local-chromium
+.git
