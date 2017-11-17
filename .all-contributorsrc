@@ -29,6 +29,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "blackmatch",
+      "name": "blackmatch",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12443954?s=460&v=4",
+      "profile": "https://github.com/blackmatch",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ]
 }
