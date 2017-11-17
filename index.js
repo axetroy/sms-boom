@@ -51,7 +51,6 @@ module.exports = function(phoneNumber, options) {
         await fs.copy(Chromium.cacheChromiumPath, Chromium.localChromiumPath);
       } else {
         // 如果没有缓存，则进行下载
-        console.info(`Can not found the Chromium!`);
         console.info(`Downloading Chromium...`);
         try {
           await Chromium.download();

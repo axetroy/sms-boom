@@ -14,9 +14,9 @@
   version "1.2.0"
   resolved "https://registry.npmjs.org/@types/p-timeout/-/p-timeout-1.2.0.tgz#436378f0cf59286587d701237ac79b284b4cb298"
 
-"@types/puppeteer@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-0.12.2.tgz#61263ffde860bcbe3848721329054eca8daf5e58"
+"@types/puppeteer@^0.13.0":
+  version "0.13.0"
+  resolved "http://registry.npm.taobao.org/@types/puppeteer/download/@types/puppeteer-0.13.0.tgz#a12e791f15ab92f6160e1e8a295fd35dbf9cb90d"
   dependencies:
     "@types/node" "*"
 

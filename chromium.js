@@ -54,19 +54,12 @@ const Chromium = {
   get isExistLocalCache() {
     return (async () => {
       const localCachePath = this.cacheChromiumPath;
+
       const exist = await fs.pathExists(localCachePath);
 
-      if (exist === true) {
-        const files = await fs.readdir(localCachePath);
-        if (files.length < 1) return false;
+      if (!exist) return false;
 
-        // 查找到对应的版本
-        const existWithPlatformAndVersion = fs.pathExistsSync(
-          localCachePath,
-          this.platform + '-' + this.revision
-        );
-        if (existWithPlatformAndVersion) return true;
-      }
+      return await fs.pathExists(path.join(localCachePath, this.platform + '-' + this.revision));
     })()
       .then(result => Promise.resolve(result))
       .catch(() => Promise.reject(false));
@@ -103,10 +96,10 @@ const Chromium = {
       this.platform,
       this.revision,
       ChromiumDownloader.DEFAULT_DOWNLOAD_HOST,
-      () => {
+      (bytesTotal, delta) => {
         if (!progressBar) {
           progressBar = new ProgressBar(
-            `Downloading Chromium r${this.revision} - ${toMegabytes(
+            `Downloading Chromium ${this.platform}/${this.revision} - ${toMegabytes(
               bytesTotal
             )} [:bar] :percent :etas `,
             {
@@ -136,29 +129,19 @@ const Chromium = {
     return (async () => {
       const localChromiumPath = path.join(config.paths.puppeteer, LOCAL_CHROMIUM);
 
-      const stat = await fs.stat(localChromiumPath);
-      // 不是目录
-      if (!stat.isDirectory()) {
-        throw null;
+      try {
+        const stat = await fs.stat(localChromiumPath);
+        // 不是目录
+        if (!stat.isDirectory()) return false;
+      } catch (err) {
+        return false;
       }
 
-      const files = await fs.readdir(localChromiumPath);
-
-      if (files.length <= 0) {
-        throw null;
-      }
-
-      const firstFile = files[0];
-
-      const firstFileStat = await fs.stat(path.join(localChromiumPath, firstFile));
-
-      // 不是目录
-      if (!firstFileStat.isDirectory()) {
-        throw null;
-      }
+      // 验证是否下载指定的版本
+      return await fs.pathExists(path.join(localChromiumPath, this.platform + '-' + this.revision));
     })()
-      .then(() => Promise.resolve(true))
-      .catch(() => Promise.resolve(false));
+      .then(isExist => Promise.resolve(isExist))
+      .catch(() => Promise.reject(false));
   },
   Downloader: ChromiumDownloader
 };
