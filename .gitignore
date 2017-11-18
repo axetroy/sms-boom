@@ -383,3 +383,6 @@ typings/
 
 package-lock.json
 .local-chromium
+
+# ignore macOS temp file
+.DS_Store
