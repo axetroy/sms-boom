@@ -12,11 +12,11 @@ module.exports = class extends Provider {
 
     await page.goto(this.url);
 
-    await page.waitForSelector('#cardList .red_btn_card', { timeout: 1000 * 15 });
+    await page.waitForSelector('#cardList .red_btn_card', { timeout: 1000 * 3 });
 
     await page.click('#cardList .red_btn_card');
 
-    await page.waitForNavigation();
+    await page.waitForNavigation({ timeout: 1000 * 5, waitUntil: 'domcontentloaded' });
 
     await page.waitForSelector('#mobile', { timeout: 1000 * 3 });
 
