@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const boomer = require('../index');
 const app = boomer(process.env.PHONE, { once: false });
+const utils = require('../app/utils');
 
 app
   .on('open', () => {
