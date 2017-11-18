@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://mims.icbc.com.cn/IMServiceServer/servlet/ICBCBaseReqNSServlet?dse_operationName=ApplyCreditCardOp&coreCode=HZDW000008461&paraPromoCode=EW0004600000000GZ01`;
-    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
