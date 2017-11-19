@@ -1,6 +1,3 @@
-/**
- * Created by WindomZ on 17-11-19.
- */
 'use strict';
 
 const Provider = require('../provider');
