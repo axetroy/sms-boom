@@ -38,6 +38,10 @@ class App extends EventEmitter {
       }
       this.bootstrap();
     });
+
+    process.on('exit', () => {
+      this.close();
+    });
   }
 
   init(func) {
