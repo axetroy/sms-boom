@@ -35,7 +35,7 @@
     "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
     "p-retry": "^1.0.0",
-    "p-timeout": "^1.2.0",
+    "p-timeout": "^2.0.0",
     "progress": "^2.0.0",
     "puppeteer": "^0.13.0"
   },
