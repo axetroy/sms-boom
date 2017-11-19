@@ -22,12 +22,14 @@ module.exports = class extends Provider {
 
     await page.click('#TANGRAM__PSP_3__smsTimer');
 
-    // 如果需要注册
-    await page
-      .waitForSelector('#TANGRAM__PSP_3__smsRegPromptWrapper', { timeout: 500, visible: true })
-      .then(() => {
-        page.click('#TANGRAM__PSP_3__smsRegPromptBtn');
+    try {
+      // 如果需要注册
+      await page.waitForSelector('#TANGRAM__PSP_3__smsRegPromptWrapper', {
+        timeout: 500,
+        visible: true,
       });
+      await page.click('#TANGRAM__PSP_3__smsRegPromptBtn');
+    } catch (err) {}
 
     // 检验是否发送成功
     await page.waitForSelector('#TANGRAM__PSP_3__smsTimer.pass-item-time-timing', {
