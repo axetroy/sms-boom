@@ -10,8 +10,7 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    // 随便模拟一段用户操作
-    await page.mouse.move(670, 370, { step: 10 });
+    await utils.mockUserMouse(page);
 
     await page.click('.result-select-regions');
 

@@ -10,6 +10,8 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
+    await utils.mockUserMouse(page);
+
     await page.type('#phone', options.phone, { delay: 50 });
 
     // 按下鼠标，拖动滚动条
