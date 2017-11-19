@@ -121,10 +121,37 @@ class App extends EventEmitter {
           if (!this.options.isProduction) {
             await this.page.evaluate(() => {
               const title = document.title;
-              window.addEventListener(
-                'mousemove',
-                e => (document.title = `(${e.x},${e.y})${title}`)
-              );
+              const coordinates = [];
+              window.addEventListener('mousemove', e => {
+                try {
+                  // trace mouse
+                  const div = document.createElement('div');
+                  div.style.width = '5px';
+                  div.style.height = '5px';
+                  div.style.borderRadius = '50%';
+                  div.style.backgroundColor = 'green';
+                  div.style.position = 'absolute';
+                  div.style.left = e.x + 5 + 'px';
+                  div.style.top = e.y + 5 + 'px';
+
+                  document.body.appendChild(div);
+
+                  coordinates.push({
+                    x: e.x,
+                    y: e.y
+                  });
+
+                  console.log(coordinates);
+
+                  setTimeout(() => {
+                    div.remove();
+                  }, 2000);
+
+                  document.title = `(${e.x},${e.y})${title}`;
+                } catch (err) {
+                  console.error(err);
+                }
+              });
             });
           }
 
@@ -153,7 +180,7 @@ class App extends EventEmitter {
           await utils.sleep(2000);
         }
       }
-      await this.close();
+      // await this.close();
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);
     }
