@@ -886,9 +886,9 @@ p-retry@^1.0.0:
   dependencies:
     retry "^0.10.0"
 
-p-timeout@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/p-timeout/-/p-timeout-1.2.0.tgz#9820f99434c5817868b4f34809ee5291660d5b6c"
+p-timeout@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-2.0.0.tgz#c0c5888560ffba5257307eb0d233de334739f1c9"
   dependencies:
     p-finally "^1.0.0"
 
