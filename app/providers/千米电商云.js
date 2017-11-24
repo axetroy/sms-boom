@@ -5,7 +5,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://www.1000.com/reg?us=3W-head`;
-    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
