@@ -6,6 +6,10 @@
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/@axetroy/context/download/@axetroy/context-0.1.0.tgz#af4d090e6e939ebd2fabb202034e0fdaa089bcb0"
 
+"@axetroy/graceful@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@axetroy/graceful/-/graceful-0.1.1.tgz#9beb506002bbfb4938781c7cd1340f849edafb79"
+
 "@types/node@*":
   version "8.0.31"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
@@ -888,7 +892,7 @@ p-retry@^1.0.0:
 
 p-timeout@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-2.0.0.tgz#c0c5888560ffba5257307eb0d233de334739f1c9"
+  resolved "https://registry.npmjs.org/p-timeout/-/p-timeout-2.0.0.tgz#c0c5888560ffba5257307eb0d233de334739f1c9"
   dependencies:
     p-finally "^1.0.0"
 

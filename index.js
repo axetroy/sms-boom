@@ -4,22 +4,9 @@ const chalk = require('chalk');
 const Chromium = require('./chromium');
 const config = require('./config');
 const App = require('./app/app');
+const graceful = require('@axetroy/graceful');
 
-console.info(`process ${chalk.blue(process.pid)} ${chalk.green('start')}.`);
-
-process.on('SIGINT', () => {
-  console.info(`SIGINT received`);
-  process.exit(1);
-});
-
-process.on('exit', () => {
-  console.info(`process ${chalk.blue(process.pid)} ${chalk.red('exit')}.`);
-});
-
-process.on('uncaughtException', err => {
-  console.error('Error caught in uncaughtException event:');
-  console.error(err);
-});
+graceful();
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -31,6 +18,7 @@ const defaultOptions = {
   isProduction,
   username: 'abc123mmp',
   name: '隔壁老王1024',
+  email: "abc@3aabzac.com",
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
   once: isProduction === false
