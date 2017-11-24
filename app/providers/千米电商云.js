@@ -5,6 +5,7 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://www.1000.com/reg?us=3W-head`;
+    this.alone = true;
   }
   async resolve(ctx) {
     const options = ctx.options;
@@ -14,9 +15,9 @@ module.exports = class extends Provider {
 
     await utils.sleep(500);
 
-    await page.type('#send_code', options.phone, { delay: 50 });
+    await page.click('#send_code');
 
     // 检验是否发送成功
-    await page.waitForSelector('#send_tip.disable', { timeout: 1000 * 3 });
+    await page.waitForSelector('#send_tip.disabled', { timeout: 1000 * 3 });
   }
 };
