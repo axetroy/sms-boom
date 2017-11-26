@@ -15,7 +15,7 @@ module.exports = class extends Provider {
     // 等待注册框弹出
     await page.waitForSelector('.login-register', { timeout: 1000 * 3 });
 
-    // 检验是否发送成功
+    // 点击注册
     await page.evaluate(() => {
       const buttons = document.querySelectorAll('.login-tab>a');
       const loginIndex = [].slice.call(buttons).findIndex(btn => btn.innerText === '注册');
