@@ -18,7 +18,7 @@ const defaultOptions = {
   isProduction,
   username: 'abc123mmp',
   name: '隔壁老王1024',
-  email: "abc@3aabzac.com",
+  email: 'abc@3aabzac.com',
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
   once: isProduction === false
