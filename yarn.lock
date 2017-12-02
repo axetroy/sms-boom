@@ -6,9 +6,11 @@
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/@axetroy/context/download/@axetroy/context-0.1.0.tgz#af4d090e6e939ebd2fabb202034e0fdaa089bcb0"
 
-"@axetroy/graceful@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@axetroy/graceful/-/graceful-0.1.1.tgz#9beb506002bbfb4938781c7cd1340f849edafb79"
+"@axetroy/graceful@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@axetroy/graceful/-/graceful-0.2.0.tgz#7253ef49f6a88bdfe283b2c057228b77eef2d9c0"
+  dependencies:
+    tree-kill "^1.2.0"
 
 "@types/node@*":
   version "8.0.31"
@@ -1703,6 +1705,10 @@ tough-cookie@~2.3.3:
   resolved "https://registry.npmjs.org/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
   dependencies:
     punycode "^1.4.1"
+
+tree-kill@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/tree-kill/-/tree-kill-1.2.0.tgz#5846786237b4239014f05db156b643212d4c6f36"
 
 trim-newlines@^1.0.0:
   version "1.0.0"
