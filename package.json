@@ -30,7 +30,7 @@
   "homepage": "https://github.com/axetroy/sms-boom#readme",
   "dependencies": {
     "@axetroy/context": "^0.1.0",
-    "@axetroy/graceful": "^0.1.1",
+    "@axetroy/graceful": "^0.2.0",
     "axios": "^0.17.0",
     "caporal": "^0.8.0",
     "chalk": "^2.3.0",
