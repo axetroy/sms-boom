@@ -41,10 +41,6 @@ program
   .description('更新远程的provider')
   .action((argv, opts) => {
     updateProviders()
-      .catch(err => {
-        console.error(err);
-        return Promise.resolve();
-      })
       .then(() => {
         console.info(`Get Remote Providers done!`);
       });

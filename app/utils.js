@@ -24,6 +24,10 @@ function error(message) {
   return console.warn(chalk.red(`[ERROR]: `) + message);
 }
 
+function success(message) {
+  return console.warn(chalk.green(`[SUCCESS]: `) + message);
+}
+
 /**
  * 模拟用户鼠标行为, 用于欺骗识别是否是机器人的脚本
  * @param page
@@ -42,4 +46,5 @@ exports.log = log;
 exports.info = info;
 exports.warn = warn;
 exports.error = error;
+exports.success = success;
 exports.mockUserMouse = mockUserMouse;

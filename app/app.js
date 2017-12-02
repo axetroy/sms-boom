@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
 const pTimeout = require('p-timeout');
 const chalk = require('chalk');
 const { shuffle } = require('lodash');
+const pMap = require('p-map');
 const utils = require('./utils');
 const config = require('../config');
 
@@ -21,7 +22,6 @@ class App extends EventEmitter {
     this.providers = [];
     this.entities = [];
     this.active = false;
-    this.currentTarget = null; // 当前页面的provider实例
     this.initer = []; // 初始化的函数
     this.on('bootstrap', async () => {
       try {
@@ -44,154 +44,167 @@ class App extends EventEmitter {
     });
   }
 
+  /**
+   * 添加初始化事务
+   * @param func
+   * @returns {App}
+   */
   init(func) {
     this.initer.push(func);
     return this;
   }
 
   /**
-   * resolve a provider with Provider Constructor
-   * @param provider
-   * @returns {App}
-   */
-  provider(provider) {
-    this.providers.push(provider);
-    return this;
-  }
-
-  /**
-   * resolve the providers with a dir
+   * 从目录加载provider
    * @param dir
    * @returns {App}
    */
   resolveProviders(dir) {
     dir = path.join(config.paths.root, dir);
     const files = fs.readdirSync(dir) || [];
-
     while (files.length) {
       const file = files.shift();
       const absFilePath = path.join(dir, file);
       const Provider = require(absFilePath);
       Provider.file = absFilePath;
-      this.provider(Provider);
+      this.providers.push(Provider);
     }
-
     return this;
   }
 
   /**
-   * run a circle
+   * 运行单个站点
+   * @param entity
    * @returns {Promise.<void>}
    */
-  async run() {
+  async runOne(entity) {
+    // create a new tab
+    const page = await this.browser.newPage();
+
+    // set the browser's viewport
+    await page.setViewport({
+      width: 1366,
+      height: 768
+    });
+
+    // listen on tab dialog, like alert, confirm
+    page.on('dialog', async dialog => {
+      await dialog.dismiss();
+    });
+
+    if (this.active === false) return;
+    try {
+      this.emit(EVENT_ON_NEXT, entity);
+      // 跳转页面
+      await page.goto(entity.url, {
+        waitUntil: 'load',
+        timeout: 3000000
+      });
+
+      // 删除cookies
+      await page.deleteCookie();
+
+      // debug 模式下，才显示坐标
+      if (!this.options.isProduction) {
+        await page.evaluate(() => {
+          const title = document.title;
+          const coordinates = [];
+          window.addEventListener('mousemove', e => {
+            try {
+              // trace mouse
+              const div = document.createElement('div');
+              div.style.width = '5px';
+              div.style.height = '5px';
+              div.style.borderRadius = '50%';
+              div.style.backgroundColor = 'green';
+              div.style.position = 'absolute';
+              div.style.left = e.x + 5 + 'px';
+              div.style.top = e.y + 5 + 'px';
+
+              document.body.appendChild(div);
+
+              coordinates.push({
+                x: e.x,
+                y: e.y
+              });
+
+              setTimeout(() => {
+                div.remove();
+              }, 2000);
+
+              document.title = `(${e.x},${e.y})${title}`;
+            } catch (err) {
+              console.error(err);
+            }
+          });
+        });
+      }
+
+      try {
+        // 60s超时用于处理发送短信，不会导致无限等待的情况...
+        await pTimeout(entity.resolve(Object.assign(this, { page })), 1000 * 60);
+        utils.success(entity.name);
+      } catch (err) {
+        // 等待超时，忽略掉
+        utils.error(entity.name);
+        // 如果是等待超时
+        // 则很有可能是验证是否发送成功
+        if (err instanceof Error && err.message.indexOf('waiting failed') >= 0) {
+          return Promise.resolve();
+        } else if (err) {
+          return Promise.reject(err);
+        }
+      }
+    } catch (err) {
+      this.emit(EVENT_ON_ERROR, err);
+    } finally {
+      // 关闭标签前，删除浏览记录
+      // 1. cookie
+      // 2. localStorage
+      // 3. sessionStorage
+      // 4. indexDb
+      await page.deleteCookie();
+
+      await utils.sleep(2000);
+
+      // 关闭标签
+      try {
+        await page.close();
+      } catch (err) {
+        this.emit(EVENT_ON_ERROR, err);
+      }
+    }
+  }
+
+  /**
+   * 运行所有站点
+   * @returns {Promise.<void>}
+   */
+  async runAll() {
     try {
       // open the browser
       if (!this.active) return;
-
       this.browser = await puppeteer.launch({ headless: this.options.isProduction });
-
       this.emit(EVENT_ON_OPEN, this);
-
-      // create a new tab
-      this.page = await this.browser.newPage();
-
-      // set the browser's viewport
-      await this.page.setViewport({
-        width: 1366,
-        height: 768
-      });
-
-      // listen on tab dialog, like alert, confirm
-      this.page.on('dialog', async dialog => {
-        await dialog.dismiss();
-      });
-
-      const entities = this.entities;
-      for (let i = 0; i < entities.length; i++) {
-        if (!this.active) return;
-        const entity = entities[i];
-
-        this.currentTarget = entity;
-
-        try {
-          this.emit(EVENT_ON_NEXT, entity);
-          // 跳转页面
-          await this.page.goto(entity.url, {
-            waitUntil: 'load',
-            timeout: 3000000
-          });
-
-          // debug 模式下，才显示坐标
-          if (!this.options.isProduction) {
-            await this.page.evaluate(() => {
-              const title = document.title;
-              const coordinates = [];
-              window.addEventListener('mousemove', e => {
-                try {
-                  // trace mouse
-                  const div = document.createElement('div');
-                  div.style.width = '5px';
-                  div.style.height = '5px';
-                  div.style.borderRadius = '50%';
-                  div.style.backgroundColor = 'green';
-                  div.style.position = 'absolute';
-                  div.style.left = e.x + 5 + 'px';
-                  div.style.top = e.y + 5 + 'px';
-
-                  document.body.appendChild(div);
-
-                  coordinates.push({
-                    x: e.x,
-                    y: e.y
-                  });
-
-                  console.log(coordinates);
-
-                  setTimeout(() => {
-                    div.remove();
-                  }, 2000);
-
-                  document.title = `(${e.x},${e.y})${title}`;
-                } catch (err) {
-                  console.error(err);
-                }
-              });
-            });
+      // 并发5个网站
+      await pMap(
+        this.entities,
+        async entity => {
+          try {
+            await this.runOne(entity);
+          } catch (err) {
+            this.emit(EVENT_ON_ERROR, err);
           }
-
-          await this.page.deleteCookie();
-
-          // 60s超时用于处理发送短信，不会导致无线等待的情况...
-          await pTimeout(entity.resolve(this), 1000 * 60)
-            .then(() => {
-              utils.log(chalk.green('[Success]:'), entity.name);
-              return Promise.resolve();
-            })
-            .catch(err => {
-              // 等待超时，忽略掉
-              utils.log(chalk.red('[Fail]:'), entity.name);
-              // 如果是等待超时
-              // 则很有可能是验证是否发送成功
-              if (err instanceof Error && err.message.indexOf('waiting failed') >= 0) {
-                return Promise.resolve();
-              } else if (err) {
-                return Promise.reject(err);
-              }
-            });
-        } catch (err) {
-          this.emit(EVENT_ON_ERROR, err);
-        } finally {
-          await utils.sleep(2000);
-        }
-      }
-      // await this.close();
+        },
+        { concurrency: 5 }
+      );
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);
     }
   }
 
   /**
-   * close browser
+   * 关掉浏览器
    * @returns {Promise.<void>}
    */
   async close() {
@@ -201,7 +214,7 @@ class App extends EventEmitter {
   }
 
   /**
-   * bootstrap the app
+   * 启动程序
    * @returns {Promise.<App>}
    */
   async bootstrap() {
@@ -245,11 +258,12 @@ class App extends EventEmitter {
     this.active = true;
 
     if (this.options.once) {
-      this.run();
+      await this.runAll();
+      await this.close();
     } else {
       // run forever
       while (process) {
-        await this.run();
+        await this.runAll();
         // take a rest then let's go...
         await utils.sleep(1000 * 10);
       }
