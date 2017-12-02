@@ -26,56 +26,40 @@
 ```bash
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install smsboomer -g
 smsboomer 138xxxxxxxx
-```
 
-### 自行引入NPM包
+# 查看命令
 
-```bash
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install smsboomer --save
-```
+smsboomer --help
 
-```javascript
-const boomer = require('smsboomer');
+   boomer 1.4.0 - 利用chrome的headless模式，模拟用户注册进行短信轰炸机
 
-const app = boomer("13800000000", { once: true });
+   USAGE
 
-app
-  .on('open', (ctx) => {
-    console.info(`打开浏览器...`);
-  })
-  .on('next', (currentTarget) => {
-    console.info(`进入到 ${currentTarget.name} ${currentTarget.url}`);
-  })
-  .on('error', err => {
-    console.error(err);
-  })
-  // bootstrap
-  .emit('bootstrap');
-```
+     boomer <phone>
 
-### 从源码运行
+   ARGUMENTS
 
-```bash
-git clone https://github.com/axetroy/sms-boom.git
-cd ./sms-boom
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 yarn
-export PHONE=13800000000  ## 设置process.env.PHONE为目标手机号
+     <phone>      手机号码      required
 
-node ./example/once.js  # 运行一个周期
-# 或者
-node ./example/forever.js # 无限循环运行
-```
+   OPTIONS
 
-### 如何更新
+     -f, --forever            永久运行，默认只运行一次                      optional      default: false
+     --dev                    以开发者模式运行，则显示浏览器运行过程        optional      default: false
+     --launch <provider>      如果是开发模式，则指定站点名称<provider>      optional      default: ""
 
-由于Chromium下载困难的原因，从1.x版本开始，可以从Github同步Provider，而不用从新安装新版本
+   COMMANDS
 
-这样做的目的是，Github上，添加/修改了Provider，使用者不用从新安装新版本，也能够使用。
+     update              更新远程的provider
+     help <command>      Display help for a specific command
 
-运行命令
+   GLOBAL OPTIONS
 
-```bash
-smsboomer update
+     -h, --help         Display help
+     -V, --version      Display version
+     --no-color         Disable colors
+     --quiet            Quiet mode - only displays warn and error messages
+     -v, --verbose      Verbose mode - will also output debug messages
+
 ```
 
 ## Contributing

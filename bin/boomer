@@ -10,8 +10,8 @@ program.version(pkg.version).description(pkg.description);
 
 program
   .argument('<phone>', '手机号码')
-  .option('-f, --forever', '是否持久运行，默认只运行一个周期', program.BOOLEAN, false)
-  .option('--dev', '是否是开发模式，如果true，则显示浏览器运行过程', program.BOOLEAN, false)
+  .option('-f, --forever', '永久运行，默认只运行一次', program.BOOLEAN, false)
+  .option('--dev', '以开发者模式运行，则显示浏览器运行过程', program.BOOLEAN, false)
   .option('--launch <provider>', '如果是开发模式，则指定站点名称<provider>', program.STRING, '')
   .action((argv, opts) => {
     const app = boomer(argv.phone || process.env.PHONE || '13800000000', {
@@ -36,16 +36,18 @@ program
       .emit('bootstrap');
   });
 
-program.command('update').action((argv, opts) => {
-  console.info(`Update Providers...`);
-  updateProviders()
-    .catch(err => {
-      console.error(err);
-      return Promise.resolve();
-    })
-    .then(() => {
-      console.info(`Get Remote Providers done!`);
-    });
-});
+program
+  .command('update')
+  .description('更新远程的provider')
+  .action((argv, opts) => {
+    updateProviders()
+      .catch(err => {
+        console.error(err);
+        return Promise.resolve();
+      })
+      .then(() => {
+        console.info(`Get Remote Providers done!`);
+      });
+  });
 
 program.parse(process.argv);
