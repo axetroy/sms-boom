@@ -6,7 +6,7 @@ const utils = require('../utils');
 module.exports = class extends Provider {
   constructor() {
     super();
-    this.url = `https://www.decathlon.com.cn/zh/create`;
+    this.url = `http://m.shucong.com/register`;
   }
 
   async resolve(ctx) {
@@ -15,8 +15,8 @@ module.exports = class extends Provider {
 
     await page.type('input#mobile', options.phone, { delay: 50 });
 
-    await page.click('button.cta.right');
+    await page.click('button#code_phone');
 
-    //    await page.waitForSelector('button.cta.right', { timeout: 1000 * 3 });
+    //    await page.waitForSelector('button#code_phone', { timeout: 1000 * 3 });
   }
 };
