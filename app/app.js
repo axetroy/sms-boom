@@ -269,6 +269,7 @@ class App extends EventEmitter {
       while (process) {
         await this.runAll();
         // take a rest then let's go...
+        await this.close();
         await utils.sleep(1000 * 10);
       }
     }
