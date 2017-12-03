@@ -3,9 +3,7 @@
   "version": "1.4.0",
   "description": "利用chrome的headless模式，模拟用户注册进行短信轰炸机",
   "main": "index.js",
-  "bin": {
-    "smsboomer": "./bin/boomer"
-  },
+  "bin": "./bin/smsboomer",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "all-contributors generate",
