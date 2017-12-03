@@ -30,7 +30,12 @@ program
         );
       })
       .on('error', err => {
-        console.error(err);
+        if (err) {
+          console.error(err);
+        }
+      })
+      .on('closed', () => {
+        utils.info(`关闭浏览器...`);
       })
       // bootstrap
       .emit('bootstrap');
@@ -40,10 +45,9 @@ program
   .command('update')
   .description('更新远程的provider')
   .action((argv, opts) => {
-    updateProviders()
-      .then(() => {
-        console.info(`Get Remote Providers done!`);
-      });
+    updateProviders().then(() => {
+      console.info(`Get Remote Providers done!`);
+    });
   });
 
 program.parse(process.argv);

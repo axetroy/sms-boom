@@ -21,7 +21,7 @@ class App extends EventEmitter {
     this.options = options;
     this.providers = [];
     this.entities = [];
-    this.active = false;
+    this.closed = false;
     this.initer = []; // 初始化的函数
     this.on('bootstrap', async () => {
       try {
@@ -29,7 +29,7 @@ class App extends EventEmitter {
         // init before bootstrap all
         while (initer.length) {
           const initFunc = initer.shift();
-          await initFunc();
+          await pTimeout(initFunc.call(this), 1000 * 10);
         }
       } catch (err) {
         console.error(`Boomer init fail...`);
@@ -78,6 +78,8 @@ class App extends EventEmitter {
    * @returns {Promise.<void>}
    */
   async runOne(entity) {
+    if (this.closed === true) return;
+
     // create a new tab
     const page = await this.browser.newPage();
 
@@ -92,7 +94,6 @@ class App extends EventEmitter {
       await dialog.dismiss();
     });
 
-    if (this.active === false) return;
     try {
       this.emit(EVENT_ON_NEXT, entity);
       // 跳转页面
@@ -140,39 +141,25 @@ class App extends EventEmitter {
         });
       }
 
-      try {
-        // 60s超时用于处理发送短信，不会导致无限等待的情况...
-        await pTimeout(entity.resolve(Object.assign(this, { page })), 1000 * 60);
-        utils.success(entity.name);
-      } catch (err) {
-        // 等待超时，忽略掉
-        utils.error(entity.name);
-        // 如果是等待超时
-        // 则很有可能是验证是否发送成功
-        if (err instanceof Error && err.message.indexOf('waiting failed') >= 0) {
-          return Promise.resolve();
-        } else if (err) {
-          return Promise.reject(err);
-        }
-      }
+      // 60s超时用于处理发送短信，不会导致无限等待的情况...
+      await pTimeout(entity.resolve(Object.assign(this, { page })), 1000 * 60);
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);
-    } finally {
+    }
+
+    try {
       // 关闭标签前，删除浏览记录
       // 1. cookie
       // 2. localStorage
       // 3. sessionStorage
       // 4. indexDb
       await page.deleteCookie();
-
-      await utils.sleep(2000);
-
+      // 延迟一秒
+      await utils.sleep(1000);
       // 关闭标签
-      try {
-        await page.close();
-      } catch (err) {
-        this.emit(EVENT_ON_ERROR, err);
-      }
+      await page.close();
+    } catch (err) {
+      // this.emit(EVENT_ON_ERROR, err);
     }
   }
 
@@ -182,9 +169,12 @@ class App extends EventEmitter {
    */
   async runAll() {
     try {
-      // open the browser
-      if (!this.active) return;
       this.browser = await puppeteer.launch({ headless: this.options.isProduction });
+      this.browser.on('disconnected', () => {
+        this.closed = true;
+        this.emit(EVENT_ON_CLOSED, this);
+      });
+      this.closed = false;
       this.emit(EVENT_ON_OPEN, this);
       // 并发5个网站
       await pMap(
@@ -208,9 +198,12 @@ class App extends EventEmitter {
    * @returns {Promise.<void>}
    */
   async close() {
-    const browser = this.browser;
-    browser && (await browser.close());
-    this.emit(EVENT_ON_CLOSED, this);
+    try {
+      const browser = this.browser;
+      browser && (await browser.close());
+    } catch (err) {
+      this.emit(EVENT_ON_CLOSED, err);
+    }
   }
 
   /**
@@ -254,8 +247,6 @@ class App extends EventEmitter {
     }
 
     this.emit(EVENT_ON_LAUNCH, this);
-
-    this.active = true;
 
     if (this.options.once) {
       await this.runAll();
