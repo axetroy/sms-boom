@@ -12,8 +12,6 @@ module.exports = class extends Provider {
 
     await utils.mockUserMouse(page);
 
-    // TODO：有待完善
-
     // 点击登陆按钮
     await page.click('a[name="login"]');
 
@@ -27,7 +25,7 @@ module.exports = class extends Provider {
     while (frames.length) {
       const frame = frames.shift();
       try {
-        await frame.waitForSelector('#in_txt', { timeout: 1000 * 3 });
+        await frame.waitForSelector('#login_box', { timeout: 1000 * 3 });
         loginFrame = frame;
         break;
       } catch (err) {}
@@ -37,18 +35,17 @@ module.exports = class extends Provider {
       throw null;
     }
 
-    // 等待短信注册按钮出现
-    await loginFrame.waitForSelector('#ml_tab', { timeout: 1000 * 3 });
+    await page.exposeFunction('getOptions', function() {
+      return options;
+    });
 
-    // 点击短信注册
-    await loginFrame.click('#ml_tab');
-
-    await loginFrame.type('#in_txt', options.phone, { delay: 100 });
-    await loginFrame.type('#ml_c_l', options.phone, { delay: 100 });
-
-    await loginFrame.click('#ml_gc');
-
-    // 检验是否发送成功
-    await loginFrame.waitForSelector('#ml_gc.verify_grey_btn', { timeout: 1000 * 3 });
+    await loginFrame.evaluate(async () => {
+      const options = await window.getOptions();
+      document.querySelector('#ml_tab').click();
+      document.querySelector('#ml_m').value = options.phone;
+      document.querySelector('#ml_gc').click();
+      // 检验是否发送成功
+      return document.querySelector('#ml_gc').classList.contains('verify_grey_btn');
+    });
   }
 };
