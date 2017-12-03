@@ -13,13 +13,15 @@ module.exports = class extends Provider {
     const options = ctx.options;
     const page = ctx.page;
 
-    await page.type('#reg_form input[name=phone]', options.phone, { delay: 100 });
+    await page.type('#reg_form input[name=phone]', options.phone, { delay: 50 });
 
     await page.click('#reg_form input.get-mpcode');
 
-    //    // 检验是否发送成功
-    //    await page.waitForSelector('#reg_form input.get-mpcode[disabled]', {
-    //      timeout: 1000 * 3,
-    //    });
+    // 检验是否发生成功
+    try {
+      await page.waitForSelector('.get-mpcode[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };
