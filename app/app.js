@@ -138,7 +138,10 @@ class App extends EventEmitter {
 
       // 60s超时用于处理发送短信，不会导致无限等待的情况...
       await pTimeout(entity.resolve(Object.assign(this, { page })), 1000 * 60);
+      utils.success(entity.name);
     } catch (err) {
+      // 等待超时，忽略掉
+      utils.error(entity.name);
       this.emit(EVENT_ON_ERROR, err);
     }
 
