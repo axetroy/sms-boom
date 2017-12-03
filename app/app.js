@@ -111,32 +111,28 @@ class App extends EventEmitter {
           const title = document.title;
           const coordinates = [];
           window.addEventListener('mousemove', e => {
-            try {
-              // trace mouse
-              const div = document.createElement('div');
-              div.style.width = '5px';
-              div.style.height = '5px';
-              div.style.borderRadius = '50%';
-              div.style.backgroundColor = 'green';
-              div.style.position = 'absolute';
-              div.style.left = e.x + 5 + 'px';
-              div.style.top = e.y + 5 + 'px';
+            // trace mouse
+            const div = document.createElement('div');
+            div.style.width = '5px';
+            div.style.height = '5px';
+            div.style.borderRadius = '50%';
+            div.style.backgroundColor = 'green';
+            div.style.position = 'absolute';
+            div.style.left = e.x + 5 + 'px';
+            div.style.top = e.y + 5 + 'px';
 
-              document.body.appendChild(div);
+            document.body.appendChild(div);
 
-              coordinates.push({
-                x: e.x,
-                y: e.y
-              });
+            coordinates.push({
+              x: e.x,
+              y: e.y
+            });
 
-              setTimeout(() => {
-                div.remove();
-              }, 2000);
+            setTimeout(() => {
+              div.remove();
+            }, 2000);
 
-              document.title = `(${e.x},${e.y})${title}`;
-            } catch (err) {
-              console.error(err);
-            }
+            document.title = `(${e.x},${e.y})${title}`;
           });
         });
       }
@@ -154,12 +150,27 @@ class App extends EventEmitter {
       // 3. sessionStorage
       // 4. indexDb
       await page.deleteCookie();
+      await page.evaluate(() => {
+        const cookies = document.cookie.split(';');
+
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i];
+          const eqPos = cookie.indexOf('=');
+          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        }
+        localStorage.clear();
+        sessionStorage.clear();
+        IDBObjectStore.clear();
+      });
+      window.addEventListener('mousemove', e => {});
       // 延迟一秒
       await utils.sleep(1000);
-      // 关闭标签
-      await page.close();
     } catch (err) {
       // this.emit(EVENT_ON_ERROR, err);
+    } finally {
+      // 关闭标签
+      await page.close();
     }
   }
 
