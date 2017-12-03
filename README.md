@@ -31,13 +31,13 @@ smsboomer 138xxxxxxxx
 # 查看命令
 smsboomer --help
 
-[13064]: start.
+[12504]: start.
 
-   boomer 1.4.0 - 利用chrome的headless模式，模拟用户注册进行短信轰炸机
+   smsboomer 2.0.0 - 利用chrome的headless模式，模拟用户注册进行短信轰炸机
 
    USAGE
 
-     boomer <phone>
+     smsboomer <phone>
 
    ARGUMENTS
 
@@ -63,7 +63,7 @@ smsboomer --help
      --quiet            Quiet mode - only displays warn and error messages
      -v, --verbose      Verbose mode - will also output debug messages
 
-[13064]: Exit with code 0.
+[12504]: Exit with code 0.
 
 ```
 
