@@ -16,6 +16,11 @@ module.exports = class extends Provider {
     await page.type('#strMobile', options.phone, { delay: 50 });
     await page.click('#vcode');
 
-    await page.waitForSelector('#vcode[disabled]', { timeout: 1000 * 3 });
+    // 检查是否发送成功
+    try {
+      await page.waitForSelector('#vcode[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };
