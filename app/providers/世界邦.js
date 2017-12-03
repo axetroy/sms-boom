@@ -17,6 +17,12 @@ module.exports = class extends Provider {
 
     // 点击发送验证码
     await page.click('button.btn.sp2');
-    await page.waitForSelector('button.btn.sp2.disabled', { timeout: 1000 * 3 });
+
+    // 检验验证码是否发生成功
+    try {
+      await page.waitForSelector('button.btn.sp2.disabled', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };
