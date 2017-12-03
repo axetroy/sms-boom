@@ -82,15 +82,22 @@ class App extends EventEmitter {
     // create a new tab
     const page = await this.browser.newPage();
 
+    // listen on tab dialog, like alert, confirm
+    page.on('dialog', async dialog => {
+      await dialog.dismiss();
+    });
+
+    page.on('error', async () => {
+      try {
+        // 关闭标签
+        await page.close();
+      } catch (err) {}
+    });
+
     // set the browser's viewport
     await page.setViewport({
       width: 1366,
       height: 768
-    });
-
-    // listen on tab dialog, like alert, confirm
-    page.on('dialog', async dialog => {
-      await dialog.dismiss();
     });
 
     try {
@@ -98,7 +105,7 @@ class App extends EventEmitter {
       // 跳转页面
       await page.goto(entity.url, {
         waitUntil: 'load',
-        timeout: 3000000
+        timeout: 1000 * 60
       });
 
       // 删除cookies
