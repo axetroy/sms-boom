@@ -7,7 +7,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://www.maifupay.com/register`;
-    this.alone = true;
   }
 
   async resolve(ctx) {
