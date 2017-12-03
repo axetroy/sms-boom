@@ -196,7 +196,7 @@ class App extends EventEmitter {
             this.emit(EVENT_ON_ERROR, err);
           }
         },
-        { concurrency: 5 }
+        { concurrency: this.options.concurrency }
       );
     } catch (err) {
       this.emit(EVENT_ON_ERROR, err);

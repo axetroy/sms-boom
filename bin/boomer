@@ -13,11 +13,13 @@ program
   .option('-f, --forever', '永久运行，默认只运行一次', program.BOOLEAN, false)
   .option('--dev', '以开发者模式运行，则显示浏览器运行过程', program.BOOLEAN, false)
   .option('--launch <provider>', '如果是开发模式，则指定站点名称<provider>', program.STRING, '')
+  .option('-c, --concurrency <number>', '设置并发数量', program.INT, 5)
   .action((argv, opts) => {
     const app = boomer(argv.phone || process.env.PHONE || '13800000000', {
       once: !opts.forever,
       isProduction: !opts.dev,
-      launchProvider: opts.launch
+      launchProvider: opts.launch,
+      concurrency: opts.concurrency
     });
 
     app

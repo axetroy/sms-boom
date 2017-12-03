@@ -28,7 +28,8 @@ const defaultOptions = {
   },
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
-  once: isProduction === false
+  once: isProduction === false,
+  concurrency: 5
 };
 
 module.exports = function(phoneNumber, options) {
