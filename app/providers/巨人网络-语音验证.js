@@ -16,7 +16,7 @@ module.exports = class extends Provider {
     await page.type('#reg_form input[name=phone]', options.phone, { delay: 50 });
 
     // 获取语言验证码
-    await page.click('#reg_form input.voice_mpcode');
+    await page.click('.voice_mpcode');
 
     // 检验是否发生成功
     try {
