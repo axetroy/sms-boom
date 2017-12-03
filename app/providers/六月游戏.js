@@ -14,5 +14,7 @@ module.exports = class extends Provider {
     await page.click('#send_sms');
 
     await utils.sleep(1000 * 600);
+
+    // TODO:检验是否发送成功
   }
 };

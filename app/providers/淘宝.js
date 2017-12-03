@@ -26,5 +26,7 @@ module.exports = class extends Provider {
 
     await utils.sleep(500);
     await page.click('#J_BtnMobileForm');
+
+    // TODO: 检测是否发送成功
   }
 };

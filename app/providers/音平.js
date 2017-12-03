@@ -17,6 +17,10 @@ module.exports = class extends Provider {
     await page.click('#sendRegMsgA');
 
     // 检验是否发送成功
-    await page.waitForSelector('.send-status.disabled');
+    try {
+      await page.waitForSelector('.send-status.disabled');
+    } catch (err) {
+      throw null;
+    }
   }
 };

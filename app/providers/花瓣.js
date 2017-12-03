@@ -32,5 +32,7 @@ module.exports = class extends Provider {
     await utils.sleep(500);
 
     await page.click('#login_frame form[method="post"]>a.rbtn');
+
+    // TODO: 检验发送成功
   }
 };

@@ -34,6 +34,10 @@ module.exports = class extends Provider {
     await page.click('.login-get-code');
 
     // 检验是否发送成功
-    await page.waitForSelector('.login-code-disable', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.login-code-disable', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

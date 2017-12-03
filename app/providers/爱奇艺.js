@@ -14,5 +14,7 @@ module.exports = class extends Provider {
     await page.type('input[data-regbox="name"]', options.phone, { delay: 50 });
     await utils.sleep(1000 * 2);
     await page.click('[rseat="prgd_smsbtn"]');
+
+    // TODO: 检测是否发送成功
   }
 };

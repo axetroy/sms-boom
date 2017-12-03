@@ -12,5 +12,7 @@ module.exports = class extends Provider {
 
     await page.type('input[name="phone"]', options.phone, { delay: 50 });
     await page.click('.login-reg-code');
+
+    // TODO:检验是否发送成功
   }
 };

@@ -30,6 +30,10 @@ module.exports = class extends Provider {
     // 松开鼠标
 
     // 检验是否发送成功
-    await page.waitForSelector('.ruc-send-auth-code-btn.button-disable', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.ruc-send-auth-code-btn.button-disable', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

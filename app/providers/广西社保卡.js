@@ -12,6 +12,11 @@ module.exports = class extends Provider {
 
     await page.type('#tel', options.phone, { delay: 50 });
     await page.click('#btn');
-    await page.waitForSelector('.window-alert-img-ok', { timeout: 3000 });
+
+    try {
+      await page.waitForSelector('.window-alert-img-ok', { timeout: 3000 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

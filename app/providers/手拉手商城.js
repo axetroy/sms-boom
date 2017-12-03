@@ -27,6 +27,10 @@ module.exports = class extends Provider {
     await utils.sleep(100);
 
     // 检验是否发送成功
-    await page.waitForSelector('#button[disabled]');
+    try {
+      await page.waitForSelector('#button[disabled]');
+    } catch (err) {
+      throw null;
+    }
   }
 };

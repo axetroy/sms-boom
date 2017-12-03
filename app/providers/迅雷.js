@@ -39,7 +39,7 @@ module.exports = class extends Provider {
       return options;
     });
 
-    await loginFrame.evaluate(async () => {
+    const isSuccess = await loginFrame.evaluate(async () => {
       const options = await window.getOptions();
       document.querySelector('#ml_tab').click();
       document.querySelector('#ml_m').value = options.phone;
@@ -47,5 +47,9 @@ module.exports = class extends Provider {
       // 检验是否发送成功
       return document.querySelector('#ml_gc').classList.contains('verify_grey_btn');
     });
+
+    if (isSuccess === false) {
+      throw null;
+    }
   }
 };

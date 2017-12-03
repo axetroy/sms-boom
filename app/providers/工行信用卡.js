@@ -35,6 +35,8 @@ module.exports = class extends Provider {
       return style.display === 'none';
     });
 
-    await (isSuccess ? Promise.resolve(true) : Promise.reject(false));
+    if (isSuccess === false) {
+      throw null;
+    }
   }
 };

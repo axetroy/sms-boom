@@ -25,7 +25,7 @@ module.exports = class extends Provider {
 
       throw null; // 抛出错误，代表发送失败
     } catch (err) {
-      throw err;
+      throw null;
     }
   }
 };

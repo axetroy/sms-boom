@@ -22,6 +22,10 @@ module.exports = class extends Provider {
     await page.click('#chkCodeSendBtn');
 
     // 检验是否发送成功
-    await page.waitForSelector('#chkCodeSendBtn[disabled]', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#chkCodeSendBtn[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

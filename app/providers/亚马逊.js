@@ -25,6 +25,10 @@ module.exports = class extends Provider {
     await page.click('#continue');
 
     // 检验是否发送成功
-    await page.waitForSelector('#auth-pv-enter-code', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#auth-pv-enter-code', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw err;
+    }
   }
 };

@@ -25,6 +25,10 @@ module.exports = class extends Provider {
     await utils.sleep(1000);
     await page.click('button.next-btn');
 
-    await page.waitForSelector('button.next-btn[disabled]', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('button.next-btn[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

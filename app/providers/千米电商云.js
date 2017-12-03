@@ -17,6 +17,10 @@ module.exports = class extends Provider {
     await page.click('#send_code');
 
     // 检验是否发送成功
-    await page.waitForSelector('#send_tip.disabled', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#send_tip.disabled', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

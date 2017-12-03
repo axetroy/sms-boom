@@ -14,6 +14,10 @@ module.exports = class extends Provider {
     await page.type('#mobileCode', options.phone, { delay: 50 });
     await page.click('.btn-get-code');
 
-    await page.waitForSelector('.btn-get-code.getCode.re-getting', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.btn-get-code.getCode.re-getting', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

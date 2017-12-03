@@ -21,13 +21,13 @@ module.exports = class extends Provider {
     // 松开鼠标
 
     // 检验是否发送成功
-    try {
-      await page.evaluate(() => {
-        const display = document.querySelector('.resend.text-send').style.display;
-        // 倒计时应该会被显示出来
-        return display !== 'none' && display !== '';
-      });
-    } catch (err) {
+    const isSuccess = await page.evaluate(() => {
+      const display = document.querySelector('.resend.text-send').style.display;
+      // 倒计时应该会被显示出来
+      return display !== 'none' && display !== '';
+    });
+
+    if (isSuccess === false) {
       throw null;
     }
   }

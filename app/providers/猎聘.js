@@ -14,6 +14,12 @@ module.exports = class extends Provider {
     await page.type('.register-box [name="user_pwd"]', options.password, { delay: 50 });
     await page.click('.register-box .btn-phone-code');
 
-    await page.waitForSelector('.register-box .btn-phone-code.btn-disabled', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.register-box .btn-phone-code.btn-disabled', {
+        timeout: 1000 * 3
+      });
+    } catch (err) {
+      throw null;
+    }
   }
 };

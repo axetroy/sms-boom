@@ -16,6 +16,6 @@ module.exports = class extends Provider {
     await page.type('#userName', options.username, { delay: 100 });
     await page.click('#verificationCodeSpanId');
 
-    await utils.sleep(1000 * 6000000);
+    // TODO: 检验发送成功
   }
 };

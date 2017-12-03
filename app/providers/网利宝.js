@@ -16,6 +16,6 @@ module.exports = class extends Provider {
 
     await page.click('.inp_but.register-code');
 
-    // 检验是否发送成功
+    // TODO: 检验是否发送成功
   }
 };

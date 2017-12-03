@@ -20,7 +20,7 @@ module.exports = class extends Provider {
     try {
       await page.waitForSelector('#verification-code', { timeout: 1000 * 3 });
     } catch (err) {
-      throw err;
+      throw null;
     }
   }
 };

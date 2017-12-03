@@ -14,6 +14,11 @@ module.exports = class extends Provider {
     await page.type('#mobileUpass', options.password, { delay: 50 });
     await page.click('#sendCode');
 
-    await page.waitForSelector('#sendCode[disabled]', { timeout: 1000 * 3 });
+    // 检验是否发送成功
+    try {
+      await page.waitForSelector('#sendCode[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

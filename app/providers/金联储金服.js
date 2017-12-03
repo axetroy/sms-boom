@@ -15,6 +15,11 @@ module.exports = class extends Provider {
     await page.type('#code', options.phone, { delay: 50 });
     await utils.sleep(1000);
     await page.click('#btn');
-    await page.waitForSelector('#btn[disabled]', { timeout: 1000 * 3 });
+
+    try {
+      await page.waitForSelector('#btn[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

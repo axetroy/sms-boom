@@ -13,5 +13,7 @@ module.exports = class extends Provider {
     await page.type('#mobilebox_name', options.name, { delay: 30 });
     await page.type('#mobilebox_phone', options.phone, { delay: 30 });
     await page.click('.contact-submit');
+
+    // TODO:检验是否发送成功
   }
 };

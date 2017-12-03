@@ -12,6 +12,11 @@ module.exports = class extends Provider {
 
     await page.type('#phone', options.phone, { delay: 50 });
     await page.click('#sendsms');
-    await page.waitForSelector('.sendsms_disable', { timeout: 1000 * 3 });
+
+    try {
+      await page.waitForSelector('.sendsms_disable', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw err;
+    }
   }
 };

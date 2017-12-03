@@ -26,14 +26,18 @@ module.exports = class extends Provider {
       // 如果需要注册
       await page.waitForSelector('#TANGRAM__PSP_3__smsRegPromptWrapper', {
         timeout: 500,
-        visible: true,
+        visible: true
       });
       await page.click('#TANGRAM__PSP_3__smsRegPromptBtn');
     } catch (err) {}
 
-    // 检验是否发送成功
-    await page.waitForSelector('#TANGRAM__PSP_3__smsTimer.pass-item-time-timing', {
-      timeout: 1000 * 3,
-    });
+    try {
+      // 检验是否发送成功
+      await page.waitForSelector('#TANGRAM__PSP_3__smsTimer.pass-item-time-timing', {
+        timeout: 1000 * 3
+      });
+    } catch (err) {
+      throw null;
+    }
   }
 };

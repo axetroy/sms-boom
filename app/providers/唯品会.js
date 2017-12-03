@@ -18,6 +18,10 @@ module.exports = class extends Provider {
     await page.click('#J_mobile_verifycode_btn');
 
     // 检验是否发送成功
-    await page.waitForSelector('#J_mobile_verifycode_btn.ui-btn-disable', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#J_mobile_verifycode_btn.ui-btn-disable', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

@@ -26,6 +26,6 @@ module.exports = class extends Provider {
 
     await page.click('#send_msg');
 
-    await utils.sleep(1000 * 999999999);
+    // TODO: 检验发送成功
   }
 };

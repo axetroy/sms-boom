@@ -21,6 +21,10 @@ module.exports = class extends Provider {
       btn.click();
     });
 
-    await page.waitForSelector('#J-resend-mobile button[disabled]', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#J-resend-mobile button[disabled]', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

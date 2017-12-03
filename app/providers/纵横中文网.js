@@ -21,6 +21,10 @@ module.exports = class extends Provider {
     await page.click('.reg-w-btn');
 
     // 检验是否发送成功
-    await page.waitForSelector('.reg-w-btn.sentend', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.reg-w-btn.sentend', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

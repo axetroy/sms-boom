@@ -16,6 +16,10 @@ module.exports = class extends Provider {
     await page.click('#send-sms', { button: 'left' });
 
     // 检验是否发送成功
-    await page.waitForSelector('.send-sms.disabled', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.send-sms.disabled', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

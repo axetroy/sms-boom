@@ -15,6 +15,11 @@ module.exports = class extends Provider {
     await page.type('#repeatPsd', options.password, { delay: 30 });
     await page.click('#getMobileCode');
 
-    await page.waitForSelector('#getMobileCode[disable]', { timeout: 1000 * 5 });
+    // 检验是否发生成功
+    try {
+      await page.waitForSelector('#getMobileCode[disable]', { timeout: 1000 * 5 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

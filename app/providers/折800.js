@@ -26,6 +26,6 @@ module.exports = class extends Provider {
 
     await utils.sleep(100);
 
-    // 检验是否发送成功
+    // TODO: 检验是否发送成功
   }
 };

@@ -28,6 +28,11 @@ module.exports = class extends Provider {
 
     await page.click('#getCodeBtn');
 
-    await page.waitForSelector('#getCodeBtn.btn_code', { timeout: 1000 * 5 });
+    // 检验是否发送成功
+    try {
+      await page.waitForSelector('#getCodeBtn.btn_code', { timeout: 1000 * 5 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

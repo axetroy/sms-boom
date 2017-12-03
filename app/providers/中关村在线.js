@@ -5,7 +5,7 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://service.zol.com.cn/user/siteLogin.php`;
-}
+  }
   async resolve(ctx) {
     const options = ctx.options;
     const page = ctx.page;
@@ -17,6 +17,10 @@ module.exports = class extends Provider {
     await page.click('#get-anicode');
 
     // 检验是否发送成功
-    await page.waitForSelector('.resendphonecode', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.resendphonecode', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };

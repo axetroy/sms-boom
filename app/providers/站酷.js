@@ -24,6 +24,7 @@ module.exports = class extends Provider {
     await utils.sleep(1000);
     await page.click('#veribtn');
 
+    // TODO: 检验是否发送成功
     // await page.waitForSelector('button.next-btn[disabled]', { timeout: 1000 * 3 });
   }
 };

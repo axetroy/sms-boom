@@ -13,5 +13,7 @@ module.exports = class extends Provider {
     await page.click('#changepage');
     await page.waitForSelector('.u-codebtn', { timeout: 1000 * 5 });
     await page.type('input[name="tel"]', options.phone, { delay: 50 });
+
+    // TODO: 检验发送成功
   }
 };

@@ -26,6 +26,10 @@ module.exports = class extends Provider {
 
     await page.click('button[type="submit"]');
 
-    await page.waitForSelector('.code-tip', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('.code-tip', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw err;
+    }
   }
 };

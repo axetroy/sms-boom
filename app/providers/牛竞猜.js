@@ -13,6 +13,11 @@ module.exports = class extends Provider {
     await page.type('input[name="phone"]', options.phone, { delay: 50 });
     await page.type('input.phoneVerify', '1234', { delay: 50 });
     await page.click('.phoneVerifyBtn');
-    await page.waitForSelector('.phoneVerifyBtn.disabled', { timeout: 1000 * 3 });
+
+    try {
+      await page.waitForSelector('.phoneVerifyBtn.disabled', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw null;
+    }
   }
 };
