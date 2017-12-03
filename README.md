@@ -29,8 +29,9 @@ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install smsboomer -g
 smsboomer 138xxxxxxxx
 
 # 查看命令
-
 smsboomer --help
+
+[13064]: start.
 
    boomer 1.4.0 - 利用chrome的headless模式，模拟用户注册进行短信轰炸机
 
@@ -44,9 +45,10 @@ smsboomer --help
 
    OPTIONS
 
-     -f, --forever            永久运行，默认只运行一次                      optional      default: false
-     --dev                    以开发者模式运行，则显示浏览器运行过程        optional      default: false
-     --launch <provider>      如果是开发模式，则指定站点名称<provider>      optional      default: ""
+     -f, --forever                   永久运行，默认只运行一次                      optional      default: false
+     --dev                           以开发者模式运行，则显示浏览器运行过程        optional      default: false
+     --launch <provider>             如果是开发模式，则指定站点名称<provider>      optional      default: ""
+     -c, --concurrency <number>      设置并发数量                                  optional      default: 5
 
    COMMANDS
 
@@ -60,6 +62,8 @@ smsboomer --help
      --no-color         Disable colors
      --quiet            Quiet mode - only displays warn and error messages
      -v, --verbose      Verbose mode - will also output debug messages
+
+[13064]: Exit with code 0.
 
 ```
 
