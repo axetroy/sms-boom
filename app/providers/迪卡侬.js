@@ -17,6 +17,10 @@ module.exports = class extends Provider {
 
     await page.click('button.cta.right');
 
-    //    await page.waitForSelector('button.cta.right', { timeout: 1000 * 3 });
+    try {
+      await page.waitForSelector('#verification-code', { timeout: 1000 * 3 });
+    } catch (err) {
+      throw err;
+    }
   }
 };
