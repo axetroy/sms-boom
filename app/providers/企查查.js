@@ -7,7 +7,6 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `http://www.qichacha.com/user_register`;
-    this.alone = true;
   }
 
   async resolve(ctx) {
