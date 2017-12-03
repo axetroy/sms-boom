@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const pTimeout = require('p-timeout');
-const chalk = require('chalk');
 const { shuffle } = require('lodash');
 const pMap = require('p-map');
 const utils = require('./utils');

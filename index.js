@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const faker = require('faker');
 const Chromium = require('./chromium');
 const config = require('./config');
 const App = require('./app/app');
@@ -16,9 +17,15 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const defaultOptions = {
   isProduction,
-  username: 'abc123mmp',
-  name: '隔壁老王1024',
-  email: 'abc@3aabzac.com',
+  get username() {
+    return faker.name.findName().replace(/\s+/g, '');
+  },
+  get name() {
+    return faker.name.firstName().replace(/\s+/g, '');
+  },
+  get email() {
+    return faker.internet.email();
+  },
   password: 'abc123abc123',
   phone: '13000000000', // do not set default phone number
   once: isProduction === false
