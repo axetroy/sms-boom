@@ -7,16 +7,23 @@ module.exports = class extends Provider {
   constructor() {
     super();
     this.url = `https://www.maifupay.com/register`;
+    this.alone = true;
   }
 
   async resolve(ctx) {
     const options = ctx.options;
     const page = ctx.page;
 
-    await page.type('input.form-control', options.phone, { delay: 100 });
+    await page.type('input[name="mobile"]', options.phone, { delay: 50 });
 
-    await page.click('span.input-group-btn button:first-child');
+    await page.click('#sendVerifySmsButton');
 
-//    await page.waitForSelector('span.input-group-btn button:first-child[disabled]', { timeout: 1000 * 3 });
+    await utils.sleep(1000);
+
+    try {
+      await page.waitForSelector('#sendVerifySmsButton[disabled]');
+    } catch (err) {
+      throw null;
+    }
   }
 };
