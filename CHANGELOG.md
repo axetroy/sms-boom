@@ -1,3 +1,59 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/axetroy/sms-boom/compare/v1.4.0...v2.0.0) (2017-12-03)
+
+
+### Bug Fixes
+
+* lofter provider没有正确检测是否发送短信成功 ([6e339f3](https://github.com/axetroy/sms-boom/commit/6e339f3))
+* segmentfault ([e7ec35c](https://github.com/axetroy/sms-boom/commit/e7ec35c))
+* username 和 name 为小写 ([e6f2849](https://github.com/axetroy/sms-boom/commit/e6f2849))
+* 世界帮provider ([87098e6](https://github.com/axetroy/sms-boom/commit/87098e6))
+* 书从provider没有正确检测是否发送短信成功 ([dd9b7a0](https://github.com/axetroy/sms-boom/commit/dd9b7a0))
+* 企查查provider没有正确检测是否发送短信成功 ([0bd61bd](https://github.com/axetroy/sms-boom/commit/0bd61bd))
+* 修复一些provider没有正确检测是否发送短信成功 ([e2c708b](https://github.com/axetroy/sms-boom/commit/e2c708b))
+* 修复中瑞财富验证是否发送成功不正确的问题 ([4e6c736](https://github.com/axetroy/sms-boom/commit/4e6c736))
+* 修复巨人网络provider没有正确选择器的问题 ([ccb0816](https://github.com/axetroy/sms-boom/commit/ccb0816))
+* 修复微盟未正确检测provider的情况 ([551ef3f](https://github.com/axetroy/sms-boom/commit/551ef3f))
+* 修复房天下的provider，在最后检测成功/失败环节抛出不预期的异常 ([df4c220](https://github.com/axetroy/sms-boom/commit/df4c220))
+* 修复迅雷provider不正确运行的问题 ([00c29b1](https://github.com/axetroy/sms-boom/commit/00c29b1))
+* 巨人网络provider没有正确检测是否发送短信成功 ([300b884](https://github.com/axetroy/sms-boom/commit/300b884))
+* 底卡侬provider没有正确检测是否发送短信成功 ([091dd15](https://github.com/axetroy/sms-boom/commit/091dd15))
+* 无限启动模式下，无法正确关闭浏览器的问题 ([340b89e](https://github.com/axetroy/sms-boom/commit/340b89e))
+* 添加意识的成功/失败提示 ([5079c06](https://github.com/axetroy/sms-boom/commit/5079c06))
+* 页面崩溃下，没有正确关闭页面的问题 ([83972f9](https://github.com/axetroy/sms-boom/commit/83972f9))
+* 麦付宝provider没有正确检测是否发送短信成功 ([27a49ff](https://github.com/axetroy/sms-boom/commit/27a49ff))
+
+
+### Features
+
+* add 中瑞财富 provider ([130b62d](https://github.com/axetroy/sms-boom/commit/130b62d))
+* add 书丛 provider ([a05b651](https://github.com/axetroy/sms-boom/commit/a05b651))
+* add 企查查 provider ([d8dfd8e](https://github.com/axetroy/sms-boom/commit/d8dfd8e))
+* add 巨人网络 provider ([f6b08a2](https://github.com/axetroy/sms-boom/commit/f6b08a2))
+* add 微盟 provider ([ccf0aee](https://github.com/axetroy/sms-boom/commit/ccf0aee))
+* add 迪卡侬 provider ([b56be26](https://github.com/axetroy/sms-boom/commit/b56be26))
+* add 麦付宝 provider ([88a1f58](https://github.com/axetroy/sms-boom/commit/88a1f58))
+* Upgrade [@axetroy](https://github.com/axetroy)/graceful, try to kill child process before exit ([830ce6b](https://github.com/axetroy/sms-boom/commit/830ce6b))
+* 不在提供外部引用的example ([2deed2e](https://github.com/axetroy/sms-boom/commit/2deed2e))
+* 关闭标签的同时，清除缓存,cookies,localStorage,sessionStorage,IndexDB ([8f94d9c](https://github.com/axetroy/sms-boom/commit/8f94d9c))
+* 删除无效的provider todokit ([89e44d1](https://github.com/axetroy/sms-boom/commit/89e44d1))
+* 删除无效的provider 棋牌领域 ([f6d0ed9](https://github.com/axetroy/sms-boom/commit/f6d0ed9))
+* 命令行添加参数-c, --concurrency，用于设置并发数量，默认为5个 ([292d0f2](https://github.com/axetroy/sms-boom/commit/292d0f2))
+* 增加互动无线provider ([d16faa1](https://github.com/axetroy/sms-boom/commit/d16faa1))
+* 增加巨人网络的语言验证码 ([5462e4b](https://github.com/axetroy/sms-boom/commit/5462e4b))
+* 增加房天下，找回密码的provider，适用于如果手机已注册 ([06b9238](https://github.com/axetroy/sms-boom/commit/06b9238))
+* 增加熊猫直播provider ([545385d](https://github.com/axetroy/sms-boom/commit/545385d))
+* 开启多标签模式，现在会并发打开5个标签 ([6146133](https://github.com/axetroy/sms-boom/commit/6146133))
+* 每次运行都会获取假的随机用户名/邮箱 ([431ac9c](https://github.com/axetroy/sms-boom/commit/431ac9c))
+* 添加51book provider ([0239792](https://github.com/axetroy/sms-boom/commit/0239792))
+* 添加enaea provider ([31873df](https://github.com/axetroy/sms-boom/commit/31873df))
+* 添加乾贷provider ([0a935ac](https://github.com/axetroy/sms-boom/commit/0a935ac))
+* 添加乾贷网的电话验证码 ([7e36751](https://github.com/axetroy/sms-boom/commit/7e36751))
+* 添加科凡provider ([3361967](https://github.com/axetroy/sms-boom/commit/3361967))
+* 添加粉笔网provider ([e409bbe](https://github.com/axetroy/sms-boom/commit/e409bbe))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/axetroy/sms-boom/compare/v1.3.2...v1.4.0) (2017-11-26)
 
