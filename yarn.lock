@@ -6,9 +6,9 @@
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/@axetroy/context/download/@axetroy/context-0.1.0.tgz#af4d090e6e939ebd2fabb202034e0fdaa089bcb0"
 
-"@axetroy/graceful@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@axetroy/graceful/-/graceful-0.2.0.tgz#7253ef49f6a88bdfe283b2c057228b77eef2d9c0"
+"@axetroy/graceful@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@axetroy/graceful/-/graceful-0.3.0.tgz#b88b6d1bea1cf96953369cc8f922dcba1536a850"
   dependencies:
     tree-kill "^1.2.0"
 
@@ -221,15 +221,16 @@ camelcase@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
-caporal@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.npmjs.org/caporal/-/caporal-0.8.0.tgz#1ff65235bf2cd0d03495b6b40eba58e95c41c5ea"
+caporal@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/caporal/-/caporal-0.9.0.tgz#4c2434a8d4ec5fe25161ccc9cb076d8848949998"
   dependencies:
     bluebird "^3.4.7"
     chalk "^1.1.3"
     cli-table2 "^0.2.0"
     fast-levenshtein "^2.0.6"
     lodash.camelcase "^4.3.0"
+    lodash.kebabcase "^4.1.1"
     micromist "^1.0.1"
     prettyjson "^1.2.1"
     tabtab "^2.2.2"
@@ -1068,6 +1069,10 @@ lodash.camelcase@^4.3.0:
 lodash.difference@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
+
+lodash.kebabcase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
 
 lodash.pad@^4.1.0:
   version "4.5.1"

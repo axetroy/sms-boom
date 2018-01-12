@@ -28,7 +28,7 @@ class App extends EventEmitter {
         // init before bootstrap all
         while (initer.length) {
           const initFunc = initer.shift();
-          await pTimeout(initFunc.call(this), 1000 * 120); // 初始化函数为120秒
+          await pTimeout(initFunc.call(this), 1000 * 300); // 初始化函数为5分钟
         }
       } catch (err) {
         console.error(`Boomer init fail...`);

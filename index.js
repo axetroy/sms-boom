@@ -18,10 +18,16 @@ const isProduction = process.env.NODE_ENV === 'production';
 const defaultOptions = {
   isProduction,
   get username() {
-    return faker.name.findName().replace(/\s+/g, '').toLowerCase();
+    return faker.name
+      .firstName()
+      .replace(/\s+/g, '')
+      .toLowerCase();
   },
   get name() {
-    return faker.name.firstName().replace(/\s+/g, '').toLowerCase();
+    return faker.name
+      .firstName()
+      .replace(/\s+/g, '')
+      .toLowerCase();
   },
   get email() {
     return faker.internet.email();
