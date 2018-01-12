@@ -39,7 +39,7 @@
     "p-retry": "^1.0.0",
     "p-timeout": "^2.0.0",
     "progress": "^2.0.0",
-    "puppeteer": "^0.13.0"
+    "puppeteer": "^1.0.0"
   },
   "devDependencies": {
     "@types/p-timeout": "^1.2.0",
