@@ -389,3 +389,5 @@ CONTRIBUTING.md
 screenshot*.jpg
 .local-chromium
 .git
+*.gif
+CHANGELOG.md
