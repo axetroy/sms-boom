@@ -30,7 +30,7 @@
     "@axetroy/context": "^0.1.0",
     "@axetroy/graceful": "^0.3.0",
     "axios": "^0.18.0",
-    "caporal": "^0.9.0",
+    "caporal": "^0.10.0",
     "chalk": "^2.3.0",
     "faker": "^4.1.0",
     "fs-extra": "^5.0.0",
